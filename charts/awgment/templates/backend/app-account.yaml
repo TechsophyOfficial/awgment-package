@@ -1,0 +1,59 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.accountapp.image.configMapRef }}
+  namespace: {{ .Values.namespace }}
+data:
+  GATEWAY_URI: {{ .Values.gateway.url }}
+  KEYCLOAK_REALM_NAME: {{ .Values.keycloak.realm }}
+  KEYCLOAK_URL_AUTH: {{ .Values.keycloak.url }}
+  TP_MODELER_APP_MONGO_URI: {{ .Values.mongo.url }}
+  MAX_FILE_SIZE: {{ .Values.accountapp.maxFileSize }}
+  USER_REGISTRATION_FAILURE_EMAIL_SUBJECT: {{ .Values.accountapp.registration.failSubject }}
+  USER_REGISTRATION_FAILURE_EMAIL_TO: {{ .Values.accountapp.registration.email }}
+  CLIENTS: {{ .Values.accountapp.clients }}
+  EMAIL_VALIDITY: "{{ .Values.accountapp.emailValidity }}"
+  
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.accountapp.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.accountapp.name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.accountapp.name }}
+    spec:
+      containers:
+      - image: {{ .Values.accountapp.image.repository }}:{{ .Values.accountapp.image.tag }}
+        name: {{ .Values.accountapp.name }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.accountapp.image.configMapRef }}
+        ports:
+        - containerPort: {{ .Values.accountapp.service.port }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.accountapp.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.accountapp.service.type }}
+  ports:
+  - port: {{ .Values.accountapp.service.port }}
+  selector:
+    name: {{ .Values.accountapp.name }}

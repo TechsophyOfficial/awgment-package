@@ -1,0 +1,170 @@
+
+replicaCount: 1
+namespace: default
+imagePullSecrets: ts-nexus 
+imagePullPolicy: Always
+augmntTag: 2.0-RC1 
+
+configserver:
+  name: cloud-config-server
+  image:
+    repository: nexus.techsophy.com/augmnt/cloud-config-server
+    tag: 2.0-RC1
+    configMapRef: cloudconfig-server-env   
+  service:
+    type: ClusterIP
+    port: 8080         
+
+gateway:
+  name: gateway
+  image:
+    repository: nexus.techsophy.com/augmnt/api-gateway
+    tag: 1.0-OS1
+    configMapRef: gateway   
+  service:
+    type: ClusterIP
+    port: 8080
+  url: http://gateway:8080/api
+      
+utilapp:
+  name: util-app
+  image:
+    repository: localhost:5001/augmnt/util-app
+    tag: latest
+    configMapRef: utilapp-env
+  service:
+    type: ClusterIP
+    port: 8080
+  pagelimit: "20"
+
+accountapp:
+  name: account-app
+  image:
+    repository: nexus.techsophy.com/augmnt/account-app
+    tag: 2.0-RC1
+    configMapRef: accountapp-env    
+  service:
+    type: ClusterIP
+    port: 8080
+  maxFileSize: 20MB
+  registration:
+    failSubject: "User Registration Failed"
+    email: "venkataramana.g@techsophy.com"
+  clients: "camunda-identity-service,ticketing-system"
+  emailValidity: 86400
+
+formapp:
+  name: form-app
+  image:
+    repository: nexus.techsophy.com/augmnt/form-app
+    tag: 2.0-RC1
+    configMapRef: formapp-env 
+  service:
+    type: ClusterIP
+    port: 8080         
+
+runtimeformapp:
+  name: runtime-form-app
+  image:
+    repository: nexus.techsophy.com/augmnt/runtimeform-app
+    tag: 2.0-RC1
+    configMapRef: runtimeformapp-env   
+  service:
+    type: ClusterIP
+    port: 8080
+  elastic: true
+
+workflowapp:
+  name: workflow-app
+  image:
+    repository: nexus.techsophy.com/augmnt/workflow-app
+    tag: 2.0-RC1
+    configMapRef: workfloeapp-env    
+  service:
+    type: ClusterIP
+    port: 8080
+
+workflowengine:
+  name: workflow-engine
+  image:
+    repository: nexus.techsophy.com/augmnt/workflow-engine
+    tag: 2.0-RC1
+    configMapRef: workflowengine-env    
+  service:
+    type: ClusterIP
+    port: 8080
+
+ruleapp:
+  name: rule-app
+  image:
+    repository: nexus.techsophy.com/augmnt/rule-app
+    tag: 2.0-RC1
+    configMapRef: ruleapp-env    
+  service:
+    type: ClusterIP
+    port: 8080
+
+ruleengine:
+  name: rules
+  image:
+    repository: nexus.techsophy.com/augmnt/rule-engine
+    tag: 2.0-RC1
+    configMapRef: dmnservice-env 
+  service:
+    type: ClusterIP
+    port: 8080
+
+cloudconfig:
+   url: https://git.techsophy.com/techsophy-platform/tp-cloud-config.git
+   user: gitlabuser
+   password: Change#1234
+
+
+mongo:
+   url: mongodb://mongo:27017/
+postgres:
+     camunda:
+         dburl: jdbc:postgresql://postgres:5432/camunda
+         user: vaibhav
+         password: password
+        #  database: camunda
+
+keycloak:
+  name: keycloak
+  image:
+    repository: nexus.techsophy.com/augmnt/keycloak
+    tag: 2.0-RC1
+    configMapRef: keycloak-env
+  service:
+    type: ClusterIP
+    port: 8080
+  realm: techsophy-platform
+  db:
+    host: postgres:5432
+    name: keycloakdb
+    password: password
+    user: vaibhav
+    vendor: postgres
+  adminUser: admin
+  adminPassword: Admin@^&%$
+  client:
+    forntend: tp-ui-core
+    backend: camunda-identity-service
+    secret: 7f74d270-073f-460d-958e-7824c1316366
+  url: http://keycloak:8080
+  #  url: https://auth.172.17.0.1.nip.io:8443
+
+
+ingress:
+   name:
+     keycloak: keycloak-ingress
+     gateway: gateway-ingress
+   class:
+     nginx: nginx
+   clusterissuer:
+     local: selfsigned-issuer
+   hosts:
+     gateway: api.172.17.0.1.nip.io
+     keycloak: auth.172.17.0.1.nip.io
+   secretname:
+     gateway: local-augmnt

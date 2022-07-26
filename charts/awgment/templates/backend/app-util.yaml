@@ -1,0 +1,53 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.utilapp.image.configMapRef }}
+  namespace: {{ .Values.namespace }}
+data:
+  GATEWAY_URI: {{ .Values.gateway.url }}
+  KEYCLOAK_URL_AUTH: {{ .Values.keycloak.url }}
+  TP_MODELER_APP_MONGO_URI: {{ .Values.mongo.url }}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.utilapp.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.utilapp.name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.utilapp.name }}
+    spec:
+      containers:
+      - image: {{ .Values.utilapp.image.repository }}:{{ .Values.utilapp.image.tag }}
+        name: {{ .Values.utilapp.name }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.utilapp.image.configMapRef }}
+        ports:
+        - containerPort: {{ .Values.utilapp.service.port }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.utilapp.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.utilapp.service.type }}
+  ports:
+  - port: {{ .Values.utilapp.service.port }}
+  selector:
+    name: {{ .Values.utilapp.name }}

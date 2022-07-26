@@ -1,0 +1,60 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.gateway.image.configMapRef }}
+  namespace: {{ .Values.namespace }}
+data:
+  ADD_ALLOWEDHEADER: '*'
+  ADD_ALLOWEDMETHOD: '*'
+  CORS_ALLOWEDORIGINS: '*'
+  KEYCLOAK_CLIENT_ID: {{ .Values.keycloak.client.backend }}
+  KEYCLOAK_CLIENT_SECRET: {{ .Values.keycloak.client.secret }}
+  KEYCLOAK_REALM_NAME: {{ .Values.keycloak.realm }}
+  KEYCLOAK_URL_AUTH: {{ .Values.keycloak.url }}
+  KEYCLOAK_URL_PLUGIN: {{ .Values.keycloak.url }}
+  KEYCLOAK_URL_TOKEN: {{ .Values.keycloak.url }}
+  KEYCLOAK_INGRESS: {{ .Values.ingress.hosts.keycloak }}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.gateway.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.gateway.name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.gateway.name }}
+    spec:
+      containers:
+      - image: {{ .Values.gateway.image.repository }}:{{ .Values.gateway.image.tag }}
+        name: {{ .Values.gateway.name }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.gateway.image.configMapRef }}
+        ports:
+        - containerPort: {{ .Values.gateway.service.port }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.gateway.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.gateway.service.type }}
+  ports:
+  - port: {{ .Values.gateway.service.port }}
+  selector:
+    name: {{ .Values.gateway.name }}

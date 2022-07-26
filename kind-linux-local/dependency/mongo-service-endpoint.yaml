@@ -1,0 +1,27 @@
+---
+kind: "Service"
+apiVersion: "v1"
+metadata:
+  name: "mongo"
+spec:
+  ports:
+    -
+      name: "mongo"
+      protocol: "TCP"
+      port: 27017
+      targetPort: 27017
+      nodePort: 0
+---
+kind: "Endpoints"
+apiVersion: "v1"
+metadata:
+  name: "mongo"
+subsets:
+  -
+    addresses:
+      -
+        ip: "192.168.1.46"
+    ports:
+      -
+        port: 27017
+        name: "mongo"
