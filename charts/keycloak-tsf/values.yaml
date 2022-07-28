@@ -1,0 +1,43 @@
+replicaCount: 1
+namespace: default
+imagePullSecrets: ts-nexus 
+imagePullPolicy: Always
+configMapRef: augmnt-env
+
+
+keycloak:
+  name: keycloak
+  image:
+    repository: nexus.techsophy.com/augmnt/keycloak
+    tag: 2.0-RC1
+    configMapRef: keycloak-env
+  service:
+    type: ClusterIP
+    port: 8080
+  realm: techsophy-platform
+  db:
+    host: 
+    name: 
+    password: 
+    user: 
+    vendor: 
+  adminUser: admin
+  adminPassword: 
+  client:
+    forntend: tp-ui-core
+    backend: camunda-identity-service
+    secret: 
+  url: http://keycloak:8080
+
+ingress:
+   name:
+     keycloak: keycloak-ingress
+   class:
+     nginx: nginx
+     alb: alb
+   clusterissuer:
+     issuer: 
+   hosts:
+     keycloak:
+   secretname:
+     keycloak:

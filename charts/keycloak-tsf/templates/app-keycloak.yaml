@@ -1,0 +1,59 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.keycloak.image.configMapRef }}
+  namespace: {{ .Values.namespace }}
+data:
+  JBOSS_HOME: /opt/jboss/keycloak
+  DB_ADDR: {{ .Values.keycloak.db.host }}
+  DB_DATABASE: {{ .Values.keycloak.db.name }}
+  DB_PASSWORD: {{ .Values.keycloak.db.password }}
+  DB_USER: {{ .Values.keycloak.db.user }}
+  DB_VENDOR: {{ .Values.keycloak.db.vendor }}
+  KEYCLOAK_USER: {{ .Values.keycloak.adminUser }}
+  KEYCLOAK_PASSWORD: {{ .Values.keycloak.adminPassword }}
+  KEYCLOAK_HTTP_PORT: "{{ .Values.keycloak.service.port }}"
+  LAUNCH_JBOSS_IN_BACKGROUND: "1"
+  PROXY_ADDRESS_FORWARDING: "true"
+  LANG: en_US.UTF-8
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.keycloak.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: {{ .Values.keycloak.name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.keycloak.name }}
+    spec:
+      containers:
+      - image: {{ .Values.keycloak.image.repository }}:{{ .Values.keycloak.image.tag }}
+        name: {{ .Values.keycloak.name }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.keycloak.image.configMapRef }}
+        ports:
+         - containerPort: {{ .Values.keycloak.service.port }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.keycloak.name }}
+#  namespace: local
+spec:
+  type: ClusterIP
+  ports:
+  - port: {{ .Values.keycloak.service.port }}
+  selector:
+    name: {{ .Values.keycloak.name }}
