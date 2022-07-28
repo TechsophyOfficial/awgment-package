@@ -10,8 +10,6 @@ https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/pr
 #kubectl apply -f \
 #https://github.com/kubernetes/ingress-nginx/blob/main/deploy/static/provider/cloud/deploy.yaml
 
-
-
 # helm upgrade --install ingress-nginx ingress-nginx \
 #   --repo https://kubernetes.github.io/ingress-nginx \
 #   --namespace ingress-nginx --create-namespace

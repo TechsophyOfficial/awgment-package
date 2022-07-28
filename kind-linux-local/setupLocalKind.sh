@@ -78,7 +78,6 @@ kubectl apply  \
 sleep 100
 
 
-
 echo 'before setting up keycloak you need to create a fresh database for keycloak in\
  and configure environment appropriately postgres'
 
@@ -141,6 +140,7 @@ subsets:
         name: "mongo"
 EOF
 
+./nginx.sh
 
 
 kubectl create secret docker-registry \
