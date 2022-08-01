@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.ruleengine.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.ruleengine.name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.ruleengine.name }}
+    spec:
+      containers:
+      - image: {{ .Values.ruleengine.image.repository }}:{{ .Values.ruleengine.image.tag }}
+        name: {{ .Values.ruleengine.name }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.ruleengine.image.configMapRef }}
+        ports:
+        - containerPort: {{ .Values.ruleengine.service.port }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.ruleengine.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.ruleengine.service.type }}
+  ports:
+  - port: {{ .Values.ruleengine.service.port }}
+  selector:
+    name: {{ .Values.ruleengine.name }}

@@ -1,0 +1,53 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.gateway.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.gateway.name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.gateway.name }}
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+      containers:
+      - image: {{ .Values.gateway.image.repository }}:{{ .Values.gateway.image.tag }}
+        name: {{ .Values.gateway.name }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.gateway.image.configMapRef }}
+        ports:
+        - containerPort: {{ .Values.gateway.service.port }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        volumeMounts:
+            - name: applicationfile
+              mountPath: /home/spring/app/bin/application-dev.yaml
+              subPath: application-dev.yaml
+      volumes:
+        - name: applicationfile
+          configMap:
+            name: applicationfile
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.gateway.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.gateway.service.type }}
+  ports:
+  - port: {{ .Values.gateway.service.port }}
+  selector:
+    name: {{ .Values.gateway.name }}

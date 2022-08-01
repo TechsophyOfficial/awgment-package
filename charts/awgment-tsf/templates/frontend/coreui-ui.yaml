@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.coreui.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.coreui.name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.coreui.name }}
+    spec:
+      containers:
+      - image: {{ .Values.coreui.image.repository }}:{{ .Values.coreui.image.tag }}
+        name: {{ .Values.coreui.name }}
+        ports:
+        - containerPort: {{ .Values.coreui.service.port }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.coreui.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.coreui.service.type }}
+  ports:
+  - port: {{ .Values.coreui.service.port }}
+  selector:
+    name: {{ .Values.coreui.name }}

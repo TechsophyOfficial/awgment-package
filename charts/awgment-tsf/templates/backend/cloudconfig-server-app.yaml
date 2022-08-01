@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.configserver.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.configserver.name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.configserver.name }}
+    spec:
+      containers:
+      - image: {{ .Values.configserver.image.repository }}:{{ .Values.configserver.image.tag }}
+        name: {{ .Values.configserver.name }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.configserver.image.configMapRef }}
+        ports:
+        - containerPort: {{ .Values.configserver.service.port }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.configserver.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.configserver.service.type }}
+  ports:
+  - port: {{ .Values.configserver.service.port }}
+  selector:
+    name: {{ .Values.configserver.name }}

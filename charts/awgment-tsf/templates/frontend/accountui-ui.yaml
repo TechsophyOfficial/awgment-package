@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.accountui.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.accountui.name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.accountui.name }}
+    spec:
+      containers:
+      - image: {{ .Values.accountui.image.repository }}:{{ .Values.accountui.image.tag }}
+        name: {{ .Values.accountui.name }}
+        ports:
+        - containerPort: {{ .Values.accountui.service.port }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.accountui.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.accountui.service.type }}
+  ports:
+  - port: {{ .Values.accountui.service.port }}
+  selector:
+    name: {{ .Values.accountui.name }}

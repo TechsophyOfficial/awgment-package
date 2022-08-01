@@ -1,0 +1,89 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.ingress.name.tsffrontend }}
+  namespace: {{ .Values.namespace }}
+  annotations:
+    kubernetes.io/ingress.class: {{ .Values.ingress.class.nginx }}
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 120m
+spec:
+  tls:
+  - hosts:
+    - {{ .Values.ingress.hosts.tsffrontend }}
+    secretName: {{ .Values.ingress.secretname.tsffrontend }}
+  rules:
+  - host: {{ .Values.ingress.hosts.tsffrontend }}
+    http:
+      paths:                 
+      - path: /model
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Values.coreui.name }}
+            port:
+              number: {{ .Values.coreui.service.port }}
+      # - pathType: Prefix
+      #   backend:
+      #     service:
+      #       name: {{ .Values.formmodeler.name }}
+      #       port:
+      #         number: {{ .Values.formmodeler.service.port }}
+      #   path: /model/forms
+      # - pathType: Prefix
+      #   backend:
+      #     service:
+      #       name:  {{ .Values.rulemodeler.name }}
+      #       port:
+      #         number: {{ .Values.rulemodeler.service.port }}
+      #   path: /model/rules
+      # - pathType: Prefix
+      #   backend:
+      #     service:
+      #       name:  {{ .Values.workflowmodeler.name }}
+      #       port:
+      #         number: {{ .Values.workflowmodeler.service.port }}
+      #   path: /model/process
+      # - pathType: Prefix
+      #   backend:
+      #     service:
+      #       name:  {{ .Values.accountui.name }}
+      #       port:
+      #         number: {{ .Values.accountui.service.port }}
+      #   path: /account
+      # - pathType: Prefix
+      #   backend:
+      #     service:
+      #       name:  {{ .Values.templatemodeler.name }}
+      #       port:
+      #         number: {{ .Values.templatemodeler.service.port }}
+      #   path: /model/templates
+      # - pathType: Prefix
+      #   backend:
+      #     service:
+      #       name:  {{ .Values.caseui.name }}
+      #       port:
+      #         number: {{ .Values.caseui.service.port }}
+      #   path: /case-inbox
+      # - pathType: Prefix
+      #   backend:
+      #     service:
+      #       name:  {{ .Values.casemodeler.name }}
+      #       port:
+      #         number: {{ .Values.casemodeler.service.port }}
+      #   path: /model/case
+      # - pathType: Prefix
+      #   backend:
+      #     service:
+      #       name:  {{ .Values.adminui.name }}
+      #       port:
+      #         number: {{ .Values.adminui.service.port }}
+      #   path: /admin
+      # - pathType: Prefix
+      #   backend:
+      #     service:
+      #       name:  {{ .Values.checklistmodeler.name }}
+      #       port:
+      #         number: {{ .Values.checklistmodeler.service.port }}
+      #   path: /model/checklist

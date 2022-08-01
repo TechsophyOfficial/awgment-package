@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.workflowapp.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.workflowapp.name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.workflowapp.name }}
+    spec:
+      containers:
+      - image: {{ .Values.workflowapp.image.repository }}:{{ .Values.workflowapp.image.tag }}
+        name: {{ .Values.workflowapp.name }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.workflowapp.image.configMapRef }}
+        ports:
+        - containerPort: {{ .Values.workflowapp.service.port }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.workflowapp.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.workflowapp.service.type }}
+  ports:
+  - port: {{ .Values.workflowapp.service.port }}
+  selector:
+    name: {{ .Values.workflowapp.name }}

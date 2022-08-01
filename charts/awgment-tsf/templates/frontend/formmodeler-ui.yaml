@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.formmodeler.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.formmodeler.name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.formmodeler.name }}
+    spec:
+      containers:
+      - image: {{ .Values.formmodeler.image.repository }}:{{ .Values.formmodeler.image.tag }}
+        name: {{ .Values.formmodeler.name }}
+        ports:
+        - containerPort: {{ .Values.formmodeler.service.port }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.formmodeler.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.formmodeler.service.type }}
+  ports:
+  - port: {{ .Values.formmodeler.service.port }}
+  selector:
+    name: {{ .Values.formmodeler.name }}

@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.runtimeformapp.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.runtimeformapp.name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.runtimeformapp.name }}
+    spec:
+      containers:
+      - image: {{ .Values.runtimeformapp.image.repository }}:{{ .Values.runtimeformapp.image.tag }}
+        name: {{ .Values.runtimeformapp.name }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.runtimeformapp.image.configMapRef }}
+        ports:
+        - containerPort: {{ .Values.runtimeformapp.service.port }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.runtimeformapp.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.runtimeformapp.service.type }}
+  ports:
+  - port: {{ .Values.runtimeformapp.service.port }}
+  selector:
+    name: {{ .Values.runtimeformapp.name }}

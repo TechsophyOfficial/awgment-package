@@ -1,0 +1,91 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.configMapRef }}
+  namespace: {{ .Values.namespace }}
+data:
+  GATEWAY_URI: {{ .Values.gateway.url }}
+  TP_MODELER_APP_MONGO_URI: {{ .Values.mongo.url }}
+  JDBC_URL: {{ .Values.postgres.camunda.dburl }}
+  JDBC_USER: {{ .Values.postgres.camunda.user }}
+  JDBC_PASSWORD: {{ .Values.postgres.camunda.password }} 
+  GIT_CONFIG_URI: {{ .Values.cloudconfig.url }}
+  GIT_USERNAME: {{ .Values.cloudconfig.user }}
+  GIT_PASSWORD: {{ .Values.cloudconfig.password }}
+  ADD_ALLOWEDHEADER: '*'
+  ADD_ALLOWEDMETHOD: '*'
+  CORS_ALLOWEDORIGINS: '*'
+  # DMS_ENABLED: "true"
+  # SMTP_DEBUG: "false"
+  # SMTP_HOST: 
+  # SMTP_PASSWORD: 
+  # SMTP_PORT: "587"
+  # SMTP_USER:
+  # SNS_ACCESS_KEY: 
+  # SNS_REGION: 
+  # SNS_SECRET_KEY: 
+  # SNS_TOPIC_ARN: 
+  # TEMPLATES_ENABLED: "true"
+  # TWILIO_ACCOUNT_ID: test
+  # TWILIO_MSID: 
+  # TWILIO_TOKEN: 
+  # AWS_ACCESS_KEY: 
+  # AWS_ENABLED: "false"
+  # AWS_BUCKET_NAME: 
+  # AWS_REGION: 
+  # AWS_SECRET_KEY: 
+  KEYCLOAK_URL_AUTH: {{ .Values.keycloak.url }}
+  KEYCLOAK_REALM_NAME: {{ .Values.keycloak.realm }}
+  KEYCLOAK_CLIENT_ID: {{ .Values.keycloak.client.backend }}
+  KEYCLOAK_CLIENT_SECRET: {{ .Values.keycloak.client.secret }}
+  KEYCLOAK_URL_PLUGIN: {{ .Values.keycloak.url }}
+  KEYCLOAK_URL_TOKEN: {{ .Values.keycloak.url }}
+  KEYCLOAK_URL_CLIENT: {{ .Values.keycloak.clientURL }}
+  CAMUNDA_ENGINE_CONTEXT_PATH: /camunda
+  EMAIL_QUERY: |
+    mutation SEND_EMAIL($mailMessage: MailMessage!) {
+      sendMail(input: $mailMessage)
+    }
+  EMAIL_VALIDITY: "86400"
+  OTP_VALIDITY: "180"
+  USER_REGISTRATION_FAILURE_EMAIL_SUBJECT: {{ .Values.accountapp.registration.failSubject }}
+  USER_REGISTRATION_FAILURE_EMAIL_TO: {{ .Values.accountapp.registration.email }}
+  CLIENTS: {{ .Values.accountapp.clients }}
+  # ELASTIC_ENABLE: "true"
+  # ELASTIC_SOURCE: "true"
+  # DIGITAL_OCEAN_ACCESSKEY: 
+  # DIGITAL_OCEAN_BUCKET_NAME: 
+  # DIGITAL_OCEAN_ENABLED: "true"
+  # DIGITAL_OCEAN_ENDPOINT: 
+  # DIGITAL_OCEAN_REGION: 
+  # DIGITAL_OCEAN_SECRET_KEY: 
+  # USERNAME: 
+  # PASSWORD: 
+  # CLIENT_ID: 
+  default.pagelimit: "20"
+  # PCI_AUDIT_FILE_ENABLED: "false"
+  # PCI_AUDIT_MONGO_ENABLED: "true"
+  # SXP_JOURNEY_BASE_URL: https://sxp-playground.journey-manager.techsophy.com/journey
+  # CE_DYN_JOURNEY_URL: https://ce.techsophy.com/getNextJourney
+  HOST: elasticsearch
+  PORT: "9200"
+  PROTOCOL: http
+  MAX_FILE_SIZE: 20MB
+
+  # FIREBASE_PROJECT_ID: 
+  # FIREBASE_PRIVATE_KEY_ID: 
+  # FIREBASE_PRIVATE_KEY: 
+  # FIREBASE_CLIENT_EMAIL: 
+  # FIREBASE_CLIENT_ID: 
+  # FIREBASE_TOKEN_URI: 
+  # FIREBASE_ENABLED: "false"
+  # FIREBASE_APP: "false"
+  # AWS_REGION: 
+  # AWS_ACCESS_KEY: 
+  # AWS_ACCESS_SECRET: 
+  # EMAIL_PROVIDER_SENDMAIL: "false"
+  # EMAIL_PROVIDER_SENDGRID: "false"
+  # EMAIL_PROVIDER_AWS_SES: "true"
+  # SES_AWS_REGION: 
+  # SES_AWS_ACCESS_KEY: 
+  # SES_AWS_ACCESS_SECRET: 

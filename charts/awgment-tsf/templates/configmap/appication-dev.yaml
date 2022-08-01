@@ -1,0 +1,193 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.gateway.image.applicationfile }}
+  namespace: {{ .Values.namespace }}
+data:
+  application-dev.yaml: |
+    keycloak:
+      issuer-uri: ${KEYCLOAK_URL_AUTH}/auth/realms/
+      realm.name: ${KEYCLOAK_REALM_NAME}
+        # Keycloak Camunda Identity Client
+      client.id: ${KEYCLOAK_CLIENT_ID}
+      client.secret: ${KEYCLOAK_CLIENT_SECRET}
+    springdoc:
+      version: '@springdoc.version@'
+    spring:
+      application:
+        name: gateway
+      cloud:
+        gateway:
+          default-filters:
+            - TokenRelay
+    #      discovery:
+    #        locator:
+    #          enabled: true
+          routes:
+            - id: form-modeler-service
+              uri: http://form-app:8080
+              predicates:
+                - Path=/form-modeler/**
+              filters:
+                - RemoveRequestHeader=Cookie
+            - id: process-modeler-service
+              uri: http://workflow-app:8080
+              predicates:
+                - Path=/process-modeler/**
+              filters:
+                - RemoveRequestHeader=Cookie
+            - id: rule-modeler-service
+              uri: http://rule-app:8080
+              predicates:
+                - Path=/rule-modeler/**
+              filters:
+                - RemoveRequestHeader=Cookie
+            - id: accounts-service
+              uri: http://account-app:8080
+              predicates:
+                - Path=/accounts/**
+              filters:
+                - RemoveRequestHeader=Cookie
+            - id: rules-service
+              uri: http://rules:8080
+              predicates:
+                - Path=/rules/**
+              filters:
+                - RemoveRequestHeader=Cookie
+            - id: form-runtime-service
+              uri: http://runtime-form-app:8080
+              predicates:
+                - Path=/form-runtime/**
+              filters:
+                - RemoveRequestHeader=Cookie
+            - id: workflow-service
+              uri: http://uxapp-controller:8080
+              predicates:
+                - Path=/workflow/**
+              filters:
+                - RemoveRequestHeader=Cookie
+            - id: workflow-engine-rest
+              uri: http://workflow-engine:8080
+              predicates:
+                - Path=/camunda/engine-rest/**
+              filters:
+                - RemoveRequestHeader=Cookie
+            - id: camunda-service
+              uri: http://workflow-engine:8080
+              predicates:
+                - Path=/camunda/service/**
+              filters:
+                - RemoveRequestHeader=Cookie
+            - id: notification
+              uri: http://tp-app-notification:8080
+              predicates:
+                - Path=/notification/**
+              filters:
+                - RemoveRequestHeader=Cookie
+            - id: template-modeler-service
+              uri: http://template-app:8080
+              predicates:
+                - Path=/template-modeler/**
+              filters:
+                - RemoveRequestHeader=Cookie
+            - id: document-converter-service
+              uri: http://document-converter:8080
+              predicates:
+                - Path=/document-converter/**
+              filters:
+                - RemoveRequestHeader=Cookie
+            - id: tp-pdf-convertor
+              uri: http://tp-pdf-convertor:8080
+              predicates:
+                - Path=/pdf-converter/**
+            - id: dms-service
+              uri: http://dms-app:8080
+              predicates:
+                - Path=/dms/**
+              filters:
+                - RemoveRequestHeader=Cookie
+            - id: config-server
+              uri: http://cloud-config-server:8080
+              predicates:
+                - Path=/config-server/**
+              filters:
+                - RemoveRequestHeader=Cookie
+            - id: case-modeler-service
+              uri: http://case-app:8080
+              predicates:
+                - Path=/case-modeler/**
+              filters:
+                - RemoveRequestHeader=Cookie
+            - id: admin-service
+              uri: http://admin-app:8080
+              predicates:
+                - Path=/admin/**
+              filters:
+                - RemoveRequestHeader=Cookie
+            - id: util-service
+              uri: http://util-app:8080
+              predicates:
+                - Path=/util/**
+              filters:
+                - RemoveRequestHeader=Cookie
+            - id: tp-elastic-search-app-service
+              uri: http://tp-elastic-search-app:8080
+              predicates:
+                - Path=/elastic/**
+              filters:
+                - RemoveRequestHeader=Cookie
+            - id: pci-service
+              uri: http://pci-app:8080
+              predicates:
+                - Path=/pci/**
+              filters:
+                - RemoveRequestHeader=Cookie
+            - id: checklist-modeler-service
+              uri: http://checklist-app:8080
+              predicates:
+                - Path=/checklist-modeler/**
+              filters:
+                - RemoveRequestHeader=Cookie
+            - id: checklist-engine-service
+              uri: http://checklist-engine:8080
+              predicates:
+                - Path=/checklist-engine/**
+              filters:
+                - RemoveRequestHeader=Cookie        
+            - id: openapi
+              uri: http://gateway:8080
+              predicates:
+                - Path=/v3/api-docs/**
+              filters:
+                - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+                - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs  
+
+      security:
+        oauth2:
+          resourceserver:
+            jwt:
+              issuer-uri: ${keycloak.issuer-uri}${keycloak.realm.name}
+          client:
+            provider:
+              keycloak:
+                token-uri: ${keycloak.issuer-uri}${keycloak.realm.name}/protocol/openid-connect/token
+                authorization-uri: ${keycloak.issuer-uri}${keycloak.realm.name}/protocol/openid-connect/auth
+                userinfo-uri: ${keycloak.issuer-uri}${keycloak.realm.name}/protocol/openid-connect/userinfo
+                user-name-attribute: preferred_username
+            registration:
+              keycloak-without-test-scope:
+                provider: keycloak
+                client-id: ${keycloak.client.id}
+                client-secret: ${keycloak.client.secret}
+                authorization-grant-type: authorization_code
+                redirect-uri: "{baseUrl}/login/oauth2/code/keycloak"
+    logging.level:
+      org.springframework.cloud.gateway: DEBUG
+      org.springframework.security: DEBUG
+      org.springframework.web.reactive.function.client: TRACE
+    logging.pattern.console: "%d{HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+    security:
+      disabled:
+          baseUrl:
+            - /config-server/**

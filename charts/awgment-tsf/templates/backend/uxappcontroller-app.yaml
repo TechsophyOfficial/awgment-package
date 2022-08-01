@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.uxappcontroller.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.uxappcontroller.name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.uxappcontroller.name }}
+    spec:
+      containers:
+      - image: {{ .Values.uxappcontroller.image.repository }}:{{ .Values.uxappcontroller.image.tag }}
+        name: {{ .Values.uxappcontroller.name }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.uxappcontroller.image.configMapRef }}
+        ports:
+        - containerPort: {{ .Values.uxappcontroller.service.port }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.uxappcontroller.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.uxappcontroller.service.type }}
+  ports:
+  - port: {{ .Values.uxappcontroller.service.port }}
+  selector:
+    name: {{ .Values.uxappcontroller.name }}

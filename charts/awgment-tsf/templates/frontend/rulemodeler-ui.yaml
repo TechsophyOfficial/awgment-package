@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.rulemodeler.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.rulemodeler.name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.rulemodeler.name }}
+    spec:
+      containers:
+      - image: {{ .Values.rulemodeler.image.repository }}:{{ .Values.rulemodeler.image.tag }}
+        name: {{ .Values.rulemodeler.name }}
+        ports:
+        - containerPort: {{ .Values.rulemodeler.service.port }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.rulemodeler.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.rulemodeler.service.type }}
+  ports:
+  - port: {{ .Values.rulemodeler.service.port }}
+  selector:
+    name: {{ .Values.rulemodeler.name }}

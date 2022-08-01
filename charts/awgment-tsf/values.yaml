@@ -1,0 +1,384 @@
+replicaCount: 1
+namespace: default
+imagePullSecrets: ts-nexus 
+imagePullPolicy: Always
+configMapRef: augmnt-env
+
+
+coreui:
+  name: core-ui
+  image:
+    repository: nexus.techsophy.com/augmnt/coreui
+    tag: 2.0-RC1
+    configMapRef:  
+  service:
+    type: ClusterIP
+    port: 80
+    
+formmodeler:
+  name: form-modeler
+  image:
+    repository: nexus.techsophy.com/augmnt/formmodeler
+    tag: 2.0-RC1
+    configMapRef:    
+  service:
+    type: ClusterIP
+    port: 80
+    
+rulemodeler:
+  name: rule-modeler
+  image:
+    repository: nexus.techsophy.com/augmnt/rulemodeler
+    tag: 2.0-RC1
+    configMapRef:  
+  service:
+    type: ClusterIP
+    port: 80 
+workflowmodeler:
+  name: workflow-modeler
+  image:
+    repository: nexus.techsophy.com/augmnt/workflowmodeler
+    tag: 2.0-RC1
+    configMapRef: 
+  service:
+    type: ClusterIP
+    port: 80
+    
+accountui:
+  name: account-ui
+  image:
+    repository: nexus.techsophy.com/augmnt/accountui
+    tag: 2.0-RC1
+    configMapRef:  
+  service:
+    type: ClusterIP
+    port: 80
+    
+templatemodeler:
+  name: template-modeler
+  image:
+    repository: nexus.techsophy.com/augmnt/template-modeler
+    tag: 2.0-RC1
+    configMapRef:  
+  service:
+    type: ClusterIP
+    port: 80
+caseui:
+  name: case-ui
+  image:
+    repository: nexus.techsophy.com/augmnt/case-ui
+    tag: 2.0-RC1
+    configMapRef:
+  service:
+    type: ClusterIP
+    port: 80
+casemodeler:
+  name: case-modeler
+  image:
+    repository: nexus.techsophy.com/augmnt/case-modeler
+    tag: 2.0-RC1
+    configMapRef:
+  service:
+    type: ClusterIP
+    port: 80
+
+checklistmodeler:
+  name: checklist-modeler
+  image:
+    repository: nexus.techsophy.com/augmnt/checklist-modeler
+    tag: 2.0-RC1
+    configMapRef:
+  service:
+    type: ClusterIP
+    port: 80
+
+adminui:
+  name: admin-ui
+  image:
+    repository: nexus.techsophy.com/augmnt/admin-ui
+    tag: 2.0-RC1
+    configMapRef:
+  service:
+    type: ClusterIP
+    port: 80
+
+configserver:
+  name: cloud-config-server
+  image:
+    repository: nexus.techsophy.com/augmnt/cloud-config-server
+    tag: 2.0-RC1
+    configMapRef: augmnt-env  
+  service:
+    type: ClusterIP
+    port: 8080         
+
+gateway:
+  name: gateway
+  image:
+    repository: nexus.techsophy.com/augmnt/api-gateway
+    tag: 2.0-RC1
+    configMapRef: augmnt-env
+    applicationfile: applicationfile   
+  service:
+    type: ClusterIP
+    port: 8080
+  url: 
+
+
+formapp:
+  name: form-app
+  image:
+    repository: nexus.techsophy.com/augmnt/form-app
+    tag: 2.0-RC1
+    configMapRef: augmnt-env  
+  service:
+    type: ClusterIP
+    port: 8080         
+
+ruleapp:
+  name: rule-app
+  image:
+    repository: nexus.techsophy.com/augmnt/rule-app
+    tag: 2.0-RC1
+    configMapRef: augmnt-env  
+  service:
+    type: ClusterIP
+    port: 8080
+    
+workflowapp:
+  name: workflow-app
+  image:
+    repository: nexus.techsophy.com/augmnt/workflow-app
+    tag: 2.0-RC1
+    configMapRef: augmnt-env   
+  service:
+    type: ClusterIP
+    port: 8080
+    
+accountapp:
+  name: account-app
+  image:
+    repository: nexus.techsophy.com/augmnt/account-app
+    tag: 2.0-RC1
+    configMapRef: augmnt-env   
+  service:
+    type: ClusterIP
+    port: 8080
+    accountapp:
+  maxFileSize: 20MB
+  registration:
+    failSubject: "User Registration Failed"
+    email: 
+  clients: "camunda-identity-service,ticketing-system"
+  emailValidity: 86400
+   
+
+templateapp:
+  name: template-app
+  image:
+    repository: nexus.techsophy.com/augmnt/templates-app
+    tag: 2.0-RC1
+    configMapRef: augmnt-env 
+  service:
+    type: ClusterIP
+    port: 8080
+    
+notificationapp:
+  name: tp-app-notification
+  image:
+    repository: nexus.techsophy.com/augmnt/notification-app
+    tag: 2.0-RC1
+    configMapRef: augmnt-env  
+  service:
+    type: ClusterIP
+    port: 8080
+    
+uxappcontroller:
+  name: uxapp-controller
+  image:
+    repository: nexus.techsophy.com/augmnt/ux-controller-app
+    tag: 2.0-RC1
+    configMapRef: augmnt-env
+  service:
+    type: ClusterIP
+    port: 8080         
+
+workflowengine:
+  name: workflow-engine
+  image:
+    repository: nexus.techsophy.com/augmnt/workflow-engine
+    tag: 2.0-RC1
+    configMapRef: augmnt-env   
+  service:
+    type: ClusterIP
+    port: 8080
+    
+runtimeformapp:
+  name: runtime-form-app
+  image:
+    repository: nexus.techsophy.com/augmnt/runtimeform-app
+    tag: 2.0-RC1
+    configMapRef: augmnt-env  
+  service:
+    type: ClusterIP
+    port: 8080
+
+dmsapp:
+  name: dms-app
+  image:
+    repository: nexus.techsophy.com/augmnt/dms-app
+    tag: 2.0-RC1
+    configMapRef: augmnt-env
+  service:
+    type: ClusterIP
+    port: 8080
+documentconverterapp:
+  name: document-converter
+  image:
+    repository: nexus.techsophy.com/augmnt/documentconverter-app
+    tag: 2.0-RC1
+    configMapRef: augmnt-env
+  service:
+    type: ClusterIP
+    port: 8080
+
+    
+ruleengine:
+  name: rules
+  image:
+    repository: nexus.techsophy.com/augmnt/rule-engine
+    tag: 2.0-RC1
+    configMapRef: augmnt-env
+  service:
+    type: ClusterIP
+    port: 8080
+
+pdfconvertor:
+  name: tp-pdf-convertor
+  image:
+    repository: nexus.techsophy.com/augmnt/pdf-convertor
+    tag: 2.0-RC1
+    configMapRef: augmnt-env
+  service:
+    type: ClusterIP
+    port: 8080
+caseapp:
+  name: case-app
+  image:
+    repository: nexus.techsophy.com/augmnt/case-app
+    tag: 2.0-RC1
+    configMapRef: augmnt-env
+  service:
+    type: ClusterIP
+    port: 8080
+
+adminapp:
+  name: admin-app
+  image:
+    repository: nexus.techsophy.com/augmnt/admin-app
+    tag: 2.0-RC1
+    configMapRef: augmnt-env
+  service:
+    type: ClusterIP
+    port: 8080
+utilapp:
+  name: util-app
+  image:
+    repository: nexus.techsophy.com/augmnt/util-app
+    tag: 2.0-RC1
+    configMapRef: augmnt-env
+  service:
+    type: ClusterIP
+    port: 8080
+pciapp:
+  name: pci-app
+  image:
+    repository: nexus.techsophy.com/augmnt/pci-app
+    tag: 2.0-RC1
+    configMapRef: augmnt-env
+  service:
+    type: ClusterIP
+    port: 8080
+elasticsearchapp:
+  name: tp-elastic-search-app
+  image:
+    repository: nexus.techsophy.com/augmnt/elasticsearch-app
+    tag: 2.0-RC1
+    configMapRef: augmnt-env
+  service:
+    type: ClusterIP
+    port: 8080
+    
+checklistengine:
+  name: checklist-engine
+  image:
+    repository: nexus.techsophy.com/augmnt/checklist-engine
+    tag: 2.0-RC1
+    configMapRef: augmnt-env
+  service:
+    type: ClusterIP
+    port: 8080
+
+checklistapp:
+  name: checklist-app    
+  image:
+    repository: nexus.techsophy.com/augmnt/checklist-app 
+    tag: 2.0-RC1
+    configMapRef: augmnt-env
+  service:
+    type: ClusterIP
+    port: 8080
+
+
+
+
+
+keycloak:
+   realm: techsophy-platform
+   client:
+      forntend: tp-ui-core
+      backend: camunda-identity-service
+      secret: 
+   url: 
+
+
+      
+mongo:
+   url: 
+ 
+cloudconfig:
+   url: 
+   user: 
+   password: 
+
+postgres:
+     camunda:
+         dburl: 
+         user: 
+         password: 
+         database: 
+   
+ingress:
+   name:
+     keycloak: keycloak-ingress
+     gateway: gateway-ingress
+     tsffrontend: tsf-ingress
+     camunda: camunda-ingress
+   class:
+     nginx: nginx
+     alb: alb
+   clusterissuer:
+     issuer: 
+     dev: 
+     uat: 
+     prod:   
+   hosts:
+     keycloak: 
+     gateway: 
+     tsffrontend: 
+     camunda: 
+   secretname:
+     keycloak: 
+     gateway: 
+     tsffrontend: 
+     camunda: 
