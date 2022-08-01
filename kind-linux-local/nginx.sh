@@ -13,6 +13,7 @@ https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/pr
 # helm upgrade --install ingress-nginx ingress-nginx \
 #   --repo https://kubernetes.github.io/ingress-nginx \
 #   --namespace ingress-nginx --create-namespace
+##deploy.yaml
 
 echo 'Waiting for NGINX to be up'
 

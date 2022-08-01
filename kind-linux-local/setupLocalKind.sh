@@ -4,10 +4,27 @@ set -xe
 sudo sysctl fs.inotify.max_user_watches=524288
 sudo sysctl fs.inotify.max_user_instances=512
 
+FILE=./localEnv.sh
+if test -f "$FILE"; then
+  . ./localEnv.sh
+else
+  echo "Please create the ./localEnv.sh for your environment with following values"
+  echo "export reg_name='kind-registry'"
+  echo "export reg_port='5001'"
+  echo "#your external ip like 192.168.1.101"
+  echo "export postgres_host=192.168.1.101"
+  echo "export postgres_port=5432"
+  echo "export mongo_host=192.168.1.101"
+  echo "export mongo_port=27017"
+  echo "export docker_user="
+  echo "export docker_password="
+fi
+
+
 . ./localEnv.sh
 
 if [ $postgres_port = "your_postgres_port" ] ;then
-  echo "Please update the ./localEnv.sh for your environment"
+  echo "Please create the ./localEnv.sh for your environment"
   exit 1
 fi
 

@@ -18,8 +18,8 @@ configserver:
 gateway:
   name: gateway
   image:
-    repository: nexus.techsophy.com/augmnt/api-gateway
-    tag: 1.0-OS1
+    repository: localhost:5001/augmnt/api-gateway
+    tag: 2.0-RC1
     configMapRef: gateway   
   service:
     type: ClusterIP
@@ -29,7 +29,7 @@ gateway:
 utilapp:
   name: util-app
   image:
-    repository: localhost:5001/augmnt/util-app
+    repository: nexus.techsophy.com/augmnt/util-app
     tag: latest
     configMapRef: utilapp-env
   service:
@@ -114,6 +114,16 @@ ruleengine:
     type: ClusterIP
     port: 8080
 
+coreui:
+  name: core-ui
+  image:
+    repository: nexus.techsophy.com/augmnt/coreui
+    tag: 2.0-RC1
+    configMapRef:  
+  service:
+    type: ClusterIP
+    port: 80
+
 cloudconfig:
    url: https://git.techsophy.com/techsophy-platform/tp-cloud-config.git
    user: gitlabuser
@@ -152,13 +162,14 @@ keycloak:
     backend: camunda-identity-service
     secret: 7f74d270-073f-460d-958e-7824c1316366
   url: http://keycloak:8080
-  #  url: https://auth.172.17.0.1.nip.io:8443
+  clientURL: https://auth.172.17.0.1.nip.io:8443
 
 
 ingress:
    name:
      keycloak: keycloak-ingress
      gateway: gateway-ingress
+     tsffrontend: tsf-ingress
    class:
      nginx: nginx
    clusterissuer:
@@ -166,5 +177,11 @@ ingress:
    hosts:
      gateway: api.172.17.0.1.nip.io
      keycloak: auth.172.17.0.1.nip.io
+     tsffrontend: awgment.172.17.0.1.nip.io
    secretname:
      gateway: local-augmnt
+     tsffrontend: local-augmnt
+     
+     
+     
+

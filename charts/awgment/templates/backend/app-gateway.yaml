@@ -14,7 +14,7 @@ data:
   KEYCLOAK_URL_AUTH: {{ .Values.keycloak.url }}
   KEYCLOAK_URL_PLUGIN: {{ .Values.keycloak.url }}
   KEYCLOAK_URL_TOKEN: {{ .Values.keycloak.url }}
-  KEYCLOAK_INGRESS: {{ .Values.ingress.hosts.keycloak }}
+  KEYCLOAK_URL_CLIENT: {{ .Values.keycloak.clientURL }}
 
 ---
 apiVersion: apps/v1

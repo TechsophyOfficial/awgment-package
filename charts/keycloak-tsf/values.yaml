@@ -16,18 +16,13 @@ keycloak:
     port: 8080
   realm: techsophy-platform
   db:
-    host: 
-    name: 
+    host: postgres:5432
+    name: keycloakdb
     password: 
     user: 
-    vendor: 
+    vendor: postgres
   adminUser: admin
-  adminPassword: 
-  client:
-    forntend: tp-ui-core
-    backend: camunda-identity-service
-    secret: 
-  url: http://keycloak:8080
+  adminPassword:
 
 ingress:
    name:
