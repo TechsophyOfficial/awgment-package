@@ -50,10 +50,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Values.keycloak.name }}
-#  namespace: local
+  namespace: {{ .Values.namespace }}
 spec:
   type: ClusterIP
   ports:
   - port: {{ .Values.keycloak.service.port }}
   selector:
     name: {{ .Values.keycloak.name }}
+  externalIPs:
+    - 172.17.1.1
