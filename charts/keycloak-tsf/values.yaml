@@ -7,6 +7,8 @@ configMapRef: augmnt-env
 
 keycloak:
   name: keycloak
+  adminUser: admin
+  adminPassword:
   image:
     repository: nexus.techsophy.com/augmnt/keycloak
     tag: 2.0-RC1
@@ -21,8 +23,8 @@ keycloak:
     password: 
     user: 
     vendor: postgres
-  adminUser: admin
-  adminPassword:
+
+  
 
 ingress:
    name:

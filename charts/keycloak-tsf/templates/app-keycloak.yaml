@@ -13,7 +13,9 @@ data:
   DB_VENDOR: {{ .Values.keycloak.db.vendor }}
   KEYCLOAK_USER: {{ .Values.keycloak.adminUser }}
   KEYCLOAK_PASSWORD: {{ .Values.keycloak.adminPassword }}
-  KEYCLOAK_HTTP_PORT: "{{ .Values.keycloak.service.port }}"
+  KEYCLOAK_HTTP_PORT: {{ .Values.keycloak.service.port |quote }}
+  KEYCLOAK_REALM: {{ .Values.keycloak.realm }}
+  KEYCLOAK_URL: {{ .Values.keycloak.url }}
   LAUNCH_JBOSS_IN_BACKGROUND: "1"
   PROXY_ADDRESS_FORWARDING: "true"
   LANG: en_US.UTF-8
@@ -57,5 +59,3 @@ spec:
   - port: {{ .Values.keycloak.service.port }}
   selector:
     name: {{ .Values.keycloak.name }}
-  externalIPs:
-    - 172.17.1.1
