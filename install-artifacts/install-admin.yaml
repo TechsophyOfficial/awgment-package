@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: install-admin
+spec:
+  backoffLimit: 2
+  ttlSecondsAfterFinished: 86400
+  template:
+    spec:
+      restartPolicy: Never    
+      containers:
+      - name: run-postman
+        image: postman/newman:alpine
+        command: ["newman", "run", "keycloak-clientscopes.postman_collection.json", "-k","--env-var", "username=$KEYCLOAK_USER","--env-var", "password=$KEYCLOAK_PASSWORD", "--env-var", "keycloak_url=$KEYCLOAK_URL", "--env-var", "realm=$KEYCLOAK_REALM"]
+        volumeMounts:
+        - mountPath: /etc/newman
+          name: postman-collections        
+      volumes:
+      - name: postman-collections
+        configMap:
+          name: postman-config
+          items:
+            - key: keycloak-clientscopes.postman_collection.json
+              path: keycloak-clientscopes.postman_collection.json
