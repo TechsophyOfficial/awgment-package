@@ -65,7 +65,7 @@ Install keycloak via helm chart
         cd awgment-package repo folder>
         awgment-package$ helm install -f kind-linux-local/local.values.yaml keycloak-tsf charts/keycloak-tsf/
 ```
-Add an admin user for awgment
+<p>Add an admin user for awgment</p>
 ```
         awgment-package$ cd install-artifacts/
         awgment-package/install-artifacts$ ./setup-keycloak-admin.sh
