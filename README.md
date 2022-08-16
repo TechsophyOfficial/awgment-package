@@ -35,7 +35,8 @@ Goto the kind-linux-local folder under package repo
 ```
                 awgment-package$ cd kind-linux-local/
 ```
-Add a file localEnv.sh with below environment details
+Add a file localEnv.sh with below variable definition for your environment details.
+
 ```
                 export reg_name='kind-registry'
                 export reg_port='5001'
@@ -46,10 +47,16 @@ Add a file localEnv.sh with below environment details
                 export docker_user=repo username
                 export docker_password=repo password
 ```
+<p>
+Please ensure that the ports are allowed in your firewall and you are able to connect using default clients with  details
+</p>
 Execute the following commands to create kind cluster and set it up with basic installations
+<p>
+
 ```        
         awgment-package/kind-linux-local$ ./setupLocalKind.sh
 ```
+</p>
 
 ## install keycloak and add admin user
 update local.values.yaml with your environment details
@@ -63,11 +70,15 @@ Add an admin user for awgment
         awgment-package$ cd install-artifacts/
         awgment-package/install-artifacts$ ./setup-keycloak-admin.sh
 ```
-Above shall import a `techsophy-platform` realm and add a default user with username as `admin`, and password as `admin` to the same. Please reset the password once you finish installing the awgment specifically in prod environments
+Above shall import a `techsophy-platform` realm and add a default user with username as `admin`, and password as `admin` to the same.<p>
+Please reset the password once you finish installing the awgment specifically in prod environments
 
 Verify the installation by logging into keycloak at `ingress.hosts.keycloak` with `keycloak.adminUser` and `keycloak.adminPassword` as per your local.values.yaml file.
-You can regenerate the  client secret for camunda-identity-service and update the same values in your local.values.yaml file under `keycloak.client.secret` before proceeding to the next steps to enhance security. This is highly recommended for production deployments.
-
+<p>
+You can regenerate the  client secret for camunda-identity-service and update the same values in your local.values.yaml file under `keycloak.client.secret` before proceeding to the next steps to enhance security. 
+<p>
+This is highly recommended for production deployments.
+</p>
 
 ## install augment deployment
 Install awgment chart 
