@@ -63,7 +63,10 @@ Add an admin user for awgment
         awgment-package$ cd install-artifacts/
         awgment-package/install-artifacts$ ./setup-keycloak-admin.sh
 ```
-Above shall add a default user with username as admin, and password as admin to techsophy-realm
+Above shall import a `techsophy-platform` realm and add a default user with username as `admin`, and password as `admin` to the same. Please reset the password once you finish installing the awgment specifically in prod environments
+
+Verify the installation by logging into keycloak at `ingress.hosts.keycloak` with `keycloak.adminUser` and `keycloak.adminPassword` as per your local.values.yaml file.
+You can regenerate the  client secret for camunda-identity-service and update the same values in your local.values.yaml file under `keycloak.client.secret` before proceeding to the next steps to enhance security. This is highly recommended for production deployments.
 
 
 ## install augment deployment
@@ -75,3 +78,12 @@ Install awgment chart
 
 
 
+## Post install
+Check for any jobs using kubectl and delete them
+```
+        kubectl get jobs
+        kubectl delete jobs <jobname>
+```
+Reset password for admin user for both 
+- master realm
+- techsophy-platform realm
