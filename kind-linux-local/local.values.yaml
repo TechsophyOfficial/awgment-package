@@ -52,9 +52,9 @@ postgres:
          password: password
          database: camunda
 cloudconfig:
-   url: https://git.techsophy.com/techsophy-platform/tp-cloud-config.git
-   user: gitlabuser
-   password: Change#1234
+   url: https://github.com/TechsophyOfficial/tp-cloud-config.git
+   user:
+   password:
 
 
 ingress:
