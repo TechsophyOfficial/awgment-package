@@ -7,11 +7,11 @@ Package awgment
 # Deployment - local linux machine using Kind
 ## Prerequisite
 
-1- Linux OS
-2- Kind 
-3- Kubectl
-4- Postgres db
-5- Mongodb
+1. Linux OS
+2. [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/)
+3. [Kubectl](https://kubernetes.io/docs/tasks/tools/)
+4. Postgres db
+5. Mongodb
 
 Create two databases in postgres and a user with appropriate priviledges
 - For keycloak - Keyclaokdb
