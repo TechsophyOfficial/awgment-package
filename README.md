@@ -10,8 +10,9 @@ Package awgment
 1. Linux OS
 2. [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/)
 3. [Kubectl](https://kubernetes.io/docs/tasks/tools/)
-4. Postgres db
-5. Mongodb
+4. [Helm](https://helm.sh/docs/intro/install/)
+5. Postgres db
+6. Mongodb
 
 Create two databases in postgres and a user with appropriate priviledges
 - For keycloak - Keyclaokdb
