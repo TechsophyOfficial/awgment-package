@@ -10,7 +10,7 @@ coreui:
   image:
     repository: nexus.techsophy.com/augmnt/coreui
     tag: 2.0-RC1
-    configMapRef:  
+    configMapRef: ui-env
   service:
     type: ClusterIP
     port: 80
@@ -347,9 +347,9 @@ mongo:
    url: 
  
 cloudconfig:
-   url: 
-   user: 
-   password: 
+   url: abcd
+   user: efgh
+   password: ijklm
 
 postgres:
      camunda:

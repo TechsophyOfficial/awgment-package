@@ -6,8 +6,8 @@ accountapp:
 keycloak:
   name: keycloak
   image:
-    repository: nexus.techsophy.com/augmnt/keycloak
-    tag: 2.0-RC1
+    repository: localhost:5001/augmnt/keycloak
+    tag: latest
     configMapRef: keycloak-env
   service:
     type: ClusterIP
@@ -41,7 +41,15 @@ gateway:
     port: 8080
   url: http://gateway:8080/api
 
-
+coreui:
+  name: core-ui
+  image:
+    repository: localhost:5001/augmnt/coreui
+    tag: latest
+    configMapRef:  ui-env
+  service:
+    type: ClusterIP
+    port: 80
 
 mongo:
    url: mongodb://mongo:27017/
@@ -53,8 +61,8 @@ postgres:
          database: camunda
 cloudconfig:
    url: https://github.com/TechsophyOfficial/tp-cloud-config.git
-   user:
-   password:
+   user: test
+   password: test
 
 
 ingress:

@@ -17,6 +17,9 @@ spec:
       containers:
       - image: {{ .Values.coreui.image.repository }}:{{ .Values.coreui.image.tag }}
         name: {{ .Values.coreui.name }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.coreui.image.configMapRef }}
         ports:
         - containerPort: {{ .Values.coreui.service.port }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
