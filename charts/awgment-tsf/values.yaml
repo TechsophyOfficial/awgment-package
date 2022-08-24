@@ -34,6 +34,7 @@ rulemodeler:
   service:
     type: ClusterIP
     port: 80 
+
 workflowmodeler:
   name: workflow-modeler
   image:
@@ -63,6 +64,7 @@ templatemodeler:
   service:
     type: ClusterIP
     port: 80
+
 caseui:
   name: case-ui
   image:
@@ -72,6 +74,7 @@ caseui:
   service:
     type: ClusterIP
     port: 80
+
 casemodeler:
   name: case-modeler
   image:
@@ -122,7 +125,7 @@ gateway:
   service:
     type: ClusterIP
     port: 8080
-  url: 
+  url: http://gateway:8080/api
 
 
 formapp:
@@ -172,7 +175,6 @@ accountapp:
   clients: "camunda-identity-service,ticketing-system"
   emailValidity: 86400
    
-
 templateapp:
   name: template-app
   image:
@@ -232,6 +234,7 @@ dmsapp:
   service:
     type: ClusterIP
     port: 8080
+
 documentconverterapp:
   name: document-converter
   image:
@@ -242,7 +245,6 @@ documentconverterapp:
     type: ClusterIP
     port: 8080
 
-    
 ruleengine:
   name: rules
   image:
@@ -262,6 +264,7 @@ pdfconvertor:
   service:
     type: ClusterIP
     port: 8080
+
 caseapp:
   name: case-app
   image:
@@ -281,6 +284,7 @@ adminapp:
   service:
     type: ClusterIP
     port: 8080
+
 utilapp:
   name: util-app
   image:
@@ -290,6 +294,7 @@ utilapp:
   service:
     type: ClusterIP
     port: 8080
+
 pciapp:
   name: pci-app
   image:
@@ -299,6 +304,7 @@ pciapp:
   service:
     type: ClusterIP
     port: 8080
+
 elasticsearchapp:
   name: tp-elastic-search-app
   image:
@@ -329,10 +335,6 @@ checklistapp:
     type: ClusterIP
     port: 8080
 
-
-
-
-
 keycloak:
    realm: techsophy-platform
    client:
@@ -340,16 +342,14 @@ keycloak:
       backend: camunda-identity-service
       secret: 
    url: 
-
-
       
 mongo:
    url: 
  
 cloudconfig:
-   url: abcd
-   user: efgh
-   password: ijklm
+   url: 
+   user: 
+   password: 
 
 postgres:
      camunda:
