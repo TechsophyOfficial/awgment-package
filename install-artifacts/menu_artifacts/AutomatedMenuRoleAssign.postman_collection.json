@@ -1,0 +1,222 @@
+{
+	"info": {
+		"_postman_id": "5430917b-38cd-4ae1-8be4-fd2fe6c41203",
+		"name": "AutomatedMenuRoleAssign",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Fetch Access Token Using Credentials Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.environment.set(\"access_token\", jsonData.access_token);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "client_id",
+						"value": "camunda-identity-service",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "username",
+						"value": "ajayk",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "password",
+						"value": "Test1234",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "grant_type",
+						"value": "password",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "{{client_id}}",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{test}}",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "{{grant_type}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{client_secret}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/auth/realms/{{realm}}/protocol/openid-connect/token",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"auth",
+						"realms",
+						"{{realm}}",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post menu",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.environment.set(\"menu_id\", jsonData.data.id);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"type\": \"{{Type}}\",\n    \"label\": \"{{Label}}\",\n    \"url\": \"{{Url}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-gateway.techsophy.com/api/accounts/v1/menus",
+					"protocol": "https",
+					"host": [
+						"api-gateway",
+						"techsophy",
+						"com"
+					],
+					"path": [
+						"api",
+						"accounts",
+						"v1",
+						"menus"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostMenuRoles",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"role\": \"{{Role}}\",\n    \"menus\": [\n        \"{{menu_id}}\"\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-gateway.techsophy.com/api/accounts/v1/menurole",
+					"protocol": "https",
+					"host": [
+						"api-gateway",
+						"techsophy",
+						"com"
+					],
+					"path": [
+						"api",
+						"accounts",
+						"v1",
+						"menurole"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "localhost",
+			"value": "http://localhost:8080"
+		}
+	]
+}
