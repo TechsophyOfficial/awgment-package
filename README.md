@@ -18,7 +18,7 @@ Create two databases in postgres and a user with appropriate priviledges
 - For keycloak - Keyclaokdb
 - For Camunda - camunda
 
-Please refer to [Troubleshooting] for solution to common issues.
+Please refer to [Troubleshooting](##Troubleshooting) for solution to common issues.
 
 Notes-
 If you get errors for open file handles
