@@ -108,8 +108,8 @@ adminui:
 configserver:
   name: cloud-config-server
   image:
-    repository: nexus.techsophy.com/augmnt/cloud-config-server
-    tag: 2.0-RC1
+    repository: techsophyofficial/awgment-cloud-config-server
+    tag: v0.0.0-alpha.0
     configMapRef: augmnt-env  
   service:
     type: ClusterIP
@@ -131,8 +131,8 @@ gateway:
 formapp:
   name: form-app
   image:
-    repository: nexus.techsophy.com/augmnt/form-app
-    tag: 2.0-RC1
+    repository: techsophyofficial/awgment-app-form
+    tag: v0.0.0-alpha.0
     configMapRef: augmnt-env  
   service:
     type: ClusterIP
@@ -141,8 +141,8 @@ formapp:
 ruleapp:
   name: rule-app
   image:
-    repository: nexus.techsophy.com/augmnt/rule-app
-    tag: 2.0-RC1
+    repository: techsophyofficial/awgment-app-rule
+    tag: v0.0.0-alpha.0
     configMapRef: augmnt-env  
   service:
     type: ClusterIP
@@ -151,8 +151,8 @@ ruleapp:
 workflowapp:
   name: workflow-app
   image:
-    repository: nexus.techsophy.com/augmnt/workflow-app
-    tag: 2.0-RC1
+    repository: techsophyofficial/awgment-app-workflow
+    tag: v0.0.0-alpha.0
     configMapRef: augmnt-env   
   service:
     type: ClusterIP
@@ -161,8 +161,8 @@ workflowapp:
 accountapp:
   name: account-app
   image:
-    repository: nexus.techsophy.com/augmnt/account-app
-    tag: 2.0-RC1
+    repository: techsophyofficial/awgment-app-account
+    tag: v0.0.0-alpha.0
     configMapRef: augmnt-env   
   service:
     type: ClusterIP
@@ -218,8 +218,8 @@ workflowengine:
 runtimeformapp:
   name: runtime-form-app
   image:
-    repository: nexus.techsophy.com/augmnt/runtimeform-app
-    tag: 2.0-RC1
+    repository: techsophyofficial/awgment-app-runtime-form
+    tag: v0.0.0-alpha.0
     configMapRef: augmnt-env  
   service:
     type: ClusterIP
@@ -288,8 +288,8 @@ adminapp:
 utilapp:
   name: util-app
   image:
-    repository: nexus.techsophy.com/augmnt/util-app
-    tag: 2.0-RC1
+    repository: techsophyofficial/awgment-app-util
+    tag: v0.0.0-alpha.0
     configMapRef: augmnt-env
   service:
     type: ClusterIP

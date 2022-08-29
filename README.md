@@ -18,6 +18,43 @@ Create two databases in postgres and a user with appropriate priviledges
 - For keycloak - Keyclaokdb
 - For Camunda - camunda
 
+
+**Changes required for PostGress DB set up:**
+1. uncomment and update the **listen_addresses** value (as shown below) which is available in **/etc/postgresql/14/main** path and save the file.
+
+   listen_addresses = '*'
+2. update the ADDRESS under **# IPv4 local connections:** in **pg_hba.conf**  file which available in **/etc/postgresql/14/main** pat and save the file.
+
+   0.0.0.0/0
+3. restart the postgres service
+
+   CMD : **sudo systemctl restart postgresql** to restart the service
+   **sudo systemctl status  postgresql** to check the service status
+
+
+**Changes required for MongoDB set up:**
+
+update the **bindIp** value(as shown below) in mongod.conf which is available in **/etc/mongod.conf**
+
+**bindIp: 0.0.0.0**
+
+and stop the mongodb service and start again.
+commands:
+**sudo service mongod status** ---- to check the status
+**sudo service mongod start** ----- to start the service
+**sudo service mongod stop** ---- to stop the service
+
+
+Docker set up:
+1. install docker(if not installed)
+2. create a docker Group
+   cmd: **sudo groupadd docker**
+3. check your user with below command: **echo $USER**
+4. excute the command: **sudo usermod -aG docker $USER**
+5. restart your system
+6. open the terminal and try to execute below command without **sudo** it should give some result. it should not give **permission Denied** message.
+   **docker images/ docker ps**
+
 Notes-
 If you get errors for open file handles
 ```
