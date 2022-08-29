@@ -99,6 +99,11 @@ Check for any jobs using kubectl and delete them
         kubectl get jobs
         kubectl delete jobs <jobname>
 ```
+Reset password for admin user for both 
+- master realm
+- techsophy-platform realm
+
+
 
 ## Troubleshooting
 
@@ -132,6 +137,4 @@ Docker set up:
 6. open the terminal and try to execute below command without **sudo** it should give some result. it should not give **permission Denied** message.
         **docker images/ docker ps**
 
-Reset password for admin user for both 
-- master realm
-- techsophy-platform realm
+
