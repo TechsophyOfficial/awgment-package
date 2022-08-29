@@ -8,9 +8,9 @@ keycloak:
   #   repository: localhost:5001/augmnt/keycloak
   #   tag: latest
   db:
-    name: keycloakdb
-    password: password
-    user: vaibhav
+    name: Keyclaokdba
+    password: postgres
+    user: postgres
     vendor: postgres
   adminUser: admin
   adminPassword: Admin@^&%$
@@ -37,9 +37,9 @@ mongo:
 postgres:
      camunda:
          dburl: jdbc:postgresql://postgres:5432/camunda
-         user: vaibhav
-         password: password
-         database: camunda
+         user: postgres
+         password: postgres
+         database: camundadb
 cloudconfig:
    url: https://github.com/TechsophyOfficial/tp-cloud-config.git
    user: test
