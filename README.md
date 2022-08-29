@@ -15,7 +15,7 @@ Package awgment
 6. Mongodb
 
 Create two databases in postgres and a user with appropriate priviledges
-- For keycloak - Keyclaokdb
+- For keycloak - Keycloakdb
 - For Camunda - camunda
 
 Please refer to [Troubleshooting](##Troubleshooting) for solution to common issues.
