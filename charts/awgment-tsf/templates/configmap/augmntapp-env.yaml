@@ -34,13 +34,13 @@ data:
   # AWS_BUCKET_NAME: 
   # AWS_REGION: 
   # AWS_SECRET_KEY: 
-  KEYCLOAK_URL_AUTH: {{ .Values.keycloak.url }}
+  KEYCLOAK_URL_AUTH: {{ .Values.keycloak.clientURL }}
   KEYCLOAK_REALM_NAME: {{ .Values.keycloak.realm }}
   KEYCLOAK_CLIENT_ID: {{ .Values.keycloak.client.backend }}
   KEYCLOAK_CLIENT_SECRET: {{ .Values.keycloak.client.secret }}
   KEYCLOAK_URL_PLUGIN: {{ .Values.keycloak.url }}
   KEYCLOAK_URL_TOKEN: {{ .Values.keycloak.url }}
-  KEYCLOAK_URL_CLIENT: {{ .Values.keycloak.clientURL }}
+  KEYCLOAK_SERVICE_URL: {{ .Values.keycloak.url }}
   CAMUNDA_ENGINE_CONTEXT_PATH: /camunda
   EMAIL_QUERY: |
     mutation SEND_EMAIL($mailMessage: MailMessage!) {

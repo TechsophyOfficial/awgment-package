@@ -6,9 +6,9 @@ metadata:
 data:
   HOSTNAME: "awgment.172.17.0.1.nip.io"
   WEB_ROOT: "/usr/share/nginx/html"
-  REACT_baseUrL: "https://awgment.172.17.0.1.nip.io:8443"
-  REACT_apiGatewayUrl: "https://api.172.17.0.1.nip.io:8443/api"
-  REACT_keyCloakUrl: "https://auth.172.17.0.1.nip.io:8443/"
+  REACT_baseUrL: "http://awgment.172.17.0.1.nip.io:8080"
+  REACT_apiGatewayUrl: "http://api.172.17.0.1.nip.io:8080/api"
+  REACT_keyCloakUrl: "http://keycloak:8080/"
   REACT_keyCloakRealm: "techsophy-platform"
   REACT_keyCloakClientId: "tp-ui-core"
   REACT_publicUrl: "/model"

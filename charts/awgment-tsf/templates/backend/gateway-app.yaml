@@ -26,10 +26,10 @@ spec:
         ports:
         - containerPort: {{ .Values.gateway.service.port }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
-        volumeMounts:
-            - name: applicationfile
-              mountPath: /home/spring/app/bin/application-dev.yaml
-              subPath: application-dev.yaml
+        # volumeMounts:
+        #     - name: applicationfile
+        #       mountPath: /home/spring/app/bin/application-dev.yaml
+        #       subPath: application-dev.yaml
       volumes:
         - name: applicationfile
           configMap:

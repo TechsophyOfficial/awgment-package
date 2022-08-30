@@ -4,9 +4,9 @@ accountapp:
     email: "noreply-tsf@techsophy.com"
 
 keycloak:
-  # image:
-  #   repository: localhost:5001/augmnt/keycloak
-  #   tag: latest
+  image:
+    repository: localhost:5001/augmnt/keycloak
+    tag: latest
   db:
     name: keycloakdb
     password: password
@@ -17,19 +17,19 @@ keycloak:
   client:
     secret: 7f74d270-073f-460d-958e-7824c1316366
   url: http://keycloak:8080
-  clientURL: https://auth.172.17.0.1.nip.io:8443
+  clientURL: http://keycloak:8080
 
 
 gateway:
-  # image:
-  #   repository: localhost:5001/augmnt/api-gateway
-  #   tag: 2.0-RC1
+  image:
+    repository: localhost:5001/awgment-api-gateway
+    tag: latest
   url: http://gateway:8080/api
 
-# coreui:
-#   image:
-#     repository: localhost:5001/augmnt/coreui
-#     tag: latest
+coreui:
+  image:
+    repository: localhost:5001/augmnt/coreui
+    tag: latest
 
 
 mongo:
@@ -53,7 +53,7 @@ ingress:
     #  uat: letsencrypt-staging
     #  prod: letsencrypt-prod  
    hosts:
-     keycloak: auth.172.17.0.1.nip.io
+     keycloak: keycloak
      gateway: api.172.17.0.1.nip.io
      tsffrontend: awgment.172.17.0.1.nip.io
      camunda: camunda.172.17.0.1.nip.io
