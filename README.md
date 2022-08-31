@@ -38,6 +38,7 @@ Please refer to [Troubleshooting](##Troubleshooting) for solution to common issu
 
 Goto the kind-linux-local folder under package repo
 <p/>
+
 ```
                 awgment-package$ cd kind-linux-local/
 ```
@@ -55,7 +56,7 @@ Add a file localEnv.sh with below variable definition for your environment detai
                 export docker_password=<repo password>
 ```
 <p>
-Please ensure that the ports are allowed in your firewall and you are able to connect using default clients with  details.\
+Please ensure that the ports are allowed in your firewall and you are able to connect using default clients with  details.<br/>
 Please refer to [Troubleshooting](##Troubleshooting) for solution to common issues.
 </p>
 Execute the following commands to create kind cluster and set it up with basic installations
@@ -71,6 +72,7 @@ update local.values.yaml with your environment details
 <p/>
 Install keycloak via helm chart
 <p/>
+
 ```
         cd awgment-package repo folder>
         awgment-package$ helm install -f kind-linux-local/local.values.yaml keycloak-tsf charts/keycloak-tsf/
