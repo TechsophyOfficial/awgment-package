@@ -20,10 +20,10 @@ keycloak:
 gateway:
   url: http://gateway:8080/api
 
-coreui:
-  image:
-    repository: localhost:5001/augmnt/coreui
-    tag: latest
+# coreui:
+#   image:
+#     repository: localhost:5001/augmnt/coreui
+#     tag: latest
 
 
 mongo:
