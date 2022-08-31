@@ -28,7 +28,7 @@ coreui:
 
 mongo:
    url: mongodb://mongo:27017/?retryWrites=false
-   transaction-enabled: false
+   transaction_enabled: false
 postgres:
      camunda:
          dburl: jdbc:postgresql://postgres:5432/camundadb

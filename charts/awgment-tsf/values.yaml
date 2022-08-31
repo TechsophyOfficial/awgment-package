@@ -345,7 +345,7 @@ keycloak:
       
 mongo:
    url: 
-   transaction-enabled: true
+   transaction_enabled: true
  
 cloudconfig:
    url: 
