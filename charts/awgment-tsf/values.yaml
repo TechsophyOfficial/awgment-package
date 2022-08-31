@@ -118,8 +118,8 @@ configserver:
 gateway:
   name: gateway
   image:
-    repository: nexus.techsophy.com/augmnt/api-gateway
-    tag: 2.0-RC1
+    repository: techsophyofficial/awgment-api-gateway
+    tag: v0.0.0-alpha.0
     configMapRef: augmnt-env
     applicationfile: applicationfile   
   service:
@@ -198,8 +198,8 @@ notificationapp:
 uxappcontroller:
   name: uxapp-controller
   image:
-    repository: nexus.techsophy.com/augmnt/ux-controller-app
-    tag: 2.0-RC1
+    repository: techsophyofficial/awgment-app-ux-controller
+    tag: v0.0.0-alpha.0
     configMapRef: augmnt-env
   service:
     type: ClusterIP
@@ -208,8 +208,8 @@ uxappcontroller:
 workflowengine:
   name: workflow-engine
   image:
-    repository: nexus.techsophy.com/augmnt/workflow-engine
-    tag: 2.0-RC1
+    repository: techsophyofficial/awgment-workflow-engine
+    tag: v0.0.0-alpha.0
     configMapRef: augmnt-env   
   service:
     type: ClusterIP
@@ -248,8 +248,8 @@ documentconverterapp:
 ruleengine:
   name: rules
   image:
-    repository: nexus.techsophy.com/augmnt/rule-engine
-    tag: 2.0-RC1
+    repository: techsophyofficial/awgment-rule-engine
+    tag: v0.0.0-alpha.0
     configMapRef: augmnt-env
   service:
     type: ClusterIP
@@ -345,6 +345,7 @@ keycloak:
       
 mongo:
    url: 
+   transaction-enabled: true
  
 cloudconfig:
    url: 
@@ -377,6 +378,11 @@ ingress:
      gateway: 
      tsffrontend: 
      camunda: 
+   urls:
+     keycloak: 
+     gateway: 
+     tsffrontend:  
+     camunda:    
    secretname:
      keycloak: 
      gateway: 

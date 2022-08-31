@@ -6,6 +6,7 @@ metadata:
 data:
   GATEWAY_URI: {{ .Values.gateway.url }}
   TP_MODELER_APP_MONGO_URI: {{ .Values.mongo.url }}
+  mongock.transaction-enabled: {{ .Values.mongo.transaction-enabled | quote }} 
   JDBC_URL: {{ .Values.postgres.camunda.dburl }}
   JDBC_USER: {{ .Values.postgres.camunda.user }}
   JDBC_PASSWORD: {{ .Values.postgres.camunda.password }} 
@@ -34,13 +35,13 @@ data:
   # AWS_BUCKET_NAME: 
   # AWS_REGION: 
   # AWS_SECRET_KEY: 
-  KEYCLOAK_URL_AUTH: {{ .Values.keycloak.clientURL }}
+  KEYCLOAK_URL_AUTH: {{ .Values.keycloak.url }}
   KEYCLOAK_REALM_NAME: {{ .Values.keycloak.realm }}
   KEYCLOAK_CLIENT_ID: {{ .Values.keycloak.client.backend }}
   KEYCLOAK_CLIENT_SECRET: {{ .Values.keycloak.client.secret }}
   KEYCLOAK_URL_PLUGIN: {{ .Values.keycloak.url }}
   KEYCLOAK_URL_TOKEN: {{ .Values.keycloak.url }}
-  KEYCLOAK_SERVICE_URL: {{ .Values.keycloak.url }}
+  #KEYCLOAK_SERVICE_URL: {{ .Values.keycloak.url }}
   CAMUNDA_ENGINE_CONTEXT_PATH: /camunda
   EMAIL_QUERY: |
     mutation SEND_EMAIL($mailMessage: MailMessage!) {
@@ -51,8 +52,8 @@ data:
   USER_REGISTRATION_FAILURE_EMAIL_SUBJECT: {{ .Values.accountapp.registration.failSubject }}
   USER_REGISTRATION_FAILURE_EMAIL_TO: {{ .Values.accountapp.registration.email }}
   CLIENTS: {{ .Values.accountapp.clients }}
-  # ELASTIC_ENABLE: "true"
-  # ELASTIC_SOURCE: "true"
+  ELASTIC_ENABLE: "true"
+  ELASTIC_SOURCE: "true"
   # DIGITAL_OCEAN_ACCESSKEY: 
   # DIGITAL_OCEAN_BUCKET_NAME: 
   # DIGITAL_OCEAN_ENABLED: "true"

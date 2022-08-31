@@ -4,13 +4,13 @@ metadata:
   name: {{ .Values.coreui.image.configMapRef }}
   namespace: {{ .Values.namespace }}
 data:
-  HOSTNAME: "awgment.172.17.0.1.nip.io"
+  HOSTNAME: {{ .Values.ingress.hosts.gateway }}
   WEB_ROOT: "/usr/share/nginx/html"
-  REACT_baseUrL: "http://awgment.172.17.0.1.nip.io:8080"
-  REACT_apiGatewayUrl: "http://api.172.17.0.1.nip.io:8080/api"
-  REACT_keyCloakUrl: "http://keycloak:8080/"
-  REACT_keyCloakRealm: "techsophy-platform"
-  REACT_keyCloakClientId: "tp-ui-core"
+  REACT_baseUrL: {{ .Values.ingress.urls.tsffrontend }}
+  REACT_apiGatewayUrl: {{ .Values.ingress.urls.gateway }} 
+  REACT_keyCloakUrl: {{ .Values.ingress.urls.keycloak }}
+  REACT_keyCloakRealm: {{ .Values.keycloak.realm }}
+  REACT_keyCloakClientId: {{ .Values.keycloak.client.forntend }}
   REACT_publicUrl: "/model"
   REACT_socketUrl: "https://sxp.channel-adapter.k8s.techsophy.com/"
   REACT_socketPath: "/socket.io/"
