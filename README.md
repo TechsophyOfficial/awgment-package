@@ -81,13 +81,13 @@ Above shall import a `techsophy-platform` realm.
 ## keycloak dns work around
 As we are installing keycloak in a local environment without a dns, we need to use port forwarding feature to manage traffic to keycloak from both internal pods and external browser.
 <p/>
-The script `runKeycloak.sh` opens a port 8888 on your local machine that redirects traffic to keycloak service. Run the same from awgment-package folder
+The script `runKeycloak.sh` opens a port 8888 on your local machine that redirects traffic to keycloak service. Run the same from awgment-package folder\
 ```
         cd awgment-package repo folder>
         awgment-package$ ./runKeycloak.sh
 ```
 The above shall open port 8888 on your local machine. Verify the installation by logging into keycloak at `http://<your ip>:8888` with `keycloak.adminUser` and `keycloak.adminPassword` as per your local.values.yaml file.
-Please update local.values.yaml with keycloak url as depicted below
+Please update local.values.yaml with keycloak url as depicted below\
 
 ```
 keycloak:
