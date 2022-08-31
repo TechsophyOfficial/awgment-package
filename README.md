@@ -64,22 +64,46 @@ Execute the following commands to create kind cluster and set it up with basic i
 </p>
 
 ## install keycloak and add admin user
-update local.values.yaml with your environment details\
+update local.values.yaml with your environment details
+<p/>
 Install keycloak via helm chart
 ```
         cd awgment-package repo folder>
         awgment-package$ helm install -f kind-linux-local/local.values.yaml keycloak-tsf charts/keycloak-tsf/
 ```
+<p/>
+Above shall import a `techsophy-platform` realm.
+
+## keycloak dns work around
+As we are installing keycloak in a local environment without a dns, we need to use port forwarding feature to manage traffic to dns
+<p/>
+The scripe `runKeycloak.sh` opens a port 8888 on your local machine that redirects traffic to dns.
+```
+        cd awgment-package repo folder>
+        awgment-package$ ./runKeycloak.sh
+```
+The above shall open port 8888 on your local. Verify the installation by logging into keycloak at `http://<your ip>:8888` with `keycloak.adminUser` and `keycloak.adminPassword` as per your local.values.yaml file.
+Please update local.values.yaml with keycloak url as depicted below
+
+```
+keycloak:
+  url: http://<your ip like 192.168.1.101>:8888
+# other properties
+#
+#
+ingress:
+  urls:
+   keycloak: http://<your ip like 192.168.1.101>:8888
+```
+
 <p>Add an admin user for awgment</p>
 
 ```
         awgment-package$ cd install-artifacts/
         awgment-package/install-artifacts$ ./setup-keycloak-admin.sh
 ```
-Above shall import a `techsophy-platform` realm and add a default user with username as `admin`, and password as `admin` to the same.\
+Above shall add a default user with username as `admin`, and password as `admin` to the techsophy-platform realm.\
 Please reset the password once you finish installing the awgment specifically in prod environments
-<p>
-Verify the installation by logging into keycloak at `ingress.hosts.keycloak` with `keycloak.adminUser` and `keycloak.adminPassword` as per your local.values.yaml file.
 <p>
 You can regenerate the  client secret for camunda-identity-service and update the same values in your local.values.yaml file under `keycloak.client.secret` before proceeding to the next steps to enhance security. 
 <p>
