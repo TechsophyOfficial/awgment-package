@@ -18,7 +18,8 @@ Create two databases in postgres and a user with appropriate priviledges
 - For keycloak - Keycloakdb
 - For Camunda - camunda
 
-Please refer to [Troubleshooting](##Troubleshooting) for solution to common issues.
+
+
 
 Notes-
 If you get errors for open file handles
@@ -30,6 +31,7 @@ Set the following on your system settings
 sudo sysctl fs.inotify.max_user_watches=524288
 sudo sysctl fs.inotify.max_user_instances=512
 ```
+Please refer to [Troubleshooting](##Troubleshooting) for solution to common issues.
 
 
 ## setup kind for awgment on linux

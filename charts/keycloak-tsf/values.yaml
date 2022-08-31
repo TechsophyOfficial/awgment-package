@@ -10,8 +10,8 @@ keycloak:
   adminUser: admin
   adminPassword:
   image:
-    repository: nexus.techsophy.com/augmnt/keycloak
-    tag: 2.0-RC1
+    repository: techsophyofficial/awgment-keycloak
+    tag: v0.0.0-alpha.0
     configMapRef: keycloak-env
   service:
     type: ClusterIP
