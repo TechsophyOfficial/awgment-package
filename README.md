@@ -92,7 +92,7 @@ The script `runKeycloak.sh` opens a port 8888 on your local machine that redirec
 ```
 
 The above shall open port 8888 on your local machine. Verify the installation by logging into keycloak at `http://<your ip>:8888` with `keycloak.adminUser` and `keycloak.adminPassword` as per your local.values.yaml file.
-Please update local.values.yaml with keycloak url as depicted below\
+Please update local.values.yaml with keycloak url as depicted below
 
 ```
 keycloak:
