@@ -37,9 +37,11 @@ Please refer to [Troubleshooting](##Troubleshooting) for solution to common issu
 ## setup kind for awgment on linux
 
 Goto the kind-linux-local folder under package repo
+<p/>
 ```
                 awgment-package$ cd kind-linux-local/
 ```
+
 Add a file localEnv.sh with below variable definition for your environment details.
 
 ```
@@ -53,7 +55,8 @@ Add a file localEnv.sh with below variable definition for your environment detai
                 export docker_password=<repo password>
 ```
 <p>
-Please ensure that the ports are allowed in your firewall and you are able to connect using default clients with  details
+Please ensure that the ports are allowed in your firewall and you are able to connect using default clients with  details.\
+Please refer to [Troubleshooting](##Troubleshooting) for solution to common issues.
 </p>
 Execute the following commands to create kind cluster and set it up with basic installations
 <p>
@@ -67,6 +70,7 @@ Execute the following commands to create kind cluster and set it up with basic i
 update local.values.yaml with your environment details
 <p/>
 Install keycloak via helm chart
+<p/>
 ```
         cd awgment-package repo folder>
         awgment-package$ helm install -f kind-linux-local/local.values.yaml keycloak-tsf charts/keycloak-tsf/
@@ -75,14 +79,14 @@ Install keycloak via helm chart
 Above shall import a `techsophy-platform` realm.
 
 ## keycloak dns work around
-As we are installing keycloak in a local environment without a dns, we need to use port forwarding feature to manage traffic to dns
+As we are installing keycloak in a local environment without a dns, we need to use port forwarding feature to manage traffic to keycloak from both internal pods and external browser.
 <p/>
-The scripe `runKeycloak.sh` opens a port 8888 on your local machine that redirects traffic to dns.
+The script `runKeycloak.sh` opens a port 8888 on your local machine that redirects traffic to keycloak service. Run the same from awgment-package folder
 ```
         cd awgment-package repo folder>
         awgment-package$ ./runKeycloak.sh
 ```
-The above shall open port 8888 on your local. Verify the installation by logging into keycloak at `http://<your ip>:8888` with `keycloak.adminUser` and `keycloak.adminPassword` as per your local.values.yaml file.
+The above shall open port 8888 on your local machine. Verify the installation by logging into keycloak at `http://<your ip>:8888` with `keycloak.adminUser` and `keycloak.adminPassword` as per your local.values.yaml file.
 Please update local.values.yaml with keycloak url as depicted below
 
 ```
@@ -117,6 +121,8 @@ Install awgment chart
         awgment-package$ helm install -f kind-linux-local/local.values.yaml awgment-tsf charts/awgment-tsf/
 ```
 
+## setting up menus
+TODO:
 
 
 ## Post install
