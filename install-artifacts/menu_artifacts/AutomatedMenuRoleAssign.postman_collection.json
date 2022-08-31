@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "5430917b-38cd-4ae1-8be4-fd2fe6c41203",
+		"_postman_id": "9493c152-3a33-4214-91aa-7b17a61bcfbb",
 		"name": "AutomatedMenuRoleAssign",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21898920"
 	},
 	"item": [
 		{
@@ -23,7 +24,8 @@
 			"protocolProfileBehavior": {
 				"disabledSystemHeaders": {
 					"content-type": true
-				}
+				},
+				"strictSSL": false
 			},
 			"request": {
 				"auth": {
@@ -83,12 +85,12 @@
 						},
 						{
 							"key": "password",
-							"value": "{{test}}",
+							"value": "{{password}}",
 							"type": "text"
 						},
 						{
 							"key": "grant_type",
-							"value": "{{grant_type}}",
+							"value": "password",
 							"type": "text"
 						},
 						{
@@ -130,6 +132,9 @@
 					}
 				}
 			],
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -153,15 +158,11 @@
 					}
 				},
 				"url": {
-					"raw": "https://api-gateway.techsophy.com/api/accounts/v1/menus",
-					"protocol": "https",
+					"raw": "{{api_url}}/accounts/v1/menus",
 					"host": [
-						"api-gateway",
-						"techsophy",
-						"com"
+						"{{api_url}}"
 					],
 					"path": [
-						"api",
 						"accounts",
 						"v1",
 						"menus"
@@ -172,6 +173,9 @@
 		},
 		{
 			"name": "PostMenuRoles",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -195,15 +199,11 @@
 					}
 				},
 				"url": {
-					"raw": "https://api-gateway.techsophy.com/api/accounts/v1/menurole",
-					"protocol": "https",
+					"raw": "{{api_url}}/accounts/v1/menurole",
 					"host": [
-						"api-gateway",
-						"techsophy",
-						"com"
+						"{{api_url}}"
 					],
 					"path": [
-						"api",
 						"accounts",
 						"v1",
 						"menurole"
