@@ -7,9 +7,9 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: 4m
 spec:
-  tls:
-    - hosts:
-      - {{ .Values.ingress.hosts.keycloak }}
+  # tls:
+  #   - hosts:
+  #     - {{ .Values.ingress.hosts.keycloak }}
   rules:
   - host: {{ .Values.ingress.hosts.keycloak }}
     http:
@@ -21,3 +21,12 @@ spec:
             name: {{ .Values.keycloak.name }}
             port:
               number: {{ .Values.keycloak.service.port }}
+  # - http:
+  #     paths:
+  #     - path: /auth
+  #       pathType: Prefix
+  #       backend:
+  #         service:
+  #           name: {{ .Values.keycloak.name }}
+  #           port:
+  #             number: {{ .Values.keycloak.service.port }}

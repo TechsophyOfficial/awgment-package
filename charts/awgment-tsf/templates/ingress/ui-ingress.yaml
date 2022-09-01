@@ -9,10 +9,10 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: 120m
 spec:
-  tls:
-  - hosts:
-    - {{ .Values.ingress.hosts.tsffrontend }}
-    secretName: {{ .Values.ingress.secretname.tsffrontend }}
+  # tls:
+  # - hosts:
+  #   - {{ .Values.ingress.hosts.tsffrontend }}
+    # secretName: {{ .Values.ingress.secretname.tsffrontend }}
   rules:
   - host: {{ .Values.ingress.hosts.tsffrontend }}
     http:

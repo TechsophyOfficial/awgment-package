@@ -41,7 +41,7 @@ data:
   KEYCLOAK_CLIENT_SECRET: {{ .Values.keycloak.client.secret }}
   KEYCLOAK_URL_PLUGIN: {{ .Values.keycloak.url }}
   KEYCLOAK_URL_TOKEN: {{ .Values.keycloak.url }}
-  KEYCLOAK_URL_CLIENT: {{ .Values.keycloak.clientURL }}
+  #KEYCLOAK_SERVICE_URL: {{ .Values.keycloak.url }}
   CAMUNDA_ENGINE_CONTEXT_PATH: /camunda
   EMAIL_QUERY: |
     mutation SEND_EMAIL($mailMessage: MailMessage!) {
@@ -52,8 +52,8 @@ data:
   USER_REGISTRATION_FAILURE_EMAIL_SUBJECT: {{ .Values.accountapp.registration.failSubject }}
   USER_REGISTRATION_FAILURE_EMAIL_TO: {{ .Values.accountapp.registration.email }}
   CLIENTS: {{ .Values.accountapp.clients }}
-  # ELASTIC_ENABLE: "true"
-  # ELASTIC_SOURCE: "true"
+  ELASTIC_ENABLE: "true"
+  ELASTIC_SOURCE: "true"
   # DIGITAL_OCEAN_ACCESSKEY: 
   # DIGITAL_OCEAN_BUCKET_NAME: 
   # DIGITAL_OCEAN_ENABLED: "true"
