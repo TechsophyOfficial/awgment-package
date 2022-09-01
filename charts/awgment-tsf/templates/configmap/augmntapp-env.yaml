@@ -6,6 +6,7 @@ metadata:
 data:
   GATEWAY_URI: {{ .Values.gateway.url }}
   TP_MODELER_APP_MONGO_URI: {{ .Values.mongo.url }}
+  MONGOCK_TRANSACTIONS: {{ .Values.mongo.transaction_enabled | quote }}
   JDBC_URL: {{ .Values.postgres.camunda.dburl }}
   JDBC_USER: {{ .Values.postgres.camunda.user }}
   JDBC_PASSWORD: {{ .Values.postgres.camunda.password }} 
