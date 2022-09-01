@@ -18,10 +18,9 @@ else
   echo "export mongo_port=27017"
   echo "export docker_user="
   echo "export docker_password="
+  exit 1
 fi
 
-
-. ./localEnv.sh
 
 if [ $postgres_port = "your_postgres_port" ] ;then
   echo "Please create the ./localEnv.sh for your environment"
@@ -92,7 +91,7 @@ kubectl create namespace cert-manager
 kubectl apply  \
   -f https://github.com/cert-manager/cert-manager/releases/download/v1.8.2/cert-manager.yaml
 
-sleep 100
+sleep 60
 
 
 echo 'before setting up keycloak you need to create a fresh database for keycloak in\

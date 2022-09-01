@@ -6,6 +6,7 @@ metadata:
   namespace: {{ .Values.namespace }}
 data:
   JBOSS_HOME: /opt/jboss/keycloak
+
   DB_ADDR: {{ .Values.keycloak.db.host }}
   DB_DATABASE: {{ .Values.keycloak.db.name }}
   DB_PASSWORD: {{ .Values.keycloak.db.password }}
@@ -16,6 +17,7 @@ data:
   KEYCLOAK_HTTP_PORT: {{ .Values.keycloak.service.port |quote }}
   KEYCLOAK_REALM: {{ .Values.keycloak.realm }}
   KEYCLOAK_URL: {{ .Values.keycloak.url }}
+  KEYCLOAK_IMPORT: /opt/jboss/keycloak/imports/techsophy-platform.json
   LAUNCH_JBOSS_IN_BACKGROUND: "1"
   PROXY_ADDRESS_FORWARDING: "true"
   LANG: en_US.UTF-8

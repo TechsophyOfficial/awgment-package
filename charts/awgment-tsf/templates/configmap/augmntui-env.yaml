@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.coreui.image.configMapRef }}
+  namespace: {{ .Values.namespace }}
+data:
+  HOSTNAME: {{ .Values.ingress.hosts.gateway }}
+  WEB_ROOT: "/usr/share/nginx/html"
+  REACT_baseUrL: {{ .Values.ingress.urls.tsffrontend }}
+  REACT_apiGatewayUrl: {{ .Values.ingress.urls.gateway }} 
+  REACT_keyCloakUrl: {{ .Values.ingress.urls.keycloak }}
+  REACT_keyCloakRealm: {{ .Values.keycloak.realm }}
+  REACT_keyCloakClientId: {{ .Values.keycloak.client.forntend }}
+  REACT_publicUrl: "/model"
+  REACT_socketUrl: "https://sxp.channel-adapter.k8s.techsophy.com/"
+  REACT_socketPath: "/socket.io/"
+  REACT_chatFileServerUrl: "https://fileserver.techsophy.com/"
+  REACT_sxpProjectId: "6233029bfd9468494f68af33"

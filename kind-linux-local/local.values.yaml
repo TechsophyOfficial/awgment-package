@@ -4,17 +4,7 @@ accountapp:
     email: "noreply-tsf@techsophy.com"
 
 keycloak:
-  name: keycloak
-  image:
-    repository: nexus.techsophy.com/augmnt/keycloak
-    tag: 2.0-RC1
-    configMapRef: keycloak-env
-  service:
-    type: ClusterIP
-    port: 8080
-  realm: techsophy-platform
   db:
-    host: postgres:5432
     name: keycloakdb
     password: password
     user: vaibhav
@@ -22,39 +12,33 @@ keycloak:
   adminUser: admin
   adminPassword: Admin@^&%$
   client:
-    forntend: tp-ui-core
-    backend: camunda-identity-service
-    secret: 7f74d270-073f-460d-958e-7824c1316366
-  url: http://keycloak:8080
-  clientURL: https://auth.172.17.0.1.nip.io:8443
+    secret: 0ef502e1-567a-48cf-ae56-7e1a5bdfe3c4
+  url: http://192.168.1.101:8888
+  # clientURL: http://192.168.1.101:8888
 
 
 gateway:
-  name: gateway
-  image:
-    repository: localhost:5001/augmnt/api-gateway
-    tag: 2.0-RC1
-    configMapRef: augmnt-env
-    applicationfile: applicationfile   
-  service:
-    type: ClusterIP
-    port: 8080
   url: http://gateway:8080/api
 
+# coreui:
+#   image:
+#     repository: localhost:5001/augmnt/coreui
+#     tag: latest
 
 
 mongo:
-   url: mongodb://mongo:27017/
+   url: mongodb://mongo:27017/?retryWrites=false
+   transaction_enabled: false
 postgres:
      camunda:
-         dburl: jdbc:postgresql://postgres:5432/camunda
+         dburl: jdbc:postgresql://postgres:5432/camundadb
          user: vaibhav
          password: password
-         database: camunda
+         database: camundadb
 cloudconfig:
-   url: https://git.techsophy.com/techsophy-platform/tp-cloud-config.git
-   user: gitlabuser
-   password: Change#1234
+   url: https://github.com/TechsophyOfficial/tp-cloud-config.git
+   user: test
+   password: test
 
 
 ingress:
@@ -68,6 +52,11 @@ ingress:
      gateway: api.172.17.0.1.nip.io
      tsffrontend: awgment.172.17.0.1.nip.io
      camunda: camunda.172.17.0.1.nip.io
+   urls:
+     keycloak: http://192.168.1.101:8888
+     gateway: http://api.172.17.0.1.nip.io:8080/api
+     tsffrontend: http://awgment.172.17.0.1.nip.io:8080 
+     camunda:  
    secretname:
      keycloak: local-augmnt
      gateway: local-augmnt
