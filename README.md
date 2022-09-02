@@ -43,7 +43,7 @@ Goto the kind-linux-local folder under package repo
                 awgment-package$ cd kind-linux-local/
 ```
 
-Add a file localEnv.sh with below variable definition for your environment details.
+Add a file localEnv.sh with below variable definition for your environment details. Give the file execute permission
 
 ```
                 export reg_name='kind-registry'
