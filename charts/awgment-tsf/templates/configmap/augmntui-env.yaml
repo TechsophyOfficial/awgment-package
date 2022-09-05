@@ -10,9 +10,23 @@ data:
   REACT_apiGatewayUrl: {{ .Values.ingress.urls.gateway }} 
   REACT_keyCloakUrl: {{ .Values.ingress.urls.keycloak }}
   REACT_keyCloakRealm: {{ .Values.keycloak.realm }}
-  REACT_keyCloakClientId: {{ .Values.keycloak.client.forntend }}
+  REACT_keyCloakClientId: {{ .Values.keycloak.client.frontend }}
+  REACT_workflowEngineURL: {{ .Values.ingress.urls.camunda  }}
+  REACT_appServerURL: {{ .Values.ingress.urls.camunda  }}/engine-rest
   REACT_publicUrl: "/model"
+  REACT_publicUrlUiCase: "model/case-inbox"
+  REACT_mfeContainerBasename: "/model/caseInbox"
+
   REACT_socketUrl: "https://sxp.channel-adapter.k8s.techsophy.com/"
   REACT_socketPath: "/socket.io/"
   REACT_chatFileServerUrl: "https://fileserver.techsophy.com/"
   REACT_sxpProjectId: "6233029bfd9468494f68af33"
+  REACT_customApiServerUrl: "http://139.59.80.134:8082/process-integration/service/1.0.0"
+  REACT_contextEngineApiUrl: "http://ce.test.sxp.techsophy.com/engine"
+
+  REACT_publicFormUrl: "/model/forms/"
+  REACT_mfeFormContainerBaseName: "/model/form-modeler"
+  REACT_publicRuleUrl: "/model/rules/"
+
+  REACT_publicProcessUrl: "/model/process/"
+  REACT_appSwaggerUrl: "https://api-gateway.techsophy.com"

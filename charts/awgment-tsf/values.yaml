@@ -338,7 +338,7 @@ checklistapp:
 keycloak:
    realm: techsophy-platform
    client:
-      forntend: tp-ui-core
+      frontend: tp-ui-core
       backend: camunda-identity-service
       secret: 
    url: 
@@ -382,7 +382,7 @@ ingress:
      keycloak: 
      gateway: 
      tsffrontend:  
-     camunda:    
+     camunda: "https://techsophy-platform.techsophy.com/camunda"
    secretname:
      keycloak: 
      gateway: 
