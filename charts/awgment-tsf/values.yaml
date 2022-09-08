@@ -8,8 +8,8 @@ configMapRef: augmnt-env
 coreui:
   name: core-ui
   image:
-    repository: nexus.techsophy.com/augmnt/coreui
-    tag: 2.0-RC1
+    repository: techsophyofficial/awgment-ui-core
+    tag: v0.0.0-alpha.0
     configMapRef: ui-env
   service:
     type: ClusterIP
