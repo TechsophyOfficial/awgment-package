@@ -17,6 +17,9 @@ spec:
       containers:
       - image: {{ .Values.formmodeler.image.repository }}:{{ .Values.formmodeler.image.tag }}
         name: {{ .Values.formmodeler.name }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.formmodeler.image.configMapRef }}
         ports:
         - containerPort: {{ .Values.formmodeler.service.port }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}

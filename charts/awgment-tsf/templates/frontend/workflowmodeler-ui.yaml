@@ -17,6 +17,9 @@ spec:
       containers:
       - image: {{ .Values.workflowmodeler.image.repository }}:{{ .Values.workflowmodeler.image.tag }}
         name: {{ .Values.workflowmodeler.name }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.workflowmodeler.image.configMapRef }}        
         ports:
         - containerPort: {{ .Values.workflowmodeler.service.port }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}

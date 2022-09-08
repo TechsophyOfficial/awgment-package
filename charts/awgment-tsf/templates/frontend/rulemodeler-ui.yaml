@@ -17,6 +17,9 @@ spec:
       containers:
       - image: {{ .Values.rulemodeler.image.repository }}:{{ .Values.rulemodeler.image.tag }}
         name: {{ .Values.rulemodeler.name }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.rulemodeler.image.configMapRef }}
         ports:
         - containerPort: {{ .Values.rulemodeler.service.port }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}

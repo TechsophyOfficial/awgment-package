@@ -7,14 +7,16 @@ data:
   HOSTNAME: {{ .Values.ingress.hosts.gateway }}
   WEB_ROOT: "/usr/share/nginx/html"
   REACT_baseUrL: {{ .Values.ingress.urls.tsffrontend }}
-  REACT_apiGatewayUrl: {{ .Values.ingress.urls.gateway }} 
+  REACT_apiGatewayUrl: {{ .Values.ingress.urls.gateway }}/api 
   REACT_keyCloakUrl: {{ .Values.ingress.urls.keycloak }}
   REACT_keyCloakRealm: {{ .Values.keycloak.realm }}
   REACT_keyCloakClientId: {{ .Values.keycloak.client.frontend }}
   REACT_workflowEngineURL: {{ .Values.ingress.urls.camunda  }}
   REACT_appServerURL: {{ .Values.ingress.urls.camunda  }}/engine-rest
   REACT_publicUrl: "/model"
-  REACT_publicUrlUiCase: "model/case-inbox"
+  REACT_publicAccountsUrl: "/accounts/"
+  REACT_publicCaseUrl: "/case-inbox/"
+  REACT_publicUrlUiCase: "/case-inbox/"
   REACT_mfeContainerBasename: "/model/caseInbox"
 
   REACT_socketUrl: "https://sxp.channel-adapter.k8s.techsophy.com/"
@@ -29,4 +31,4 @@ data:
   REACT_publicRuleUrl: "/model/rules/"
 
   REACT_publicProcessUrl: "/model/process/"
-  REACT_appSwaggerUrl: "https://api-gateway.techsophy.com"
+  REACT_appSwaggerUrl: {{ .Values.ingress.urls.gateway }}
