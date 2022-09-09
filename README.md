@@ -130,7 +130,7 @@ Install awgment chart
 
 ## setting up menus
 TODO:
-
+Please refer the files under (install-artifacts/menu_artifacts)[install-artifacts/menu_artifacts] to install menu items.
 
 ## Post install
 Check for any jobs using kubectl and delete them
