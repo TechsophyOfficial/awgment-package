@@ -8,8 +8,8 @@ configMapRef: augmnt-env
 coreui:
   name: core-ui
   image:
-    repository: nexus.techsophy.com/augmnt/coreui
-    tag: 2.0-RC1
+    repository: techsophyofficial/awgment-ui-core
+    tag: v0.0.0-alpha.0
     configMapRef: ui-env
   service:
     type: ClusterIP
@@ -18,9 +18,9 @@ coreui:
 formmodeler:
   name: form-modeler
   image:
-    repository: nexus.techsophy.com/augmnt/formmodeler
-    tag: 2.0-RC1
-    configMapRef:    
+    repository: techsophyofficial/awgment-modeler-form
+    tag: v0.0.0-alpha.0
+    configMapRef: ui-env    
   service:
     type: ClusterIP
     port: 80
@@ -28,9 +28,9 @@ formmodeler:
 rulemodeler:
   name: rule-modeler
   image:
-    repository: nexus.techsophy.com/augmnt/rulemodeler
-    tag: 2.0-RC1
-    configMapRef:  
+    repository: techsophyofficial/awgment-modeler-rule
+    tag: v0.0.0-alpha.0
+    configMapRef: ui-env  
   service:
     type: ClusterIP
     port: 80 
@@ -38,9 +38,9 @@ rulemodeler:
 workflowmodeler:
   name: workflow-modeler
   image:
-    repository: nexus.techsophy.com/augmnt/workflowmodeler
-    tag: 2.0-RC1
-    configMapRef: 
+    repository: techsophyofficial/awgment-modeler-workflow
+    tag: v0.0.0-alpha.0
+    configMapRef: ui-env  
   service:
     type: ClusterIP
     port: 80
@@ -48,9 +48,9 @@ workflowmodeler:
 accountui:
   name: account-ui
   image:
-    repository: nexus.techsophy.com/augmnt/accountui
-    tag: 2.0-RC1
-    configMapRef:  
+    repository: techsophyofficial/awgment-ui-account
+    tag: v0.0.0-alpha.0
+    configMapRef: ui-env
   service:
     type: ClusterIP
     port: 80
@@ -68,9 +68,9 @@ templatemodeler:
 caseui:
   name: case-ui
   image:
-    repository: nexus.techsophy.com/augmnt/case-ui
-    tag: 2.0-RC1
-    configMapRef:
+    repository: techsophyofficial/awgment-ui-case
+    tag: v0.0.0-alpha.0
+    configMapRef: ui-env
   service:
     type: ClusterIP
     port: 80
@@ -338,7 +338,7 @@ checklistapp:
 keycloak:
    realm: techsophy-platform
    client:
-      forntend: tp-ui-core
+      frontend: tp-ui-core
       backend: camunda-identity-service
       secret: 
    url: 
@@ -382,7 +382,7 @@ ingress:
      keycloak: 
      gateway: 
      tsffrontend:  
-     camunda:    
+     camunda: 
    secretname:
      keycloak: 
      gateway: 

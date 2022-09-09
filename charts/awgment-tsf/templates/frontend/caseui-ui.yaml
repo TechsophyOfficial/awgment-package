@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.caseui.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.caseui.name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.caseui.name }}
+    spec:
+      containers:
+      - image: {{ .Values.caseui.image.repository }}:{{ .Values.caseui.image.tag }}
+        name: {{ .Values.caseui.name }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.caseui.image.configMapRef }}
+        ports:
+        - containerPort: {{ .Values.caseui.service.port }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.caseui.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.caseui.service.type }}
+  ports:
+  - port: {{ .Values.caseui.service.port }}
+  selector:
+    name: {{ .Values.caseui.name }}
