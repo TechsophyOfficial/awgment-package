@@ -9,7 +9,7 @@ For installation and setting agents refer [Postman Docs](https://learning.postma
 ## Importing Collections
 
 1. Select Import in the left navigation menu.
-2. Select menu_atifacts folder. It will automatically recognize the "AutomatedMenuRoleAssign" as Postman Collection and "Menu Env" as Postman Environment.
+2. Select menu_atifacts folder. It will automatically recognize the "AutomatedMenuRoleAssign" as Postman Collection and "MenuEnv" as Postman Environment.
 3. Click Import to bring data into Postman.
 
 
