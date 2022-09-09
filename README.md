@@ -12,11 +12,11 @@ Package awgment
 3. [Kubectl](https://kubernetes.io/docs/tasks/tools/)
 4. [Helm](https://helm.sh/docs/intro/install/)
 5. Postgres db
-6. Mongodb
+6. [Mongodb](https://www.mongodb.com/atlas/database) with transactions support 
 
 Create two databases in postgres and a user with appropriate priviledges
 - For keycloak - Keycloakdb
-- For Camunda - camunda
+- For Camunda - camundadb
 
 
 
