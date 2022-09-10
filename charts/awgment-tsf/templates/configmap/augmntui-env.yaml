@@ -7,6 +7,7 @@ data:
   HOSTNAME: {{ .Values.ingress.hosts.gateway }}
   WEB_ROOT: "/usr/share/nginx/html"
   REACT_baseUrL: {{ .Values.ingress.urls.tsffrontend }}
+  REACT_baseUrl: {{ .Values.ingress.urls.tsffrontend }}
   REACT_apiGatewayUrl: {{ .Values.ingress.urls.gateway }}/api 
   REACT_keyCloakUrl: {{ .Values.ingress.urls.keycloak }}
   REACT_keyCloakRealm: {{ .Values.keycloak.realm }}
@@ -14,6 +15,7 @@ data:
   REACT_workflowEngineURL: {{ .Values.ingress.urls.camunda  }}
   REACT_appServerURL: {{ .Values.ingress.urls.camunda  }}/engine-rest
   REACT_publicUrl: "/model"
+
   REACT_publicAccountsUrl: "/accounts/"
   REACT_mfeAccountContainerBaseName: "/model/accounts" 
   REACT_publicCaseUrl: "/case-inbox/"
@@ -29,7 +31,7 @@ data:
 
   REACT_publicFormUrl: "/model/forms/"
   REACT_mfeFormContainerBaseName: "/model/form-modeler"
-  REACT_publicRuleUrl: "/model/rules/"
+  REACT_publicRulesUrl: "/model/rules/"
 
   REACT_publicProcessUrl: "/model/process/"
   REACT_appSwaggerUrl: {{ .Values.ingress.urls.gateway }}
