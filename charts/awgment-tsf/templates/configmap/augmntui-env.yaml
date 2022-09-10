@@ -15,6 +15,7 @@ data:
   REACT_appServerURL: {{ .Values.ingress.urls.camunda  }}/engine-rest
   REACT_publicUrl: "/model"
   REACT_publicAccountsUrl: "/accounts/"
+  REACT_mfeAccountContainerBaseName: "/model/accounts" 
   REACT_publicCaseUrl: "/case-inbox/"
   REACT_publicUrlUiCase: "/case-inbox/"
   REACT_mfeContainerBasename: "/model/caseInbox"

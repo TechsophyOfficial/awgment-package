@@ -16,8 +16,8 @@ else
   echo "export postgres_port=5432"
   echo "export mongo_host=192.168.1.101"
   echo "export mongo_port=27017"
-  echo "export docker_user="
-  echo "export docker_password="
+  # echo "export docker_user="
+  # echo "export docker_password="
   exit 1
 fi
 
@@ -159,11 +159,11 @@ EOF
 ./nginx.sh
 
 
-kubectl create secret docker-registry \
-  ts-nexus \
-  --docker-server=http://nexus.techsophy.com \
-  --docker-username=${docker_user} \
-  --docker-password=${docker_password} 
+# kubectl create secret docker-registry \
+#   ts-nexus \
+#   --docker-server=http://nexus.techsophy.com \
+#   --docker-username=${docker_user} \
+#   --docker-password=${docker_password} 
 
 
 
