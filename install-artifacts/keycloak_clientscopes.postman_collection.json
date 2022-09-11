@@ -676,7 +676,7 @@
 					"script": {
 						"exec": [
 							"var jsonData=JSON.parse(responseBody);",
-							"pm.environment.set(\"camundaClientId\", jsonData[0].id);"
+							"pm.environment.set(\"uiCoreClientId\", jsonData[0].id);"
 						],
 						"type": "text/javascript"
 					}
@@ -709,7 +709,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/clients?clientId=camunda-identity-service&first=0&max=20&search=true",
+					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/clients?clientId=tp-ui-core&first=0&max=20&search=true",
 					"host": [
 						"{{keycloak_url}}"
 					],
@@ -723,7 +723,7 @@
 					"query": [
 						{
 							"key": "clientId",
-							"value": "camunda-identity-service"
+							"value": "tp-ui-core"
 						},
 						{
 							"key": "first",
@@ -770,7 +770,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/clients/{{camundaClientId}}/default-client-scopes/{{awgmentScopeId}}",
+					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/clients/{{uiCoreClientId}}/default-client-scopes/{{awgmentScopeId}}",
 					"host": [
 						"{{keycloak_url}}"
 					],
@@ -780,7 +780,7 @@
 						"realms",
 						"{{realm}}",
 						"clients",
-						"{{camundaClientId}}",
+						"{{uiCoreClientId}}",
 						"default-client-scopes",
 						"{{awgmentScopeId}}"
 					]
