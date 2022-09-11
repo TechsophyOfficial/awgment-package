@@ -1,2 +1,3 @@
-kind-linux-local/localEnv.sh
+localEnv.sh
+local.values.yaml
 **/ignored/**
