@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "67f3e31b-1bbe-431a-a776-ded6d5a16852",
+		"_postman_id": "47533e70-2990-4b29-84bf-fb349f42d4bc",
 		"name": "keycloak_clientscopes",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "21898920"
@@ -624,6 +624,126 @@
 		},
 		{
 			"name": "Client Scope - awgment",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/clients/{{camundaClientId}}/default-client-scopes/{{awgmentScopeId}}",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"auth",
+						"admin",
+						"realms",
+						"{{realm}}",
+						"clients",
+						"{{camundaClientId}}",
+						"default-client-scopes",
+						"{{awgmentScopeId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UI Client",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData=JSON.parse(responseBody);",
+							"pm.environment.set(\"camundaClientId\", jsonData[0].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/clients?clientId=camunda-identity-service&first=0&max=20&search=true",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"auth",
+						"admin",
+						"realms",
+						"{{realm}}",
+						"clients"
+					],
+					"query": [
+						{
+							"key": "clientId",
+							"value": "camunda-identity-service"
+						},
+						{
+							"key": "first",
+							"value": "0"
+						},
+						{
+							"key": "max",
+							"value": "20"
+						},
+						{
+							"key": "search",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Client Scope - awgment UICore",
 			"protocolProfileBehavior": {
 				"strictSSL": false
 			},
