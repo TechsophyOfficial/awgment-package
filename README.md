@@ -12,11 +12,11 @@ Package awgment
 3. [Kubectl](https://kubernetes.io/docs/tasks/tools/)
 4. [Helm](https://helm.sh/docs/intro/install/)
 5. Postgres db
-6. Mongodb
+6. [Mongodb](https://www.mongodb.com/atlas/database) with transactions support 
 
 Create two databases in postgres and a user with appropriate priviledges
 - For keycloak - Keycloakdb
-- For Camunda - camunda
+- For Camunda - camundadb
 
 
 
@@ -43,7 +43,7 @@ Goto the kind-linux-local folder under package repo
                 awgment-package$ cd kind-linux-local/
 ```
 
-Add a file localEnv.sh with below variable definition for your environment details.
+Add a file localEnv.sh with below variable definition for your environment details. Give the file execute permission
 
 ```
                 export reg_name='kind-registry'
@@ -129,8 +129,8 @@ Install awgment chart
 ```
 
 ## setting up menus
-TODO:
 
+Please refer the files and steps under [install-artifacts/menu_artifacts](install-artifacts/menu_artifacts) to install menu items.
 
 ## Post install
 Check for any jobs using kubectl and delete them
@@ -156,7 +156,8 @@ Reset password for admin user for both
           **sudo systemctl status  postgresql** to check the service status
  
 
-**Changes required for MongoDB set up:**
+**MongoDB set up:**
+Using mongo on local machine -
 update the **bindIp** value(as shown below) in mongod.conf which is available in **/etc/mongod.conf**
 **bindIp: 0.0.0.0**
 and stop the mongodb service and start again.
@@ -165,8 +166,12 @@ commands:
 **sudo service mongod start** ----- to start the service
 **sudo service mongod stop** ---- to stop the service
 
+[Running Standalone Mongo as a replication cluster(https://hevodata.com/learn/mongodb-transactions-on-single-node/#41)]
 
 Docker set up:
+
+[Manage docker as a non root user(https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user)]
+
 1. install docker(if not installed)
 2. create a docker Group
         cmd: **sudo groupadd docker**
@@ -175,5 +180,3 @@ Docker set up:
 5. restart your system
 6. open the terminal and try to execute below command without **sudo** it should give some result. it should not give **permission Denied** message.
         **docker images/ docker ps**
-
-
