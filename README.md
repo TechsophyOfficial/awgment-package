@@ -29,7 +29,7 @@ Set the following on your system settings
 sudo sysctl fs.inotify.max_user_watches=524288
 sudo sysctl fs.inotify.max_user_instances=512
 ```
-Please refer to [Troubleshooting](##Troubleshooting) for solution to common issues.
+Please refer to [Troubleshooting](##troubleshooting) for solution to common issues.
 
 
 ## setup kind for awgment on linux
