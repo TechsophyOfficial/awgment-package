@@ -14,12 +14,10 @@ Package awgment
 5. Postgres db
 6. [Mongodb](https://www.mongodb.com/atlas/database) with transactions support 
 
+
 Create two databases in postgres and a user with appropriate priviledges
 - For keycloak - Keycloakdb
 - For Camunda - camundadb
-
-
-
 
 Notes-
 If you get errors for open file handles
@@ -43,23 +41,19 @@ Goto the kind-linux-local folder under package repo
                 awgment-package$ cd kind-linux-local/
 ```
 
-Add a file localEnv.sh with below variable definition for your environment details. Give the file execute permission
+Edit file localEnv.sh to manage your environment ports, below defaults are used, if they are already bound please change them.
 
 ```
-                export reg_name='kind-registry'
-                export reg_port='5001'
-                export postgres_host=<postgres hostname>
-                export postgres_port=<postgres port>
-                export mongo_host=<mongo hostname>
-                export mongo_port=<mongo port>
-                export docker_user=<repo username>
-                export docker_password=<repo password>
+        export reg_name='kind-registry'
+        export reg_port='5001'
+        export http_port=8080
+
 ```
 <p>
-Please ensure that the ports are allowed in your firewall and you are able to connect using default clients with  details.<br/>
+Please ensure that the database (mongo and postgres) are allowed in your firewall and you are able to connect using default clients with IP details.<br/>
 Please refer to [Troubleshooting](##Troubleshooting) for solution to common issues.
 </p>
-Execute the following commands to create kind cluster and set it up with basic installations
+Execute the following commands to create kind cluster and set it up with basic installations including nginx controller.
 <p>
 
 ```        
@@ -68,34 +62,71 @@ Execute the following commands to create kind cluster and set it up with basic i
 </p>
 
 ## install keycloak
-update local.values.yaml with your environment details
-<p/>
+Update local.values.yaml with your environment details for postgres and mongo in below properties
+```
+keycloak:
+  adminUser: admin
+  adminPassword: <MASTER_REALM_PASSWORD>
+  client:
+    secret: 0ef502e1-567a-48cf-ae56-7e1a5bdfe3c4  
+  db:   
+    host: <POSTGRES_HOST>:5432 
+    user: <POSTGRES_USER>
+    password: <POSTGRES_PASSWORD>
+    name: keycloakdb
+    vendor: postgres
+  url: http://<you ip like 192.168.1.16>:8888
+  
+mongo:
+   url: mongodb+srv://<username>:<password>@<mongo.cluster.com>:27017/?retryWrites=true
+postgres:
+     camunda:
+         dburl: jdbc:postgresql://<POSTGRES_HOST>:5432/camundadb
+         user: <POSTGRES_USER>
+         password: <POSTGRES_PASSWORD>
+         database: camundadb
+ingress:
+# other properties
+#
+#
+  urls:
+   keycloak: http://<your ip like 192.168.1.101>:8888
+
+
+```
+<br/>
 Install keycloak via helm chart
-<p/>
+<br/>
 
 ```
         cd awgment-package repo folder>
         awgment-package$ helm install -f kind-linux-local/local.values.yaml keycloak-tsf charts/keycloak-tsf/
 ```
-<p/>
+
 Above shall import a `techsophy-platform` realm.
 
 ## keycloak dns work around
 As we are installing keycloak in a local environment without a dns, we need to use port forwarding feature to manage traffic to keycloak from both internal pods and external browser.
-<p/>
+<br/>
 The script `runKeycloak.sh` opens a port 8888 on your local machine that redirects traffic to keycloak service. Run the same from awgment-package folder
-<p/>
+<br/>
 
 ```
         cd awgment-package repo folder>
         awgment-package$ ./runKeycloak.sh
 ```
 
-The above shall open port 8888 on your local machine. Verify the installation by logging into keycloak at `http://<your ip>:8888` with `keycloak.adminUser` and `keycloak.adminPassword` as per your local.values.yaml file.
-Please update local.values.yaml with keycloak url as depicted below
-
+The above shall open port 8888 on your local machine.<br/>
+Verify the installation by logging into keycloak at `http://<your ip>:8888` with `keycloak.adminUser` and `keycloak.adminPassword` as per your local.values.yaml file.<br/>
+Please ensure to update local.values.yaml with keycloak url before proceeding to further steps as depicted below
+<br/>
+You can regenerate the  client secret for camunda-identity-service and update the same values in your local.values.yaml file under `keycloak.client.secret` before proceeding to the next steps to enhance security. 
+<br/>
+This is highly recommended for production deployments.
 ```
 keycloak:
+  client:
+    secret: 0ef502e1-567a-48cf-ae56-7e1a5bdfe3c4  
   url: http://<your ip like 192.168.1.101>:8888
 # other properties
 #
@@ -107,19 +138,19 @@ ingress:
 
 ## add admin user
 
-<p>Add an admin user for awgment</p>
+Run below script to add an admin user for awgment
+<br/>
 
 ```
         awgment-package$ cd install-artifacts/
         awgment-package/install-artifacts$ ./setup-keycloak-admin.sh
 ```
-Above shall add a default user with username as `admin`, and password as `admin` to the techsophy-platform realm.\
-Please reset the password once you finish installing the awgment specifically in prod environments
-<p>
-You can regenerate the  client secret for camunda-identity-service and update the same values in your local.values.yaml file under `keycloak.client.secret` before proceeding to the next steps to enhance security. 
-<p>
-This is highly recommended for production deployments.
-</p>
+Above shall add a default user to the techsophy-platform realm.<br/>
+```
+username: admin
+password: admin
+```
+Further steps currently use above details, please reset the password AFTER  finishing the awgment installation.
 
 ## install augment deployment
 Install awgment chart 
@@ -129,8 +160,16 @@ Install awgment chart
 ```
 
 ## setting up menus
+Run below script to install default menus for awgment
+<br/>
 
-Please refer the files and steps under [install-artifacts/menu_artifacts](install-artifacts/menu_artifacts) to install menu items.
+```
+        awgment-package$ cd install-artifacts/
+        awgment-package/install-artifacts$ ./setup-menu.sh
+```
+
+To do this step manually if variation are required in future, please refer the files and steps under [install-artifacts/menu_artifacts](install-artifacts/menu_artifacts) to install menu items.
+
 
 ## Post install
 Check for any jobs using kubectl and delete them
@@ -146,7 +185,8 @@ Reset password for admin user for both
 
 ## Troubleshooting
 
-**Changes required for PostGress DB set up:**
+
+**Changes required for PostGress DB set up on local:**
 1. uncomment and update the **listen_addresses** value (as shown below) which is available in **/etc/postgresql/14/main** path and save the file.
     listen_addresses = '*' 
 2. update the ADDRESS under **# IPv4 local connections:** in **pg_hba.conf**  file which available in **/etc/postgresql/14/main** pat and save the file.
@@ -168,7 +208,7 @@ commands:
 
 [Running Standalone Mongo as a replication cluster(https://hevodata.com/learn/mongodb-transactions-on-single-node/#41)]
 
-Docker set up:
+**Docker set up:**
 
 [Manage docker as a non root user(https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user)]
 
