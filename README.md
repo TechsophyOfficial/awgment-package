@@ -174,6 +174,38 @@ Install awgment chart
         awgment-package$ helm install -f kind-linux-local/local.values.yaml awgment-tsf charts/awgment-tsf/
 ```
 
+<br/>
+Verify the  installation by
+<br/>
+
+```
+        cd awgment-package repo folder>
+        awgment-package$ helm list
+```
+
+
+You will see awgment-tsf name with status as Deployed. If not, please refer to [Troubleshooting](https://github.com/TechsophyOfficial/awgment-package/tree/readme_issues#troubleshooting)
+<br/>
+
+After Verification, check if all pods are running.
+</br>
+```
+        cd awgment-package repo folder>
+        awgment-package$ kubectl get pods
+```
+
+If the status for all listed pods is running or active then go to next step.
+<br/>
+Oops, you are here. It seems all pods are not in running status.
+<br/>
+
+```
+        cd awgment-package repo folder>
+        awgment-package$ kubectl logs <pod name>
+```
+See the status and check what blocks the pod to run.
+
+
 ## setting up menus
 Run below script to install default menus for awgment
 <br/>
