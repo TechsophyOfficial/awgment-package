@@ -113,9 +113,10 @@ Verify the  installation by
         awgment-package$ helm list
 ```
 
-<p>
-You will see keycloak-tsf name with status as Deployed. If not, please refer [Troubleshooting] (https://github.com/TechsophyOfficial/awgment-package/tree/readme_issues#troubleshooting)
-</p>
+
+You will see keycloak-tsf name with status as Deployed. If not, please refer to [Troubleshooting](https://github.com/TechsophyOfficial/awgment-package/tree/readme_issues#troubleshooting)
+<br/>
+
 
 Above shall import a `techsophy-platform` realm.
 
