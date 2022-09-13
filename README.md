@@ -199,10 +199,12 @@ If the status for all listed pods is running or active then go to next step.
 <br/>
 Oops, you are here. It seems all pods are not in running status.
 <br/>
+
 ```
         cd awgment-package repo folder>
         awgment-package$ kubectl logs <pod name>
 ```
+
 See the status and check what blocks the pod to run.
 
 
