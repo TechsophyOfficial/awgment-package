@@ -107,10 +107,12 @@ Install keycloak via helm chart
 <br/>
 Verify the  installation by
 <br/>
+
 ```
         cd awgment-package repo folder>
         awgment-package$ helm list
 ```
+
 <p>
 You will see a keycloak-tsf with deployed status. If not, please refer [Troubleshooting](https://github.com/TechsophyOfficial/awgment-package/tree/readme_issues#troubleshooting)
 </p>
