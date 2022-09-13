@@ -103,6 +103,18 @@ Install keycloak via helm chart
         awgment-package$ helm install -f kind-linux-local/local.values.yaml keycloak-tsf charts/keycloak-tsf/
 ```
 
+
+<br/>
+Verify the  installation by
+<br/>
+```
+        cd awgment-package repo folder>
+        awgment-package$ helm list
+```
+<p>
+You will see a keycloak-tsf with deployed status. If not, please refer [Troubleshooting](https://github.com/TechsophyOfficial/awgment-package/tree/readme_issues#troubleshooting)
+</p>
+
 Above shall import a `techsophy-platform` realm.
 
 ## keycloak dns work around
@@ -187,6 +199,7 @@ Reset password for admin user for both
 
 
 **Changes required for PostGress DB set up on local:**
+<br/>
 [Postgres Configuration](https://www.vultr.com/docs/install-pgadmin-4-for-postgresql-database-server-on-ubuntu-linux/#2__Change_PostgreSQL_Configurations)
  
 
@@ -200,11 +213,11 @@ commands:
 **sudo service mongod start** ----- to start the service
 **sudo service mongod stop** ---- to stop the service
 
-[Running Standalone Mongo as a replication cluster(https://hevodata.com/learn/mongodb-transactions-on-single-node/#41)]
+[Running Standalone Mongo as a replication cluster](https://hevodata.com/learn/mongodb-transactions-on-single-node/#41)
 
 **Docker set up:**
 
-[Manage docker as a non root user(https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user)]
+[Manage docker as a non root user](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user)
 
 1. install docker(if not installed)
 2. create a docker Group
