@@ -114,7 +114,7 @@ Verify the  installation by
 ```
 
 <p>
-You will see a keycloak-tsf with deployed status. If not, please refer [Troubleshooting](https://github.com/TechsophyOfficial/awgment-package/tree/readme_issues#troubleshooting)
+You will see keycloak-tsf name with status as Deployed. If not, please refer [Troubleshooting] (https://github.com/TechsophyOfficial/awgment-package/tree/readme_issues#troubleshooting)
 </p>
 
 Above shall import a `techsophy-platform` realm.
