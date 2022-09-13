@@ -16,7 +16,7 @@ Package awgment
 
 
 Create two databases in postgres and a user with appropriate priviledges
-- For keycloak - Keycloakdb
+- For keycloak - keycloakdb
 - For Camunda - camundadb
 
 Notes-
