@@ -187,13 +187,7 @@ Reset password for admin user for both
 
 
 **Changes required for PostGress DB set up on local:**
-1. uncomment and update the **listen_addresses** value (as shown below) which is available in **/etc/postgresql/14/main** path and save the file.
-    listen_addresses = '*' 
-2. update the ADDRESS under **# IPv4 local connections:** in **pg_hba.conf**  file which available in **/etc/postgresql/14/main** pat and save the file.
-        0.0.0.0/0
-3. restart the postgres service 
-    CMD : **sudo systemctl restart postgresql** to restart the service
-          **sudo systemctl status  postgresql** to check the service status
+[Postgres Configuration](https://www.vultr.com/docs/install-pgadmin-4-for-postgresql-database-server-on-ubuntu-linux/#2__Change_PostgreSQL_Configurations)
  
 
 **MongoDB set up:**
