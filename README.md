@@ -114,9 +114,11 @@ Verify the  installation by
         awgment-package$ helm list
 ```
 
-
-You will see keycloak-tsf name with status as Deployed. If not, please refer to [Troubleshooting](https://github.com/TechsophyOfficial/awgment-package/tree/readme_issues#troubleshooting)
+You will see keycloak-tsf name with status as Deployed as above. If not, please refer [Troubleshooting](https://github.com/TechsophyOfficial/awgment-package/tree/readme_issues#troubleshooting)
 <br/>
+
+        NAME        	NAMESPACE	REVISION	UPDATED        	STATUS  	CHART             	APP VERSION
+        keycloak-tsf	default  	1       	                deployed	keycloak-tsf-1.0.0	1.0.0 
 
 
 Above shall import a `techsophy-platform` realm.
@@ -124,8 +126,7 @@ Above shall import a `techsophy-platform` realm.
 
 After Verification, check if keycloak pods is running.
 </br>
-```
-        
+``` 
         awgment-package$ kubectl get pods
 ```
 
