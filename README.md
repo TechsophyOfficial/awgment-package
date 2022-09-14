@@ -1,6 +1,7 @@
 # awgment-package
 Package awgment
 
+The below readme assumes some understanding of kubernetes and helm, please refer [Troubleshooting](##troubleshooting) for some helpful links to beginners.
 
 
 
@@ -120,6 +121,26 @@ You will see keycloak-tsf name with status as Deployed. If not, please refer to 
 
 Above shall import a `techsophy-platform` realm.
 
+
+After Verification, check if keycloak pods is running.
+</br>
+```
+        
+        awgment-package$ kubectl get pods
+```
+
+If the status for all listed pods is running or active then go to next step.
+
+<br/>
+Oops, you are here. If pod errors out please check the logs to identify the issue
+<br/>
+
+```
+        awgment-package$ kubectl logs <pod name>
+```
+
+
+
 ## keycloak dns work around
 As we are installing keycloak in a local environment without a dns, we need to use port forwarding feature to manage traffic to keycloak from both internal pods and external browser.
 <br/>
@@ -233,10 +254,13 @@ Reset password for admin user for both
 
 
 ## Troubleshooting
+**Introduction to kubernetes and helm**
+[Quick start for absolute beginners](https://opensource.com/article/20/2/kubectl-helm-commands)
+[More detailed dive](https://www.baeldung.com/ops/kubernetes-helm)
 
 
-**Changes required for PostGress DB set up on local:**
-<br/>
+**Setting up PostGress DB on local:**
+It should be possible to connect with postgres db via IP address, some link below explain how to allow connection for any/specific ip, please follow as per your version<br/>
 [Postgres Configuration](https://www.vultr.com/docs/install-pgadmin-4-for-postgresql-database-server-on-ubuntu-linux/#2__Change_PostgreSQL_Configurations)
  
 
