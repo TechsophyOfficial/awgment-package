@@ -190,7 +190,7 @@ password: admin
 ```
 Further steps currently use above details, please reset the password AFTER  finishing the awgment installation.
 
-## install augment deployment
+## install awgment deployment
 Install awgment chart 
 ```
         cd <awgment-package repo folder>
@@ -207,8 +207,12 @@ Verify the  installation by
 ```
 
 
-You will see awgment-tsf name with status as Deployed. If not, please refer to [Troubleshooting](https://github.com/TechsophyOfficial/awgment-package/tree/readme_issues#troubleshooting)
+You will see awgment-tsf name with status as Deployed as below. If not, please refer to [Troubleshooting](https://github.com/TechsophyOfficial/awgment-package/tree/readme_issues#troubleshooting)
 <br/>
+
+        NAME        	NAMESPACE	REVISION	UPDATED         STATUS  	CHART               	APP VERSION
+        awgment-tsf 	default  	1       	                deployed	tsf-playground-1.0.0	1.0.0      
+        keycloak-tsf	default  	1       	                deployed	keycloak-tsf-1.0.0  	1.0.0 
 
 After Verification, check if all pods are running.
 </br>
