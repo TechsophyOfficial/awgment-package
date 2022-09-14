@@ -255,8 +255,9 @@ Reset password for admin user for both
 
 ## Troubleshooting
 **Introduction to kubernetes and helm**
-[Quick start for absolute beginners](https://opensource.com/article/20/2/kubectl-helm-commands)
-[More detailed dive](https://www.baeldung.com/ops/kubernetes-helm)
+
+[Quick start for absolute beginners](https://opensource.com/article/20/2/kubectl-helm-commands) <br/>
+[More detailed dive](https://www.baeldung.com/ops/kubernetes-helm)<br/>
 
 
 **Setting up PostGress DB on local:**
