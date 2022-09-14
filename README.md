@@ -115,7 +115,7 @@ Verify the  installation by
         awgment-package$ helm list
 ```
 
-You will see keycloak-tsf name with status as Deployed as below. If not, please refer [Troubleshooting](https://github.com/TechsophyOfficial/awgment-package/tree/readme_issues#troubleshooting)
+You will see keycloak-tsf name with status as Deployed as below example. If not, please refer [Troubleshooting](https://github.com/TechsophyOfficial/awgment-package/tree/readme_issues#troubleshooting)
 <br/>
 
         NAME        	NAMESPACE	REVISION	UPDATED        	STATUS  	CHART             	APP VERSION
@@ -207,7 +207,7 @@ Verify the  installation by
 ```
 
 
-You will see awgment-tsf name with status as Deployed as below. If not, please refer to [Troubleshooting](https://github.com/TechsophyOfficial/awgment-package/tree/readme_issues#troubleshooting)
+You will see awgment-tsf name with status as Deployed as below example. If not, please refer to [Troubleshooting](https://github.com/TechsophyOfficial/awgment-package/tree/readme_issues#troubleshooting)
 <br/>
 
         NAME        	NAMESPACE	REVISION	UPDATED         STATUS  	CHART               	APP VERSION
