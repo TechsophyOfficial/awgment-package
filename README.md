@@ -52,7 +52,8 @@ Edit file localEnv.sh to manage your environment ports, below defaults are used,
 ```
 <p>
 Please ensure that the database (mongo and postgres) are allowed in your firewall and you are able to connect using default clients with IP details.<br/>
-Please refer to [Troubleshooting](##Troubleshooting) for solution to common issues.
+
+Please refer to [Troubleshooting](https://github.com/TechsophyOfficial/awgment-package/tree/readme_issues) for solution to common issues.
 </p>
 Execute the following commands to create kind cluster and set it up with basic installations including nginx controller.
 <p>
@@ -114,7 +115,7 @@ Verify the  installation by
         awgment-package$ helm list
 ```
 
-You will see keycloak-tsf name with status as Deployed as above. If not, please refer [Troubleshooting](https://github.com/TechsophyOfficial/awgment-package/tree/readme_issues#troubleshooting)
+You will see keycloak-tsf name with status as Deployed as below. If not, please refer [Troubleshooting](https://github.com/TechsophyOfficial/awgment-package/tree/readme_issues#troubleshooting)
 <br/>
 
         NAME        	NAMESPACE	REVISION	UPDATED        	STATUS  	CHART             	APP VERSION
@@ -124,16 +125,16 @@ You will see keycloak-tsf name with status as Deployed as above. If not, please 
 Above shall import a `techsophy-platform` realm.
 
 
-After Verification, check if keycloak pods is running.
+After Verification, check if keycloak pods are running.
 </br>
 ``` 
         awgment-package$ kubectl get pods
 ```
 
-If the status for all listed pods is running or active then go to next step.
+If the status for the listed pods is running or active then go to next step.
 
 <br/>
-Oops, you are here. If pod errors out please check the logs to identify the issue
+Oops, you are here. If pod errors out, please check the logs to identify the issue
 <br/>
 
 ```
