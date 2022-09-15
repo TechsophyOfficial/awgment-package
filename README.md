@@ -115,7 +115,7 @@ Verify the  installation by
         awgment-package$ helm list
 ```
 
-You will see keycloak-tsf name with status as Deployed as below example. If not, please refer [Troubleshooting](https://github.com/TechsophyOfficial/awgment-package/tree/readme_issues#troubleshooting)
+You will see keycloak-tsf name with status as Deployed as below example.
 <br/>
 
         NAME        	NAMESPACE	REVISION	UPDATED        	STATUS  	CHART             	APP VERSION
@@ -125,13 +125,16 @@ You will see keycloak-tsf name with status as Deployed as below example. If not,
 Above shall import a `techsophy-platform` realm.
 
 
-After Verification, check if keycloak pods are running.
+After Verification, Wait for few minutes and check if keycloak pods are running.
 </br>
 ``` 
         awgment-package$ kubectl get pods
 ```
 
-If the status for the listed pods is running or active then go to next step.
+If the status for the listed keycloak pods is running as example below, then skip the next step.
+
+        NAME                                   READY   STATUS    RESTARTS        AGE
+        keycloak-94f8bd648-5lsrr               1/1     Running   0               6m47s
 
 <br/>
 Oops, you are here. If pod errors out, please check the logs to identify the issue
@@ -221,7 +224,28 @@ After Verification, check if all pods are running.
         awgment-package$ kubectl get pods
 ```
 
-If the status for all listed pods is running or active then go to next step.
+If the status for all listed pods is running as example below, then skip the next step.
+
+        NAME                                   READY   STATUS    RESTARTS        AGE
+        account-app-b56bf9d69-m8pn6            1/1     Running   0               5m11s
+        account-ui-5d8f8bf76b-v9687            1/1     Running   0               5m11s
+        case-ui-78745f966c-6pl4w               1/1     Running   0               5m11s
+        cloud-config-server-57bb4bc6c8-kxncj   1/1     Running   0               5m11s
+        core-ui-7c75f8cddd-29kl9               1/1     Running   0               5m11s
+        form-app-7c79cc86-l95vn                1/1     Running   0               5m11s
+        form-modeler-5448cdf575-mqb6d          1/1     Running   0               5m11s
+        gateway-85df6ffb9c-jwvln               1/1     Running   0               5m11s
+        keycloak-94f8bd648-5lsrr               1/1     Running   0               6m47s
+        rule-app-5f748cc976-gpcbn              1/1     Running   1 (3m46s ago)   5m11s
+        rule-modeler-c689cbb79-7n6vv           1/1     Running   0               5m11s
+        rules-857b8d5859-kj2vp                 1/1     Running   1 (4m40s ago)   5m11s
+        runtime-form-app-5c89f8d5-x9cjp        1/1     Running   0               5m11s
+        util-app-754b94566b-z5bp8              1/1     Running   1 (3m26s ago)   5m11s
+        uxapp-controller-86b5d4cc66-v5jxr      1/1     Running   1 (3m ago)      5m11s
+        workflow-app-54cfd979fc-nttbd          1/1     Running   0               5m10s
+        workflow-engine-b7bf8bbb6-fjcwg        1/1     Running   0               5m10s
+        workflow-modeler-6f7488b66-rw28r       1/1     Running   0               5m11s
+        
 
 <br/>
 Oops, you are here. It seems all pods are not in running status.
