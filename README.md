@@ -285,7 +285,7 @@ Check for any jobs using kubectl and delete them
         kubectl get jobs
         kubectl delete jobs <jobname>
 ```
-Reset password for admin user for both 
+Reset password for admin user for both realms, specifically if you are using this in a non-local environment 
 - master realm
 - techsophy-platform realm
 
@@ -297,6 +297,11 @@ Reset password for admin user for both
 [Quick start for absolute beginners](https://opensource.com/article/20/2/kubectl-helm-commands) <br/>
 [More detailed dive](https://www.baeldung.com/ops/kubernetes-helm)<br/>
 
+If you experience higher CPU usage on your system please uninstall the chart via helm
+```        
+        helm uninstall awgment-tsf
+        helm uninstall keycloak-tsf
+```
 
 **Setting up PostGress DB on local:**
 It should be possible to connect with postgres db via IP address, some link below explain how to allow connection for any/specific ip, please follow as per your version<br/>
@@ -327,3 +332,4 @@ commands:
 5. restart your system
 6. open the terminal and try to execute below command without **sudo** it should give some result. it should not give **permission Denied** message.
         **docker images/ docker ps**
+
