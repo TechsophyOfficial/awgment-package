@@ -15,6 +15,7 @@ The below readme assumes some understanding of kubernetes and helm, please refer
 5. Postgres db
 6. [Mongodb](https://www.mongodb.com/atlas/database) with transactions support 
 
+Git clone this repository on your local.
 
 Create two databases in postgres and a user with appropriate priviledges
 - For keycloak - keycloakdb
