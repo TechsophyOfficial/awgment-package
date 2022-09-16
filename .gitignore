@@ -1,3 +1,4 @@
-localEnv.sh
+kind-linux-local/localEnv.sh
 local.values.yaml
+*.bak
 **/ignored/**
