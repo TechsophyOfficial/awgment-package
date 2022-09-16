@@ -1,12 +1,11 @@
 #!/bin/sh
-set -xe
-
 #export KUBECONFIG=~/.kube/config
-
 #export NGINX_VERSION=$(curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/stable.txt)
 #kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/${NGINX_VERSION}/deploy/static/provider/kind/deploy.yaml
+
 kubectl apply -f \
 https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+
 #kubectl apply -f \
 #https://github.com/kubernetes/ingress-nginx/blob/main/deploy/static/provider/cloud/deploy.yaml
 
@@ -16,6 +15,7 @@ https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/pr
 ##deploy.yaml
 
 echo 'Waiting for NGINX to be up'
+sleep 60
 
 kubectl wait --namespace ingress-nginx \
   --for=condition=ready pod \

@@ -17,6 +17,9 @@ spec:
       containers:
       - image: {{ .Values.accountui.image.repository }}:{{ .Values.accountui.image.tag }}
         name: {{ .Values.accountui.name }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.accountui.image.configMapRef }}
         ports:
         - containerPort: {{ .Values.accountui.service.port }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}

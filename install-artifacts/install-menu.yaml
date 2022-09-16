@@ -1,0 +1,56 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: install-menu
+  namespace: default
+spec:
+  backoffLimit: 2
+  ttlSecondsAfterFinished: 86400
+  template:
+    spec:
+      restartPolicy: Never    
+      containers:
+      - name: run-postman
+        image: postman/newman:alpine
+        command: ["newman"]
+        args:
+        - "run"
+        - "AutomatedMenuRoleAssign.postman_collection.json"
+        - "-k"
+        - "--environment"
+        - "MenuEnv.postman_environment.json"
+        - "-d"
+        - "data.csv"
+        # - "--env-var"
+        # - "username=admin"
+        # - "--env-var"
+        # - "password=admin"
+        - "--env-var"
+        - "keycloak_url=$(KEYCLOAK_URL_AUTH)"
+        - "--env-var"
+        - "realm=$(KEYCLOAK_REALM_NAME)"
+        - "--env-var"
+        - "api_url=$(GATEWAY_URI)"
+        - "--env-var"
+        - "client_secret=$(KEYCLOAK_CLIENT_SECRET)"
+        - "--env-var"
+        - "realm=$(KEYCLOAK_REALM_NAME)"
+        
+        envFrom:
+          - configMapRef:
+              name: augmnt-env
+        volumeMounts:
+        - mountPath: /etc/newman
+          name: postman-collections        
+      volumes:
+      - name: postman-collections
+        configMap:
+          # name: awgment-admin-configmap
+          name: menu-config
+          items:
+            - key: AutomatedMenuRoleAssign.postman_collection.json
+              path: AutomatedMenuRoleAssign.postman_collection.json
+            - key: MenuEnv.postman_environment.json
+              path: MenuEnv.postman_environment.json
+            - key: data.csv
+              path: data.csv
