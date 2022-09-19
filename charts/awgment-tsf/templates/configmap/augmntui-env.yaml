@@ -34,4 +34,4 @@ data:
   REACT_publicRulesUrl: "/model/rules/"
 
   REACT_publicProcessUrl: "/model/process/"
-  REACT_appSwaggerUrl: {{ .Values.ingress.urls.gateway }}
+  REACT_swaggerUrl: {{ .Values.ingress.urls.gateway }}
