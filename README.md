@@ -3,14 +3,6 @@ Package awgment
 
 The below readme assumes some understanding of kubernetes and helm, please refer [Troubleshooting](##troubleshooting) for some helpful links to beginners.
 
-# Build charts
-Git clone this repository on your local.
-Run the following command
-
-```
-        helm package -d build/ charts/keycloak-tsf/ charts/awgment-tsf/
-
-```
 
 # Deployment - local linux machine using Kind
 ## Prerequisite
