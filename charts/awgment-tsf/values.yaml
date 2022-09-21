@@ -241,152 +241,152 @@ ingress:
      camunda: 
 
 
-# templatemodeler:
-#   name: template-modeler
-#   image:
-#     repository: nexus.techsophy.com/augmnt/template-modeler
-#     tag: 2.0-RC1
-#     configMapRef:  
-#   service:
-#     type: ClusterIP
-#     port: 80
+templatemodeler:
+   name: template-modeler
+   image:
+     repository: nexus.techsophy.com/augmnt/template-modeler
+     tag: 2.0-RC1
+     configMapRef:
+   service:
+     type: ClusterIP
+     port: 80
 
-# casemodeler:
-#   name: case-modeler
-#   image:
-#     repository: nexus.techsophy.com/augmnt/case-modeler
-#     tag: 2.0-RC1
-#     configMapRef:
-#   service:
-#     type: ClusterIP
-#     port: 80
+casemodeler:
+   name: case-modeler
+   image:
+     repository: nexus.techsophy.com/augmnt/case-modeler
+     tag: 2.0-RC1
+     configMapRef:
+   service:
+     type: ClusterIP
+     port: 80
 
-# checklistmodeler:
-#   name: checklist-modeler
-#   image:
-#     repository: nexus.techsophy.com/augmnt/checklist-modeler
-#     tag: 2.0-RC1
-#     configMapRef:
-#   service:
-#     type: ClusterIP
-#     port: 80
+checklistmodeler:
+   name: checklist-modeler
+   image:
+     repository: nexus.techsophy.com/augmnt/checklist-modeler
+     tag: 2.0-RC1
+     configMapRef:
+   service:
+     type: ClusterIP
+     port: 80
 
-# adminui:
-#   name: admin-ui
-#   image:
-#     repository: nexus.techsophy.com/augmnt/admin-ui
-#     tag: 2.0-RC1
-#     configMapRef:
-#   service:
-#     type: ClusterIP
-#     port: 80
+adminui:
+   name: admin-ui
+   image:
+     repository: nexus.techsophy.com/augmnt/admin-ui
+     tag: 2.0-RC1
+     configMapRef:
+   service:
+     type: ClusterIP
+     port: 80
    
-# templateapp:
-#   name: template-app
-#   image:
-#     repository: nexus.techsophy.com/augmnt/templates-app
-#     tag: 2.0-RC1
-#     configMapRef: augmnt-env 
-#   service:
-#     type: ClusterIP
-#     port: 8080
+templateapp:
+   name: template-app
+   image:
+     repository: nexus.techsophy.com/augmnt/templates-app
+     tag: 2.0-RC1
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
     
-# notificationapp:
-#   name: tp-app-notification
-#   image:
-#     repository: nexus.techsophy.com/augmnt/notification-app
-#     tag: 2.0-RC1
-#     configMapRef: augmnt-env  
-#   service:
-#     type: ClusterIP
-#     port: 8080
+notificationapp:
+   name: tp-app-notification
+   image:
+     repository: nexus.techsophy.com/augmnt/notification-app
+     tag: 2.0-RC1
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
 
-# dmsapp:
-#   name: dms-app
-#   image:
-#     repository: nexus.techsophy.com/augmnt/dms-app
-#     tag: 2.0-RC1
-#     configMapRef: augmnt-env
-#   service:
-#     type: ClusterIP
-#     port: 8080
+dmsapp:
+   name: dms-app
+   image:
+     repository: nexus.techsophy.com/augmnt/dms-app
+     tag: 2.0-RC1
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
 
-# documentconverterapp:
-#   name: document-converter
-#   image:
-#     repository: nexus.techsophy.com/augmnt/documentconverter-app
-#     tag: 2.0-RC1
-#     configMapRef: augmnt-env
-#   service:
-#     type: ClusterIP
-#     port: 8080
+documentconverterapp:
+   name: document-converter
+   image:
+     repository: nexus.techsophy.com/augmnt/documentconverter-app
+     tag: 2.0-RC1
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
 
-# pdfconvertor:
-#   name: tp-pdf-convertor
-#   image:
-#     repository: nexus.techsophy.com/augmnt/pdf-convertor
-#     tag: 2.0-RC1
-#     configMapRef: augmnt-env
-#   service:
-#     type: ClusterIP
-#     port: 8080
+pdfconvertor:
+   name: tp-pdf-convertor
+   image:
+     repository: nexus.techsophy.com/augmnt/pdf-convertor
+     tag: 2.0-RC1
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
 
-# caseapp:
-#   name: case-app
-#   image:
-#     repository: nexus.techsophy.com/augmnt/case-app
-#     tag: 2.0-RC1
-#     configMapRef: augmnt-env
-#   service:
-#     type: ClusterIP
-#     port: 8080
+caseapp:
+   name: case-app
+   image:
+     repository: nexus.techsophy.com/augmnt/case-app
+     tag: 2.0-RC1
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
 
-# adminapp:
-#   name: admin-app
-#   image:
-#     repository: nexus.techsophy.com/augmnt/admin-app
-#     tag: 2.0-RC1
-#     configMapRef: augmnt-env
-#   service:
-#     type: ClusterIP
-#     port: 8080
+adminapp:
+   name: admin-app
+   image:
+     repository: nexus.techsophy.com/augmnt/admin-app
+     tag: 2.0-RC1
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
 
-# pciapp:
-#   name: pci-app
-#   image:
-#     repository: nexus.techsophy.com/augmnt/pci-app
-#     tag: 2.0-RC1
-#     configMapRef: augmnt-env
-#   service:
-#     type: ClusterIP
-#     port: 8080
+pciapp:
+   name: pci-app
+   image:
+     repository: nexus.techsophy.com/augmnt/pci-app
+     tag: 2.0-RC1
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
 
-# elasticsearchapp:
-#   name: tp-elastic-search-app
-#   image:
-#     repository: nexus.techsophy.com/augmnt/elasticsearch-app
-#     tag: 2.0-RC1
-#     configMapRef: augmnt-env
-#   service:
-#     type: ClusterIP
-#     port: 8080
+elasticsearchapp:
+   name: tp-elastic-search-app
+   image:
+     repository: nexus.techsophy.com/augmnt/elasticsearch-app
+     tag: 2.0-RC1
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
     
-# checklistengine:
-#   name: checklist-engine
-#   image:
-#     repository: nexus.techsophy.com/augmnt/checklist-engine
-#     tag: 2.0-RC1
-#     configMapRef: augmnt-env
-#   service:
-#     type: ClusterIP
-#     port: 8080
+checklistengine:
+   name: checklist-engine
+   image:
+     repository: nexus.techsophy.com/augmnt/checklist-engine
+     tag: 2.0-RC1
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
 
-# checklistapp:
-#   name: checklist-app    
-#   image:
-#     repository: nexus.techsophy.com/augmnt/checklist-app 
-#     tag: 2.0-RC1
-#     configMapRef: augmnt-env
-#   service:
-#     type: ClusterIP
-#     port: 8080
+checklistapp:
+   name: checklist-app
+   image:
+     repository: nexus.techsophy.com/augmnt/checklist-app
+     tag: 2.0-RC1
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
