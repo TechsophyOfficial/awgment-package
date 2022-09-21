@@ -1,7 +1,7 @@
 # awgment-package
 Package awgment
 
-The below readme assumes some understanding of kubernetes and helm, please refer [Troubleshooting](##troubleshooting) for some helpful links to beginners.
+The below readme assumes some understanding of kubernetes and helm, please refer [Troubleshooting](#troubleshooting) for some helpful links to beginners.
 
 
 # Deployment - local linux machine using Kind
@@ -30,7 +30,7 @@ Set the following on your system settings
 sudo sysctl fs.inotify.max_user_watches=524288
 sudo sysctl fs.inotify.max_user_instances=512
 ```
-Please refer to [Troubleshooting](##troubleshooting) for solution to common issues.
+Please refer to [Troubleshooting](#troubleshooting) for solution to common issues.
 
 
 ## setup kind for awgment on linux
@@ -53,7 +53,7 @@ Edit file localEnv.sh to manage your environment ports, below defaults are used,
 <p>
 Please ensure that the database (mongo and postgres) are allowed in your firewall and you are able to connect using default clients with IP details.<br/>
 
-Please refer to [Troubleshooting](https://github.com/TechsophyOfficial/awgment-package/tree/readme_issues) for solution to common issues.
+Please refer to [Troubleshooting](#troubleshooting) for solution to common issues.
 </p>
 Execute the following commands to create kind cluster and set it up with basic installations including nginx controller.
 <p>
@@ -210,7 +210,7 @@ Verify the  installation by
 ```
 
 
-You will see awgment-tsf name with status as Deployed as below example. If not, please refer to [Troubleshooting](https://github.com/TechsophyOfficial/awgment-package/tree/readme_issues#troubleshooting)
+You will see awgment-tsf name with status as Deployed as below example. If not, please refer to [Troubleshooting](#troubleshooting)
 <br/>
 
         NAME        	NAMESPACE	REVISION	UPDATED         STATUS  	CHART               	APP VERSION
