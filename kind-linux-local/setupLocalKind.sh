@@ -14,21 +14,9 @@ else
   echo "export reg_name='kind-registry'"
   echo "export reg_port='5001'"
   echo "export http_port=8080"
-  # echo "#your external ip like 192.168.1.101"
-  # echo "export postgres_host=192.168.1.101"
-  # echo "export postgres_port=5432"
-  # echo "export mongo_host=192.168.1.101"
-  # echo "export mongo_port=27017"
-  # echo "export docker_user="
-  # echo "export docker_password="
   exit 1
 fi
 
-
-# if [ $postgres_port = "your_postgres_port" ] ;then
-#   echo "Please create the ./localEnv.sh for your environment"
-#   exit 1
-# fi
 
 #clean up
 kind delete clusters --all
@@ -43,7 +31,7 @@ if [ "$(docker inspect -f '{{.State.Running}}' "${reg_name}" 2>/dev/null || true
 fi
 
 # create a cluster with the local registry enabled in containerd
-cat <<EOF | kind create cluster --config=-
+cat <<EOF | kind create cluster --name ${cluster_name} --config=-
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 containerdConfigPatches:
@@ -87,83 +75,16 @@ data:
 EOF
 
 
-kubectl cluster-info --context kind-kind
+kubectl cluster-info --context kind-${cluster_name}
 
 # echo "Installing certificate manager, though we currently dont support  "
 # kubectl create namespace cert-manager
 # kubectl apply  \
 #   -f https://github.com/cert-manager/cert-manager/releases/download/v1.8.2/cert-manager.yaml
 
-
-
-# cat <<EOF | kubectl apply -f -
-# ---
-# kind: "Service"
-# apiVersion: "v1"
-# metadata:
-#   name: "postgres"
-# spec:
-#   ports:
-#     -
-#       name: "postgres"
-#       protocol: "TCP"
-#       port: 5432
-#       targetPort: ${postgres_port}
-#       nodePort: 0
-# ---
-# kind: "Endpoints"
-# apiVersion: "v1"
-# metadata:
-#   name: "postgres"
-# subsets:
-#   -
-#     addresses:
-#       -
-#         ip: "${postgres_host}"
-#     ports:
-#       -
-#         port: ${postgres_port}
-#         name: "postgres"
-# ---
-# kind: "Service"
-# apiVersion: "v1"
-# metadata:
-#   name: "mongo"
-# spec:
-#   ports:
-#     -
-#       name: "mongo"
-#       protocol: "TCP"
-#       port: 27017
-#       targetPort: ${mongo_port}
-#       nodePort: 0
-# ---
-# kind: "Endpoints"
-# apiVersion: "v1"
-# metadata:
-#   name: "mongo"
-# subsets:
-#   -
-#     addresses:
-#       -
-#         ip: "${mongo_host}"
-#     ports:
-#       -
-#         port: ${mongo_port}
-#         name: "mongo"
-# EOF
-
 echo "Installing nginx "
 
 ./nginx.sh
-
-
-# kubectl create secret docker-registry \
-#   ts-nexus \
-#   --docker-server=http://nexus.techsophy.com \
-#   --docker-username=${docker_user} \
-#   --docker-password=${docker_password} 
-
 
 
 # kubectl apply -f dependency/cert-manager.yaml --validate=false
@@ -172,6 +93,5 @@ echo "Installing nginx "
 
 
 echo \
-'Please create a fresh database for keycloak and camunda in postgres\
- and setup your local.values.yaml appropriately'
+'Please setup your db(postgres/mongo) as per readme and setup local.values.yaml appropriately'
 

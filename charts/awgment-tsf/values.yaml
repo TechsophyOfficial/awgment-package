@@ -4,12 +4,11 @@ imagePullSecrets: ts-nexus
 imagePullPolicy: Always
 configMapRef: augmnt-env
 
-
 coreui:
   name: core-ui
   image:
     repository: techsophyofficial/awgment-ui-core
-    tag: v0.0.0-alpha.0
+    tag: v0.1.0-beta
     configMapRef: ui-env
   service:
     type: ClusterIP
@@ -19,7 +18,7 @@ formmodeler:
   name: form-modeler
   image:
     repository: techsophyofficial/awgment-modeler-form
-    tag: v0.0.0-alpha.0
+    tag: v0.1.0-beta
     configMapRef: ui-env    
   service:
     type: ClusterIP
@@ -29,7 +28,7 @@ rulemodeler:
   name: rule-modeler
   image:
     repository: techsophyofficial/awgment-modeler-rule
-    tag: v0.0.0-alpha.0
+    tag: v0.1.0-beta
     configMapRef: ui-env  
   service:
     type: ClusterIP
@@ -39,7 +38,7 @@ workflowmodeler:
   name: workflow-modeler
   image:
     repository: techsophyofficial/awgment-modeler-workflow
-    tag: v0.0.0-alpha.0
+    tag: v0.1.0-beta
     configMapRef: ui-env  
   service:
     type: ClusterIP
@@ -49,18 +48,8 @@ accountui:
   name: account-ui
   image:
     repository: techsophyofficial/awgment-ui-account
-    tag: v0.0.0-alpha.0
+    tag: v0.1.0-beta
     configMapRef: ui-env
-  service:
-    type: ClusterIP
-    port: 80
-    
-templatemodeler:
-  name: template-modeler
-  image:
-    repository: nexus.techsophy.com/augmnt/template-modeler
-    tag: 2.0-RC1
-    configMapRef:  
   service:
     type: ClusterIP
     port: 80
@@ -69,47 +58,19 @@ caseui:
   name: case-ui
   image:
     repository: techsophyofficial/awgment-ui-case
-    tag: v0.0.0-alpha.0
+    tag: v0.1.0-beta
     configMapRef: ui-env
   service:
     type: ClusterIP
     port: 80
 
-casemodeler:
-  name: case-modeler
-  image:
-    repository: nexus.techsophy.com/augmnt/case-modeler
-    tag: 2.0-RC1
-    configMapRef:
-  service:
-    type: ClusterIP
-    port: 80
 
-checklistmodeler:
-  name: checklist-modeler
-  image:
-    repository: nexus.techsophy.com/augmnt/checklist-modeler
-    tag: 2.0-RC1
-    configMapRef:
-  service:
-    type: ClusterIP
-    port: 80
-
-adminui:
-  name: admin-ui
-  image:
-    repository: nexus.techsophy.com/augmnt/admin-ui
-    tag: 2.0-RC1
-    configMapRef:
-  service:
-    type: ClusterIP
-    port: 80
 
 configserver:
   name: cloud-config-server
   image:
     repository: techsophyofficial/awgment-cloud-config-server
-    tag: v0.0.0-alpha.0
+    tag: v0.1.0-beta
     configMapRef: augmnt-env  
   service:
     type: ClusterIP
@@ -119,7 +80,7 @@ gateway:
   name: gateway
   image:
     repository: techsophyofficial/awgment-api-gateway
-    tag: v0.0.0-alpha.0
+    tag: v0.1.0-beta
     configMapRef: augmnt-env
     applicationfile: applicationfile   
   service:
@@ -132,7 +93,7 @@ formapp:
   name: form-app
   image:
     repository: techsophyofficial/awgment-app-form
-    tag: v0.0.0-alpha.0
+    tag: v0.1.0-beta
     configMapRef: augmnt-env  
   service:
     type: ClusterIP
@@ -142,7 +103,7 @@ ruleapp:
   name: rule-app
   image:
     repository: techsophyofficial/awgment-app-rule
-    tag: v0.0.0-alpha.0
+    tag: v0.1.0-beta
     configMapRef: augmnt-env  
   service:
     type: ClusterIP
@@ -152,7 +113,7 @@ workflowapp:
   name: workflow-app
   image:
     repository: techsophyofficial/awgment-app-workflow
-    tag: v0.0.0-alpha.0
+    tag: v0.1.0-beta
     configMapRef: augmnt-env   
   service:
     type: ClusterIP
@@ -162,7 +123,7 @@ accountapp:
   name: account-app
   image:
     repository: techsophyofficial/awgment-app-account
-    tag: v0.0.0-alpha.0
+    tag: v0.1.0-beta
     configMapRef: augmnt-env   
   service:
     type: ClusterIP
@@ -174,32 +135,12 @@ accountapp:
     email: 
   clients: "camunda-identity-service,ticketing-system"
   emailValidity: 86400
-   
-templateapp:
-  name: template-app
-  image:
-    repository: nexus.techsophy.com/augmnt/templates-app
-    tag: 2.0-RC1
-    configMapRef: augmnt-env 
-  service:
-    type: ClusterIP
-    port: 8080
-    
-notificationapp:
-  name: tp-app-notification
-  image:
-    repository: nexus.techsophy.com/augmnt/notification-app
-    tag: 2.0-RC1
-    configMapRef: augmnt-env  
-  service:
-    type: ClusterIP
-    port: 8080
-    
+
 uxappcontroller:
   name: uxapp-controller
   image:
     repository: techsophyofficial/awgment-app-ux-controller
-    tag: v0.0.0-alpha.0
+    tag: v0.1.0-beta
     configMapRef: augmnt-env
   service:
     type: ClusterIP
@@ -209,7 +150,7 @@ workflowengine:
   name: workflow-engine
   image:
     repository: techsophyofficial/awgment-workflow-engine
-    tag: v0.0.0-alpha.0
+    tag: v0.1.0-beta
     configMapRef: augmnt-env   
   service:
     type: ClusterIP
@@ -219,28 +160,8 @@ runtimeformapp:
   name: runtime-form-app
   image:
     repository: techsophyofficial/awgment-app-runtime-form
-    tag: v0.0.0-alpha.0
+    tag: v0.1.0-beta
     configMapRef: augmnt-env  
-  service:
-    type: ClusterIP
-    port: 8080
-
-dmsapp:
-  name: dms-app
-  image:
-    repository: nexus.techsophy.com/augmnt/dms-app
-    tag: 2.0-RC1
-    configMapRef: augmnt-env
-  service:
-    type: ClusterIP
-    port: 8080
-
-documentconverterapp:
-  name: document-converter
-  image:
-    repository: nexus.techsophy.com/augmnt/documentconverter-app
-    tag: 2.0-RC1
-    configMapRef: augmnt-env
   service:
     type: ClusterIP
     port: 8080
@@ -249,37 +170,7 @@ ruleengine:
   name: rules
   image:
     repository: techsophyofficial/awgment-rule-engine
-    tag: v0.0.0-alpha.0
-    configMapRef: augmnt-env
-  service:
-    type: ClusterIP
-    port: 8080
-
-pdfconvertor:
-  name: tp-pdf-convertor
-  image:
-    repository: nexus.techsophy.com/augmnt/pdf-convertor
-    tag: 2.0-RC1
-    configMapRef: augmnt-env
-  service:
-    type: ClusterIP
-    port: 8080
-
-caseapp:
-  name: case-app
-  image:
-    repository: nexus.techsophy.com/augmnt/case-app
-    tag: 2.0-RC1
-    configMapRef: augmnt-env
-  service:
-    type: ClusterIP
-    port: 8080
-
-adminapp:
-  name: admin-app
-  image:
-    repository: nexus.techsophy.com/augmnt/admin-app
-    tag: 2.0-RC1
+    tag: v0.1.0-beta
     configMapRef: augmnt-env
   service:
     type: ClusterIP
@@ -289,47 +180,7 @@ utilapp:
   name: util-app
   image:
     repository: techsophyofficial/awgment-app-util
-    tag: v0.0.0-alpha.0
-    configMapRef: augmnt-env
-  service:
-    type: ClusterIP
-    port: 8080
-
-pciapp:
-  name: pci-app
-  image:
-    repository: nexus.techsophy.com/augmnt/pci-app
-    tag: 2.0-RC1
-    configMapRef: augmnt-env
-  service:
-    type: ClusterIP
-    port: 8080
-
-elasticsearchapp:
-  name: tp-elastic-search-app
-  image:
-    repository: nexus.techsophy.com/augmnt/elasticsearch-app
-    tag: 2.0-RC1
-    configMapRef: augmnt-env
-  service:
-    type: ClusterIP
-    port: 8080
-    
-checklistengine:
-  name: checklist-engine
-  image:
-    repository: nexus.techsophy.com/augmnt/checklist-engine
-    tag: 2.0-RC1
-    configMapRef: augmnt-env
-  service:
-    type: ClusterIP
-    port: 8080
-
-checklistapp:
-  name: checklist-app    
-  image:
-    repository: nexus.techsophy.com/augmnt/checklist-app 
-    tag: 2.0-RC1
+    tag: v0.1.0-beta
     configMapRef: augmnt-env
   service:
     type: ClusterIP
@@ -388,3 +239,154 @@ ingress:
      gateway: 
      tsffrontend: 
      camunda: 
+
+
+templatemodeler:
+   name: template-modeler
+   image:
+     repository: nexus.techsophy.com/augmnt/template-modeler
+     tag: 2.0-RC1
+     configMapRef:
+   service:
+     type: ClusterIP
+     port: 80
+
+casemodeler:
+   name: case-modeler
+   image:
+     repository: nexus.techsophy.com/augmnt/case-modeler
+     tag: 2.0-RC1
+     configMapRef:
+   service:
+     type: ClusterIP
+     port: 80
+
+checklistmodeler:
+   name: checklist-modeler
+   image:
+     repository: nexus.techsophy.com/augmnt/checklist-modeler
+     tag: 2.0-RC1
+     configMapRef:
+   service:
+     type: ClusterIP
+     port: 80
+
+adminui:
+   name: admin-ui
+   image:
+     repository: nexus.techsophy.com/augmnt/admin-ui
+     tag: 2.0-RC1
+     configMapRef:
+   service:
+     type: ClusterIP
+     port: 80
+   
+templateapp:
+   name: template-app
+   image:
+     repository: nexus.techsophy.com/augmnt/templates-app
+     tag: 2.0-RC1
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
+    
+notificationapp:
+   name: tp-app-notification
+   image:
+     repository: nexus.techsophy.com/augmnt/notification-app
+     tag: 2.0-RC1
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
+
+dmsapp:
+   name: dms-app
+   image:
+     repository: nexus.techsophy.com/augmnt/dms-app
+     tag: 2.0-RC1
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
+
+documentconverterapp:
+   name: document-converter
+   image:
+     repository: nexus.techsophy.com/augmnt/documentconverter-app
+     tag: 2.0-RC1
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
+
+pdfconvertor:
+   name: tp-pdf-convertor
+   image:
+     repository: nexus.techsophy.com/augmnt/pdf-convertor
+     tag: 2.0-RC1
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
+
+caseapp:
+   name: case-app
+   image:
+     repository: nexus.techsophy.com/augmnt/case-app
+     tag: 2.0-RC1
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
+
+adminapp:
+   name: admin-app
+   image:
+     repository: nexus.techsophy.com/augmnt/admin-app
+     tag: 2.0-RC1
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
+
+pciapp:
+   name: pci-app
+   image:
+     repository: nexus.techsophy.com/augmnt/pci-app
+     tag: 2.0-RC1
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
+
+elasticsearchapp:
+   name: tp-elastic-search-app
+   image:
+     repository: nexus.techsophy.com/augmnt/elasticsearch-app
+     tag: 2.0-RC1
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
+    
+checklistengine:
+   name: checklist-engine
+   image:
+     repository: nexus.techsophy.com/augmnt/checklist-engine
+     tag: 2.0-RC1
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
+
+checklistapp:
+   name: checklist-app
+   image:
+     repository: nexus.techsophy.com/augmnt/checklist-app
+     tag: 2.0-RC1
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
