@@ -11,7 +11,7 @@ keycloak:
   adminPassword:
   image:
     repository: techsophyofficial/awgment-keycloak
-    tag: v0.0.0-alpha.0
+    tag: v0.1.0-beta
     configMapRef: keycloak-env
   service:
     type: ClusterIP

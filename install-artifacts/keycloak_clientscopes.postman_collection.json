@@ -1,1 +1,1285 @@
-{"info":{"_postman_id":"ce4ee716-8b8b-462f-a30f-3fe2c7cc3300","name":"keycloak_clientscopes","schema":"https://schema.getpostman.com/json/collection/v2.1.0/collection.json","_exporter_id":"21898920"},"item":[{"name":"FetchKeycloakAccessToken","event":[{"listen":"test","script":{"exec":["var jsonData=JSON.parse(responseBody);","pm.environment.set(\"access_token\", jsonData.access_token);"],"type":"text/javascript"}}],"protocolProfileBehavior":{"strictSSL":false},"request":{"method":"POST","header":[{"key":"gra","value":"","type":"text","disabled":true}],"body":{"mode":"urlencoded","urlencoded":[{"key":"grant_type","value":"password","type":"text"},{"key":"client_id","value":"admin-cli","type":"text"},{"key":"username","value":"{{username}}","type":"text"},{"key":"password","value":"{{password}}","type":"text"},{"key":"client_secret","value":"0ef502e1-567a-48cf-ae56-7e1a5bdfe3c4","type":"text","disabled":true},{"key":"code","value":"f8d41c04-35dd-403d-a906-5d8e506993d4.91f6a6c1-ba3b-4afe-bde4-98960a35ac40.7aa9c4cc-d056-4196-a8fb-db4ed5a1e4a2","type":"text","disabled":true},{"key":"redirect_uri","value":"http://139.59.80.134:8082/","type":"text","disabled":true}]},"url":{"raw":"{{keycloak_url}}/auth/realms/master/protocol/openid-connect/token","host":["{{keycloak_url}}"],"path":["auth","realms","master","protocol","openid-connect","token"]}},"response":[]},{"name":"ClientScope - camunda-rest-api","protocolProfileBehavior":{"strictSSL":false},"request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{access_token}}","type":"string"}]},"method":"POST","header":[],"body":{"mode":"raw","raw":"{\r\n    \"attributes\": {\r\n        \"display.on.consent.screen\": \"true\",\r\n        \"include.in.token.scope\": \"true\"\r\n    },\r\n    \"name\": \"camunda-rest-api\",\r\n    \"description\": \"camunda-rest-api\",\r\n    \"protocol\": \"openid-connect\"\r\n}","options":{"raw":{"language":"json"}}},"url":{"raw":"{{keycloak_url}}/auth/admin/realms/{{realm}}/client-scopes","host":["{{keycloak_url}}"],"path":["auth","admin","realms","{{realm}}","client-scopes"]}},"response":[]},{"name":"ClientScope - awgment","protocolProfileBehavior":{"strictSSL":false},"request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{access_token}}","type":"string"}]},"method":"POST","header":[],"body":{"mode":"raw","raw":"{\r\n    \"attributes\": {\r\n        \"display.on.consent.screen\": \"true\",\r\n        \"include.in.token.scope\": \"true\"\r\n    },\r\n    \"name\": \"awgment\",\r\n    \"description\": \"awgment\",\r\n    \"protocol\": \"openid-connect\"\r\n}","options":{"raw":{"language":"json"}}},"url":{"raw":"{{keycloak_url}}/auth/admin/realms/{{realm}}/client-scopes","host":["{{keycloak_url}}"],"path":["auth","admin","realms","{{realm}}","client-scopes"]}},"response":[]},{"name":"ClientScopes","event":[{"listen":"test","script":{"exec":["var jsonData=JSON.parse(responseBody);","var awgmentScopeId;","for (obj in jsonData) {","        if(jsonData[obj].name === \"awgment\") {","            pm.environment.set(\"awgmentScopeId\", jsonData[obj].id);","        }","        if(jsonData[obj].name === \"camunda-rest-api\") {","            pm.environment.set(\"camundaScopeId\", jsonData[obj].id);","        }","}",""],"type":"text/javascript"}}],"protocolProfileBehavior":{"disableBodyPruning":true,"strictSSL":false},"request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{access_token}}","type":"string"}]},"method":"GET","header":[],"body":{"mode":"raw","raw":"","options":{"raw":{"language":"json"}}},"url":{"raw":"{{keycloak_url}}/auth/admin/realms/{{realm}}/client-scopes","host":["{{keycloak_url}}"],"path":["auth","admin","realms","{{realm}}","client-scopes"]}},"response":[]},{"name":"Mapper - camunda-rest-api","protocolProfileBehavior":{"strictSSL":false},"request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{access_token}}","type":"string"}]},"method":"POST","header":[],"body":{"mode":"raw","raw":"{\r\n    \"protocol\": \"openid-connect\",\r\n    \"config\": {\r\n        \"id.token.claim\": \"false\",\r\n        \"access.token.claim\": \"true\",\r\n        \"included.client.audience\": null,\r\n        \"included.custom.audience\": \"camunda-rest-api\"\r\n    },\r\n    \"name\": \"camunda-rest-api\",\r\n    \"protocolMapper\": \"oidc-audience-mapper\"\r\n}","options":{"raw":{"language":"json"}}},"url":{"raw":"{{keycloak_url}}/auth/admin/realms/{{realm}}/client-scopes/{{camundaScopeId}}/protocol-mappers/models","host":["{{keycloak_url}}"],"path":["auth","admin","realms","{{realm}}","client-scopes","{{camundaScopeId}}","protocol-mappers","models"]}},"response":[]},{"name":"Mapper - awgment-groups","protocolProfileBehavior":{"strictSSL":false},"request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{access_token}}","type":"string"}]},"method":"POST","header":[],"body":{"mode":"raw","raw":"{\r\n    \"protocol\": \"openid-connect\",\r\n    \"config\": {\r\n        \"full.path\": \"true\",\r\n        \"id.token.claim\": \"false\",\r\n        \"access.token.claim\": \"false\",\r\n        \"userinfo.token.claim\": \"true\",\r\n        \"claim.name\": \"groups\"\r\n    },\r\n    \"name\": \"awgment-groups\",\r\n    \"protocolMapper\": \"oidc-group-membership-mapper\"\r\n}","options":{"raw":{"language":"json"}}},"url":{"raw":"{{keycloak_url}}/auth/admin/realms/{{realm}}/client-scopes/{{awgmentScopeId}}/protocol-mappers/models","host":["{{keycloak_url}}"],"path":["auth","admin","realms","{{realm}}","client-scopes","{{awgmentScopeId}}","protocol-mappers","models"]}},"response":[]},{"name":"Mapper - awgment-roles","protocolProfileBehavior":{"strictSSL":false},"request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{access_token}}","type":"string"}]},"method":"POST","header":[],"body":{"mode":"raw","raw":"{\r\n    \"protocol\": \"openid-connect\",\r\n    \"config\": {\r\n        \"multivalued\": \"true\",\r\n        \"id.token.claim\": \"false\",\r\n        \"access.token.claim\": \"false\",\r\n        \"userinfo.token.claim\": \"true\",\r\n        \"usermodel.clientRoleMapping.clientId\": \"camunda-identity-service\",\r\n        \"claim.name\": \"clientRoles\",\r\n        \"jsonType.label\": \"String\"\r\n    },\r\n    \"name\": \"awgment-roles\",\r\n    \"protocolMapper\": \"oidc-usermodel-client-role-mapper\"\r\n}","options":{"raw":{"language":"json"}}},"url":{"raw":"{{keycloak_url}}/auth/admin/realms/{{realm}}/client-scopes/{{awgmentScopeId}}/protocol-mappers/models","host":["{{keycloak_url}}"],"path":["auth","admin","realms","{{realm}}","client-scopes","{{awgmentScopeId}}","protocol-mappers","models"]}},"response":[]},{"name":"Mapper - realm-management-roles","protocolProfileBehavior":{"strictSSL":false},"request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{access_token}}","type":"string"}]},"method":"POST","header":[],"body":{"mode":"raw","raw":"{\r\n    \"protocol\": \"openid-connect\",\r\n    \"config\": {\r\n        \"multivalued\": \"true\",\r\n        \"id.token.claim\": \"false\",\r\n        \"access.token.claim\": \"true\",\r\n        \"userinfo.token.claim\": \"true\",\r\n        \"usermodel.clientRoleMapping.clientId\": \"realm-management\",\r\n        \"claim.name\": \"resource_access.${client_id}.roles\",\r\n        \"jsonType.label\": \"String\"\r\n    },\r\n    \"name\": \"realm-management-roles\",\r\n    \"protocolMapper\": \"oidc-usermodel-client-role-mapper\"\r\n}","options":{"raw":{"language":"json"}}},"url":{"raw":"{{keycloak_url}}/auth/admin/realms/{{realm}}/client-scopes/{{awgmentScopeId}}/protocol-mappers/models","host":["{{keycloak_url}}"],"path":["auth","admin","realms","{{realm}}","client-scopes","{{awgmentScopeId}}","protocol-mappers","models"]}},"response":[]},{"name":"Camunda Client","event":[{"listen":"test","script":{"exec":["var jsonData=JSON.parse(responseBody);","pm.environment.set(\"camundaClientId\", jsonData[0].id);"],"type":"text/javascript"}}],"protocolProfileBehavior":{"disableBodyPruning":true,"strictSSL":false},"request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{access_token}}","type":"string"}]},"method":"GET","header":[],"body":{"mode":"raw","raw":"","options":{"raw":{"language":"json"}}},"url":{"raw":"{{keycloak_url}}/auth/admin/realms/{{realm}}/clients?clientId=camunda-identity-service&first=0&max=20&search=true","host":["{{keycloak_url}}"],"path":["auth","admin","realms","{{realm}}","clients"],"query":[{"key":"clientId","value":"camunda-identity-service"},{"key":"first","value":"0"},{"key":"max","value":"20"},{"key":"search","value":"true"}]}},"response":[]},{"name":"Realm Clients","event":[{"listen":"test","script":{"exec":["var jsonData=JSON.parse(responseBody);","pm.environment.set(\"realmClientId\", jsonData[0].id);"],"type":"text/javascript"}}],"protocolProfileBehavior":{"disableBodyPruning":true,"strictSSL":false},"request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{access_token}}","type":"string"}]},"method":"GET","header":[],"body":{"mode":"raw","raw":"","options":{"raw":{"language":"json"}}},"url":{"raw":"{{keycloak_url}}/auth/admin/realms/{{realm}}/clients?clientId=realm-management&first=0&max=20&search=true","host":["{{keycloak_url}}"],"path":["auth","admin","realms","{{realm}}","clients"],"query":[{"key":"clientId","value":"realm-management"},{"key":"first","value":"0"},{"key":"max","value":"20"},{"key":"search","value":"true"}]}},"response":[]},{"name":"Client Scope - camunda","protocolProfileBehavior":{"strictSSL":false},"request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{access_token}}","type":"string"}]},"method":"PUT","header":[],"body":{"mode":"raw","raw":"","options":{"raw":{"language":"json"}}},"url":{"raw":"{{keycloak_url}}/auth/admin/realms/{{realm}}/clients/{{clientId}}/default-client-scopes/{{camundaScopeId}}","host":["{{keycloak_url}}"],"path":["auth","admin","realms","{{realm}}","clients","{{clientId}}","default-client-scopes","{{camundaScopeId}}"]}},"response":[]},{"name":"Client Scope - awgment","protocolProfileBehavior":{"strictSSL":false},"request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{access_token}}","type":"string"}]},"method":"PUT","header":[],"body":{"mode":"raw","raw":"","options":{"raw":{"language":"json"}}},"url":{"raw":"{{keycloak_url}}/auth/admin/realms/{{realm}}/clients/{{clientId}}/default-client-scopes/{{awgmentScopeId}}","host":["{{keycloak_url}}"],"path":["auth","admin","realms","{{realm}}","clients","{{clientId}}","default-client-scopes","{{awgmentScopeId}}"]}},"response":[]},{"name":"Create Admin User","protocolProfileBehavior":{"strictSSL":false},"request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{access_token}}","type":"string"}]},"method":"POST","header":[],"body":{"mode":"raw","raw":"{\r\n    \"enabled\": true,\r\n    \"attributes\": {},\r\n    \"username\": \"admin\",\r\n    \"emailVerified\": \"\",\r\n    \"firstName\": \"admin\",\r\n    \"email\": \"admin@techsophy.com\"\r\n}","options":{"raw":{"language":"json"}}},"url":{"raw":"{{keycloak_url}}/auth/admin/realms/{{realm}}/users","host":["{{keycloak_url}}"],"path":["auth","admin","realms","{{realm}}","users"]}},"response":[]},{"name":"UserDetails","event":[{"listen":"test","script":{"exec":["var jsonData=JSON.parse(responseBody);","pm.environment.set(\"userId\", jsonData[0].id);"],"type":"text/javascript"}}],"protocolProfileBehavior":{"disableBodyPruning":true,"strictSSL":false},"request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{access_token}}","type":"string"}]},"method":"GET","header":[],"body":{"mode":"raw","raw":"","options":{"raw":{"language":"json"}}},"url":{"raw":"{{keycloak_url}}/auth/admin/realms/{{realm}}/users?briefRepresentation=true&first=0&max=20&search=admin","host":["{{keycloak_url}}"],"path":["auth","admin","realms","{{realm}}","users"],"query":[{"key":"briefRepresentation","value":"true"},{"key":"first","value":"0"},{"key":"max","value":"20"},{"key":"search","value":"admin"}]}},"response":[]},{"name":"Admin User Password","protocolProfileBehavior":{"strictSSL":false},"request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{access_token}}","type":"string"}]},"method":"PUT","header":[],"body":{"mode":"raw","raw":"{\"type\":\"password\",\"value\":\"admin\",\"temporary\":false}","options":{"raw":{"language":"json"}}},"url":{"raw":"{{keycloak_url}}/auth/admin/realms/{{realm}}/users/{{userId}}/reset-password","host":["{{keycloak_url}}"],"path":["auth","admin","realms","{{realm}}","users","{{userId}}","reset-password"]}},"response":[]},{"name":"Get Realm Roles","event":[{"listen":"test","script":{"exec":["pm.environment.set(\"realmRoles\", responseBody);"],"type":"text/javascript"}}],"protocolProfileBehavior":{"disableBodyPruning":true,"strictSSL":false},"request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{access_token}}","type":"string"}]},"method":"GET","header":[],"body":{"mode":"raw","raw":"[\n    {\n        \"id\": \"af4ce8d2-b780-4291-8c9d-80a35a1aa26c\",\n        \"name\": \"create-client\",\n        \"description\": \"${role_create-client}\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"9555bb8f-d403-4206-aa34-edea7c406f8d\",\n        \"name\": \"impersonation\",\n        \"description\": \"${role_impersonation}\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"ee75a2bb-edbe-424d-b157-5d2f6c4bd102\",\n        \"name\": \"manage-authorization\",\n        \"description\": \"${role_manage-authorization}\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"5114bbe9-9574-46cb-be6d-c7c6ff700ad9\",\n        \"name\": \"manage-clients\",\n        \"description\": \"${role_manage-clients}\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"6b4932d9-5ba4-42c8-b758-badf67d60a42\",\n        \"name\": \"manage-events\",\n        \"description\": \"${role_manage-events}\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"87365097-de57-43f6-9c4d-3ee9c31b5753\",\n        \"name\": \"manage-identity-providers\",\n        \"description\": \"${role_manage-identity-providers}\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"73ee9460-9fd1-4b8a-a6a1-0aff067f292d\",\n        \"name\": \"manage-realm\",\n        \"description\": \"${role_manage-realm}\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"6b4d1958-a039-4322-ac84-1b4c377cfce6\",\n        \"name\": \"query-clients\",\n        \"description\": \"${role_query-clients}\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"60a034f9-5137-4456-9e54-9f81cbc38069\",\n        \"name\": \"query-users\",\n        \"description\": \"${role_query-users}\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"7a22a8d7-29a1-4204-91ac-8dd3e5d42ce7\",\n        \"name\": \"realm-admin\",\n        \"description\": \"${role_realm-admin}\",\n        \"composite\": true,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"032afd9d-cac5-47e2-900d-2f145a2afd1e\",\n        \"name\": \"view-authorization\",\n        \"description\": \"${role_view-authorization}\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"e0722551-a492-41b3-b46c-f9937aa12fd0\",\n        \"name\": \"view-clients\",\n        \"description\": \"${role_view-clients}\",\n        \"composite\": true,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"65642340-a588-4aa8-a046-dda2b70c98d2\",\n        \"name\": \"view-events\",\n        \"description\": \"${role_view-events}\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"995490a1-f06a-45c5-925c-263f76d1ed9b\",\n        \"name\": \"view-identity-providers\",\n        \"description\": \"${role_view-identity-providers}\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"0563616a-45f7-4634-b18f-97df4247e0d3\",\n        \"name\": \"view-realm\",\n        \"description\": \"${role_view-realm}\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"4572850a-eb1e-4ea9-b260-9bf587f1d4e5\",\n        \"name\": \"view-users\",\n        \"description\": \"${role_view-users}\",\n        \"composite\": true,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    }\n]","options":{"raw":{"language":"json"}}},"url":{"raw":"{{keycloak_url}}/auth/admin/realms/{{realm}}/users/{{userId}}/role-mappings/clients/{{realmClientId}}/available","host":["{{keycloak_url}}"],"path":["auth","admin","realms","{{realm}}","users","{{userId}}","role-mappings","clients","{{realmClientId}}","available"]}},"response":[]},{"name":"Realm Roles","protocolProfileBehavior":{"strictSSL":false},"request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{access_token}}","type":"string"}]},"method":"POST","header":[],"body":{"mode":"raw","raw":"{{realmRoles}}","options":{"raw":{"language":"json"}}},"url":{"raw":"{{keycloak_url}}/auth/admin/realms/{{realm}}/users/{{userId}}/role-mappings/clients/{{realmClientId}}","host":["{{keycloak_url}}"],"path":["auth","admin","realms","{{realm}}","users","{{userId}}","role-mappings","clients","{{realmClientId}}"]}},"response":[]},{"name":"Awgment Roles","event":[{"listen":"test","script":{"exec":["","pm.environment.set(\"camundaRoles\", responseBody);"],"type":"text/javascript"}}],"protocolProfileBehavior":{"disableBodyPruning":true,"strictSSL":false},"request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{access_token}}","type":"string"}]},"method":"GET","header":[],"body":{"mode":"raw","raw":"[\n    {\n        \"id\": \"c2354c14-266b-496f-8d6e-678e3f546bb0\",\n        \"name\": \"awgment-account-all\",\n        \"description\": \"awgment-account-all\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"0efaff15-dcbd-41ed-be68-eaccfe4aa995\",\n        \"name\": \"awgment-case-inbox\",\n        \"description\": \"awgment-case-inbox\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"d0638000-7ee4-4e6a-afd4-49ec0ab33b22\",\n        \"name\": \"awgment-form-all\",\n        \"description\": \"awgment-form-all\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"2b7935b0-7ca5-4307-8c56-6309cb325728\",\n        \"name\": \"awgment-manage-groups\",\n        \"description\": \"awgment-manage-groups\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"14ce7d5e-891d-4c1a-834e-0d4d861f6255\",\n        \"name\": \"awgment-manage-themes\",\n        \"description\": \"awgment-manage-themes\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"bbf7f8f1-f885-447f-bcb3-55818cd01ef8\",\n        \"name\": \"awgment-manage-users\",\n        \"description\": \"awgment-manage-users\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"eb3d88ea-6755-4901-99c9-44eaef0bc8d5\",\n        \"name\": \"awgment-modeler-form\",\n        \"description\": \"awgment-modeler-form\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"df9f0d5c-996e-4972-9205-2142c5c40e38\",\n        \"name\": \"awgment-modeler-rule\",\n        \"description\": \"awgment-modeler-rule\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"1b0ba3b9-7d7b-469d-9c9b-361a6b4c376f\",\n        \"name\": \"awgment-modeler-workflow\",\n        \"description\": \"awgment-modeler-workflow\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"64bbb1e5-dfd3-460f-9fca-fe3fccab7f10\",\n        \"name\": \"awgment-rule-all\",\n        \"description\": \"awgment-rule-all\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"a947c8da-7c48-4047-a802-ca6bbbc488c5\",\n        \"name\": \"awgment-rule-engine-all\",\n        \"description\": \"awgment-rule-engine-all\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"67c5e8f9-7ac6-45ac-984a-bf1ccb62d786\",\n        \"name\": \"awgment-runtime-form-all\",\n        \"description\": \"awgment-runtime-form-all\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"82318abe-e2f7-49ce-8db2-e38f2c109be0\",\n        \"name\": \"awgment-util-all\",\n        \"description\": \"awgment-util-all\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"f7bbc03a-3ff9-4f6a-95c0-0dc3f908eb2c\",\n        \"name\": \"awgment-ux-controller-all\",\n        \"description\": \"awgment-ux-controller-all\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"15287043-79e3-4a77-80e9-600e53d9ad49\",\n        \"name\": \"awgment-workflow-all\",\n        \"description\": \"awgment-workflow-all\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    }\n]","options":{"raw":{"language":"json"}}},"url":{"raw":"{{keycloak_url}}/auth/admin/realms/{{realm}}/users/{{userId}}/role-mappings/clients/{{camundaClientId}}/available","host":["{{keycloak_url}}"],"path":["auth","admin","realms","{{realm}}","users","{{userId}}","role-mappings","clients","{{camundaClientId}}","available"]}},"response":[]},{"name":"Awgment Roles Copy","protocolProfileBehavior":{"strictSSL":false},"request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{access_token}}","type":"string"}]},"method":"POST","header":[],"body":{"mode":"raw","raw":"{{camundaRoles}}","options":{"raw":{"language":"json"}}},"url":{"raw":"{{keycloak_url}}/auth/admin/realms/{{realm}}/users/{{userId}}/role-mappings/clients/{{camundaClientId}}","host":["{{keycloak_url}}"],"path":["auth","admin","realms","{{realm}}","users","{{userId}}","role-mappings","clients","{{camundaClientId}}"]}},"response":[]},{"name":"GroupDetails","event":[{"listen":"test","script":{"exec":["var jsonData=JSON.parse(responseBody);","pm.environment.set(\"groupId\", jsonData[0].id);"],"type":"text/javascript"}}],"protocolProfileBehavior":{"disableBodyPruning":true,"strictSSL":false},"request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{access_token}}","type":"string"}]},"method":"GET","header":[],"body":{"mode":"raw","raw":"","options":{"raw":{"language":"json"}}},"url":{"raw":"{{keycloak_url}}/auth/admin/realms/{{realm}}/groups?first=0&max=20&search=camunda-admin","host":["{{keycloak_url}}"],"path":["auth","admin","realms","{{realm}}","groups"],"query":[{"key":"first","value":"0"},{"key":"max","value":"20"},{"key":"search","value":"camunda-admin"}]}},"response":[]},{"name":"User Groups","protocolProfileBehavior":{"strictSSL":false},"request":{"auth":{"type":"bearer","bearer":[{"key":"token","value":"{{access_token}}","type":"string"}]},"method":"PUT","header":[],"body":{"mode":"raw","raw":"","options":{"raw":{"language":"json"}}},"url":{"raw":"{{keycloak_url}}/auth/admin/realms/{{realm}}/users/{{userId}}/groups/{{groupId}}","host":["{{keycloak_url}}"],"path":["auth","admin","realms","{{realm}}","users","{{userId}}","groups","{{groupId}}"]}},"response":[]}]}
+{
+	"info": {
+		"_postman_id": "47533e70-2990-4b29-84bf-fb349f42d4bc",
+		"name": "keycloak_clientscopes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21898920"
+	},
+	"item": [
+		{
+			"name": "FetchKeycloakAccessToken",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData=JSON.parse(responseBody);",
+							"pm.environment.set(\"access_token\", jsonData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "gra",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "admin-cli",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "0ef502e1-567a-48cf-ae56-7e1a5bdfe3c4",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "code",
+							"value": "f8d41c04-35dd-403d-a906-5d8e506993d4.91f6a6c1-ba3b-4afe-bde4-98960a35ac40.7aa9c4cc-d056-4196-a8fb-db4ed5a1e4a2",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "redirect_uri",
+							"value": "http://139.59.80.134:8082/",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/auth/realms/master/protocol/openid-connect/token",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"auth",
+						"realms",
+						"master",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ClientScope - camunda-rest-api",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"attributes\": {\r\n        \"display.on.consent.screen\": \"true\",\r\n        \"include.in.token.scope\": \"true\"\r\n    },\r\n    \"name\": \"camunda-rest-api\",\r\n    \"description\": \"camunda-rest-api\",\r\n    \"protocol\": \"openid-connect\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/client-scopes",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"auth",
+						"admin",
+						"realms",
+						"{{realm}}",
+						"client-scopes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ClientScope - awgment",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"attributes\": {\r\n        \"display.on.consent.screen\": \"true\",\r\n        \"include.in.token.scope\": \"true\"\r\n    },\r\n    \"name\": \"awgment\",\r\n    \"description\": \"awgment\",\r\n    \"protocol\": \"openid-connect\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/client-scopes",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"auth",
+						"admin",
+						"realms",
+						"{{realm}}",
+						"client-scopes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ClientScopes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData=JSON.parse(responseBody);",
+							"var awgmentScopeId;",
+							"for (obj in jsonData) {",
+							"        if(jsonData[obj].name === \"awgment\") {",
+							"            pm.environment.set(\"awgmentScopeId\", jsonData[obj].id);",
+							"        }",
+							"        if(jsonData[obj].name === \"camunda-rest-api\") {",
+							"            pm.environment.set(\"camundaScopeId\", jsonData[obj].id);",
+							"        }",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/client-scopes",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"auth",
+						"admin",
+						"realms",
+						"{{realm}}",
+						"client-scopes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Mapper - camunda-rest-api",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"protocol\": \"openid-connect\",\r\n    \"config\": {\r\n        \"id.token.claim\": \"false\",\r\n        \"access.token.claim\": \"true\",\r\n        \"included.client.audience\": null,\r\n        \"included.custom.audience\": \"camunda-rest-api\"\r\n    },\r\n    \"name\": \"camunda-rest-api\",\r\n    \"protocolMapper\": \"oidc-audience-mapper\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/client-scopes/{{camundaScopeId}}/protocol-mappers/models",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"auth",
+						"admin",
+						"realms",
+						"{{realm}}",
+						"client-scopes",
+						"{{camundaScopeId}}",
+						"protocol-mappers",
+						"models"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Mapper - awgment-groups",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"protocol\": \"openid-connect\",\r\n    \"config\": {\r\n        \"full.path\": \"true\",\r\n        \"id.token.claim\": \"false\",\r\n        \"access.token.claim\": \"false\",\r\n        \"userinfo.token.claim\": \"true\",\r\n        \"claim.name\": \"groups\"\r\n    },\r\n    \"name\": \"awgment-groups\",\r\n    \"protocolMapper\": \"oidc-group-membership-mapper\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/client-scopes/{{awgmentScopeId}}/protocol-mappers/models",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"auth",
+						"admin",
+						"realms",
+						"{{realm}}",
+						"client-scopes",
+						"{{awgmentScopeId}}",
+						"protocol-mappers",
+						"models"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Mapper - awgment-roles",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"protocol\": \"openid-connect\",\r\n    \"config\": {\r\n        \"multivalued\": \"true\",\r\n        \"id.token.claim\": \"false\",\r\n        \"access.token.claim\": \"false\",\r\n        \"userinfo.token.claim\": \"true\",\r\n        \"usermodel.clientRoleMapping.clientId\": \"camunda-identity-service\",\r\n        \"claim.name\": \"clientRoles\",\r\n        \"jsonType.label\": \"String\"\r\n    },\r\n    \"name\": \"awgment-roles\",\r\n    \"protocolMapper\": \"oidc-usermodel-client-role-mapper\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/client-scopes/{{awgmentScopeId}}/protocol-mappers/models",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"auth",
+						"admin",
+						"realms",
+						"{{realm}}",
+						"client-scopes",
+						"{{awgmentScopeId}}",
+						"protocol-mappers",
+						"models"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Mapper - realm-management-roles",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"protocol\": \"openid-connect\",\r\n    \"config\": {\r\n        \"multivalued\": \"true\",\r\n        \"id.token.claim\": \"false\",\r\n        \"access.token.claim\": \"true\",\r\n        \"userinfo.token.claim\": \"true\",\r\n        \"usermodel.clientRoleMapping.clientId\": \"realm-management\",\r\n        \"claim.name\": \"resource_access.${client_id}.roles\",\r\n        \"jsonType.label\": \"String\"\r\n    },\r\n    \"name\": \"realm-management-roles\",\r\n    \"protocolMapper\": \"oidc-usermodel-client-role-mapper\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/client-scopes/{{awgmentScopeId}}/protocol-mappers/models",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"auth",
+						"admin",
+						"realms",
+						"{{realm}}",
+						"client-scopes",
+						"{{awgmentScopeId}}",
+						"protocol-mappers",
+						"models"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Camunda Client",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData=JSON.parse(responseBody);",
+							"pm.environment.set(\"camundaClientId\", jsonData[0].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/clients?clientId=camunda-identity-service&first=0&max=20&search=true",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"auth",
+						"admin",
+						"realms",
+						"{{realm}}",
+						"clients"
+					],
+					"query": [
+						{
+							"key": "clientId",
+							"value": "camunda-identity-service"
+						},
+						{
+							"key": "first",
+							"value": "0"
+						},
+						{
+							"key": "max",
+							"value": "20"
+						},
+						{
+							"key": "search",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Realm Clients",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData=JSON.parse(responseBody);",
+							"pm.environment.set(\"realmClientId\", jsonData[0].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/clients?clientId=realm-management&first=0&max=20&search=true",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"auth",
+						"admin",
+						"realms",
+						"{{realm}}",
+						"clients"
+					],
+					"query": [
+						{
+							"key": "clientId",
+							"value": "realm-management"
+						},
+						{
+							"key": "first",
+							"value": "0"
+						},
+						{
+							"key": "max",
+							"value": "20"
+						},
+						{
+							"key": "search",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Client Scope - camunda",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/clients/{{camundaClientId}}/default-client-scopes/{{camundaScopeId}}",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"auth",
+						"admin",
+						"realms",
+						"{{realm}}",
+						"clients",
+						"{{camundaClientId}}",
+						"default-client-scopes",
+						"{{camundaScopeId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Client Scope - awgment",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/clients/{{camundaClientId}}/default-client-scopes/{{awgmentScopeId}}",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"auth",
+						"admin",
+						"realms",
+						"{{realm}}",
+						"clients",
+						"{{camundaClientId}}",
+						"default-client-scopes",
+						"{{awgmentScopeId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UI Client",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData=JSON.parse(responseBody);",
+							"pm.environment.set(\"uiCoreClientId\", jsonData[0].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/clients?clientId=tp-ui-core&first=0&max=20&search=true",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"auth",
+						"admin",
+						"realms",
+						"{{realm}}",
+						"clients"
+					],
+					"query": [
+						{
+							"key": "clientId",
+							"value": "tp-ui-core"
+						},
+						{
+							"key": "first",
+							"value": "0"
+						},
+						{
+							"key": "max",
+							"value": "20"
+						},
+						{
+							"key": "search",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Client Scope - awgment UICore",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/clients/{{uiCoreClientId}}/default-client-scopes/{{awgmentScopeId}}",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"auth",
+						"admin",
+						"realms",
+						"{{realm}}",
+						"clients",
+						"{{uiCoreClientId}}",
+						"default-client-scopes",
+						"{{awgmentScopeId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Admin User",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"enabled\": true,\r\n    \"attributes\": {},\r\n    \"username\": \"admin\",\r\n    \"emailVerified\": \"\",\r\n    \"firstName\": \"admin\",\r\n    \"email\": \"admin@techsophy.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/users",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"auth",
+						"admin",
+						"realms",
+						"{{realm}}",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UserDetails",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData=JSON.parse(responseBody);",
+							"pm.environment.set(\"userId\", jsonData[0].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/users?briefRepresentation=true&first=0&max=20&search=admin",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"auth",
+						"admin",
+						"realms",
+						"{{realm}}",
+						"users"
+					],
+					"query": [
+						{
+							"key": "briefRepresentation",
+							"value": "true"
+						},
+						{
+							"key": "first",
+							"value": "0"
+						},
+						{
+							"key": "max",
+							"value": "20"
+						},
+						{
+							"key": "search",
+							"value": "admin"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin User Password",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"type\":\"password\",\"value\":\"admin\",\"temporary\":false}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/users/{{userId}}/reset-password",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"auth",
+						"admin",
+						"realms",
+						"{{realm}}",
+						"users",
+						"{{userId}}",
+						"reset-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Realm Roles",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"realmRoles\", responseBody);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"id\": \"af4ce8d2-b780-4291-8c9d-80a35a1aa26c\",\n        \"name\": \"create-client\",\n        \"description\": \"${role_create-client}\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"9555bb8f-d403-4206-aa34-edea7c406f8d\",\n        \"name\": \"impersonation\",\n        \"description\": \"${role_impersonation}\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"ee75a2bb-edbe-424d-b157-5d2f6c4bd102\",\n        \"name\": \"manage-authorization\",\n        \"description\": \"${role_manage-authorization}\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"5114bbe9-9574-46cb-be6d-c7c6ff700ad9\",\n        \"name\": \"manage-clients\",\n        \"description\": \"${role_manage-clients}\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"6b4932d9-5ba4-42c8-b758-badf67d60a42\",\n        \"name\": \"manage-events\",\n        \"description\": \"${role_manage-events}\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"87365097-de57-43f6-9c4d-3ee9c31b5753\",\n        \"name\": \"manage-identity-providers\",\n        \"description\": \"${role_manage-identity-providers}\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"73ee9460-9fd1-4b8a-a6a1-0aff067f292d\",\n        \"name\": \"manage-realm\",\n        \"description\": \"${role_manage-realm}\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"6b4d1958-a039-4322-ac84-1b4c377cfce6\",\n        \"name\": \"query-clients\",\n        \"description\": \"${role_query-clients}\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"60a034f9-5137-4456-9e54-9f81cbc38069\",\n        \"name\": \"query-users\",\n        \"description\": \"${role_query-users}\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"7a22a8d7-29a1-4204-91ac-8dd3e5d42ce7\",\n        \"name\": \"realm-admin\",\n        \"description\": \"${role_realm-admin}\",\n        \"composite\": true,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"032afd9d-cac5-47e2-900d-2f145a2afd1e\",\n        \"name\": \"view-authorization\",\n        \"description\": \"${role_view-authorization}\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"e0722551-a492-41b3-b46c-f9937aa12fd0\",\n        \"name\": \"view-clients\",\n        \"description\": \"${role_view-clients}\",\n        \"composite\": true,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"65642340-a588-4aa8-a046-dda2b70c98d2\",\n        \"name\": \"view-events\",\n        \"description\": \"${role_view-events}\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"995490a1-f06a-45c5-925c-263f76d1ed9b\",\n        \"name\": \"view-identity-providers\",\n        \"description\": \"${role_view-identity-providers}\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"0563616a-45f7-4634-b18f-97df4247e0d3\",\n        \"name\": \"view-realm\",\n        \"description\": \"${role_view-realm}\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    },\n    {\n        \"id\": \"4572850a-eb1e-4ea9-b260-9bf587f1d4e5\",\n        \"name\": \"view-users\",\n        \"description\": \"${role_view-users}\",\n        \"composite\": true,\n        \"clientRole\": true,\n        \"containerId\": \"27e83254-6a46-4dfb-9ff9-209b042c66a4\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/users/{{userId}}/role-mappings/clients/{{realmClientId}}/available",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"auth",
+						"admin",
+						"realms",
+						"{{realm}}",
+						"users",
+						"{{userId}}",
+						"role-mappings",
+						"clients",
+						"{{realmClientId}}",
+						"available"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Realm Roles",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{realmRoles}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/users/{{userId}}/role-mappings/clients/{{realmClientId}}",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"auth",
+						"admin",
+						"realms",
+						"{{realm}}",
+						"users",
+						"{{userId}}",
+						"role-mappings",
+						"clients",
+						"{{realmClientId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Awgment Roles",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.environment.set(\"camundaRoles\", responseBody);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"id\": \"c2354c14-266b-496f-8d6e-678e3f546bb0\",\n        \"name\": \"awgment-account-all\",\n        \"description\": \"awgment-account-all\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"0efaff15-dcbd-41ed-be68-eaccfe4aa995\",\n        \"name\": \"awgment-case-inbox\",\n        \"description\": \"awgment-case-inbox\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"d0638000-7ee4-4e6a-afd4-49ec0ab33b22\",\n        \"name\": \"awgment-form-all\",\n        \"description\": \"awgment-form-all\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"2b7935b0-7ca5-4307-8c56-6309cb325728\",\n        \"name\": \"awgment-manage-groups\",\n        \"description\": \"awgment-manage-groups\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"14ce7d5e-891d-4c1a-834e-0d4d861f6255\",\n        \"name\": \"awgment-manage-themes\",\n        \"description\": \"awgment-manage-themes\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"bbf7f8f1-f885-447f-bcb3-55818cd01ef8\",\n        \"name\": \"awgment-manage-users\",\n        \"description\": \"awgment-manage-users\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"eb3d88ea-6755-4901-99c9-44eaef0bc8d5\",\n        \"name\": \"awgment-modeler-form\",\n        \"description\": \"awgment-modeler-form\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"df9f0d5c-996e-4972-9205-2142c5c40e38\",\n        \"name\": \"awgment-modeler-rule\",\n        \"description\": \"awgment-modeler-rule\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"1b0ba3b9-7d7b-469d-9c9b-361a6b4c376f\",\n        \"name\": \"awgment-modeler-workflow\",\n        \"description\": \"awgment-modeler-workflow\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"64bbb1e5-dfd3-460f-9fca-fe3fccab7f10\",\n        \"name\": \"awgment-rule-all\",\n        \"description\": \"awgment-rule-all\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"a947c8da-7c48-4047-a802-ca6bbbc488c5\",\n        \"name\": \"awgment-rule-engine-all\",\n        \"description\": \"awgment-rule-engine-all\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"67c5e8f9-7ac6-45ac-984a-bf1ccb62d786\",\n        \"name\": \"awgment-runtime-form-all\",\n        \"description\": \"awgment-runtime-form-all\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"82318abe-e2f7-49ce-8db2-e38f2c109be0\",\n        \"name\": \"awgment-util-all\",\n        \"description\": \"awgment-util-all\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"f7bbc03a-3ff9-4f6a-95c0-0dc3f908eb2c\",\n        \"name\": \"awgment-ux-controller-all\",\n        \"description\": \"awgment-ux-controller-all\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    },\n    {\n        \"id\": \"15287043-79e3-4a77-80e9-600e53d9ad49\",\n        \"name\": \"awgment-workflow-all\",\n        \"description\": \"awgment-workflow-all\",\n        \"composite\": false,\n        \"clientRole\": true,\n        \"containerId\": \"8f5be7d9-eec9-4020-baba-6a03e4769f6c\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/users/{{userId}}/role-mappings/clients/{{camundaClientId}}/available",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"auth",
+						"admin",
+						"realms",
+						"{{realm}}",
+						"users",
+						"{{userId}}",
+						"role-mappings",
+						"clients",
+						"{{camundaClientId}}",
+						"available"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Awgment Roles Copy",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{camundaRoles}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/users/{{userId}}/role-mappings/clients/{{camundaClientId}}",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"auth",
+						"admin",
+						"realms",
+						"{{realm}}",
+						"users",
+						"{{userId}}",
+						"role-mappings",
+						"clients",
+						"{{camundaClientId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GroupDetails",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData=JSON.parse(responseBody);",
+							"pm.environment.set(\"groupId\", jsonData[0].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/groups?first=0&max=20&search=camunda-admin",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"auth",
+						"admin",
+						"realms",
+						"{{realm}}",
+						"groups"
+					],
+					"query": [
+						{
+							"key": "first",
+							"value": "0"
+						},
+						{
+							"key": "max",
+							"value": "20"
+						},
+						{
+							"key": "search",
+							"value": "camunda-admin"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Groups",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{keycloak_url}}/auth/admin/realms/{{realm}}/users/{{userId}}/groups/{{groupId}}",
+					"host": [
+						"{{keycloak_url}}"
+					],
+					"path": [
+						"auth",
+						"admin",
+						"realms",
+						"{{realm}}",
+						"users",
+						"{{userId}}",
+						"groups",
+						"{{groupId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
