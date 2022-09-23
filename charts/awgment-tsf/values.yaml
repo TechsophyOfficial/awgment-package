@@ -8,7 +8,7 @@ coreui:
   name: core-ui
   image:
     repository: techsophyofficial/awgment-ui-core
-    tag: v0.1.0-beta
+    tag: v0.0.0-alpha.0
     configMapRef: ui-env
   service:
     type: ClusterIP
@@ -18,7 +18,7 @@ formmodeler:
   name: form-modeler
   image:
     repository: techsophyofficial/awgment-modeler-form
-    tag: v0.1.0-beta
+    tag: v0.0.0-alpha.0
     configMapRef: ui-env    
   service:
     type: ClusterIP
@@ -28,7 +28,7 @@ rulemodeler:
   name: rule-modeler
   image:
     repository: techsophyofficial/awgment-modeler-rule
-    tag: v0.1.0-beta
+    tag: v0.0.0-alpha.0
     configMapRef: ui-env  
   service:
     type: ClusterIP
@@ -38,7 +38,7 @@ workflowmodeler:
   name: workflow-modeler
   image:
     repository: techsophyofficial/awgment-modeler-workflow
-    tag: v0.1.0-beta
+    tag: v0.0.0-alpha.0
     configMapRef: ui-env  
   service:
     type: ClusterIP
@@ -48,7 +48,7 @@ accountui:
   name: account-ui
   image:
     repository: techsophyofficial/awgment-ui-account
-    tag: v0.1.0-beta
+    tag: v0.0.0-alpha.0
     configMapRef: ui-env
   service:
     type: ClusterIP
@@ -58,7 +58,7 @@ caseui:
   name: case-ui
   image:
     repository: techsophyofficial/awgment-ui-case
-    tag: v0.1.0-beta
+    tag: v0.0.0-alpha.0
     configMapRef: ui-env
   service:
     type: ClusterIP
@@ -70,7 +70,7 @@ configserver:
   name: cloud-config-server
   image:
     repository: techsophyofficial/awgment-cloud-config-server
-    tag: v0.1.0-beta
+    tag: v0.0.0-alpha.0
     configMapRef: augmnt-env  
   service:
     type: ClusterIP
@@ -80,7 +80,7 @@ gateway:
   name: gateway
   image:
     repository: techsophyofficial/awgment-api-gateway
-    tag: v0.1.0-beta
+    tag: v0.0.0-alpha.0
     configMapRef: augmnt-env
     applicationfile: applicationfile   
   service:
@@ -93,7 +93,7 @@ formapp:
   name: form-app
   image:
     repository: techsophyofficial/awgment-app-form
-    tag: v0.1.0-beta
+    tag: v0.0.0-alpha.0
     configMapRef: augmnt-env  
   service:
     type: ClusterIP
@@ -103,7 +103,7 @@ ruleapp:
   name: rule-app
   image:
     repository: techsophyofficial/awgment-app-rule
-    tag: v0.1.0-beta
+    tag: v0.0.0-alpha.0
     configMapRef: augmnt-env  
   service:
     type: ClusterIP
@@ -113,7 +113,7 @@ workflowapp:
   name: workflow-app
   image:
     repository: techsophyofficial/awgment-app-workflow
-    tag: v0.1.0-beta
+    tag: v0.0.0-alpha.0
     configMapRef: augmnt-env   
   service:
     type: ClusterIP
@@ -123,7 +123,7 @@ accountapp:
   name: account-app
   image:
     repository: techsophyofficial/awgment-app-account
-    tag: v0.1.0-beta
+    tag: v0.0.0-alpha.0
     configMapRef: augmnt-env   
   service:
     type: ClusterIP
@@ -140,7 +140,7 @@ uxappcontroller:
   name: uxapp-controller
   image:
     repository: techsophyofficial/awgment-app-ux-controller
-    tag: v0.1.0-beta
+    tag: v0.0.0-alpha.0
     configMapRef: augmnt-env
   service:
     type: ClusterIP
@@ -150,7 +150,7 @@ workflowengine:
   name: workflow-engine
   image:
     repository: techsophyofficial/awgment-workflow-engine
-    tag: v0.1.0-beta
+    tag: v0.0.0-alpha.0
     configMapRef: augmnt-env   
   service:
     type: ClusterIP
@@ -160,7 +160,7 @@ runtimeformapp:
   name: runtime-form-app
   image:
     repository: techsophyofficial/awgment-app-runtime-form
-    tag: v0.1.0-beta
+    tag: v0.0.0-alpha.0
     configMapRef: augmnt-env  
   service:
     type: ClusterIP
@@ -170,7 +170,7 @@ ruleengine:
   name: rules
   image:
     repository: techsophyofficial/awgment-rule-engine
-    tag: v0.1.0-beta
+    tag: v0.0.0-alpha.0
     configMapRef: augmnt-env
   service:
     type: ClusterIP
@@ -180,7 +180,7 @@ utilapp:
   name: util-app
   image:
     repository: techsophyofficial/awgment-app-util
-    tag: v0.1.0-beta
+    tag: v0.0.0-alpha.0
     configMapRef: augmnt-env
   service:
     type: ClusterIP
