@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: postgres
+  template:
+    metadata:
+      labels:
+        name: postgres
+    spec:
+      containers:
+      - image: postgres:12.11
+        name: postgres
+        envFrom:
+        - configMapRef:
+            name: postgres-config         
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - mountPath: "/var/lib/postgresql/data"
+          name: postgres-keycloak-paisa
+          subPath: postgres
+      initContainers:
+      - name: pgsql-data-permission-fix
+        image: busybox
+        command: ["/bin/chmod","-R","777", "/data"]
+        volumeMounts:
+        - name: postgres-keycloak-paisa
+          mountPath: /data
+      volumes:
+       - name: postgres-keycloak-paisa
+         persistentVolumeClaim:
+           claimName: postgres-keycloack-volume-paisa
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: dev
+spec:
+  type: NodePort
+  ports:
+    - port: 5432
+      nodePort: 30020
+  selector:
+    name: postgres
