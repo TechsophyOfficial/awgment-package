@@ -1,0 +1,54 @@
+namespace: dev
+accountapp:
+  registration:
+    email: "noreply-tsf@gmail.com"
+
+keycloak:
+  adminUser: admin
+  adminPassword: Admin@^&%$
+  client:
+    secret: 0ef502e1-567a-48cf-ae56-7e1a5bdfe3c4  
+  db:   
+    host: postgres:5432 
+    user: postgresadmin
+    password: Po$^&r#$qL!7*9#
+    name: keycloakdb
+    vendor: postgres
+  url: http://auth.146.190.10.81.nip.io
+  
+mongo:
+   url: mongodb://tp_modeler:T3ch%21%23%40%5E%26o%2A@mongo-0.mongo:27017,mongo-1.mongo:27017/
+postgres:
+     camunda:
+         dburl: jdbc:postgresql://postgres:5432/camundadb
+         user: postgresadmin
+         password: Po$^&r#$qL!7*9#
+         database: camundadb
+         
+cloudconfig:
+   url: https://github.com/TechsophyOfficial/tp-cloud-config.git
+   user: test
+   password: test
+
+
+ingress:
+   clusterissuer:
+     issuer: selfsigned-issuer
+    #  dev: letsencrypt-dev
+    #  uat: letsencrypt-staging
+    #  prod: letsencrypt-prod  
+   hosts:
+     keycloak: auth.146.190.10.81.nip.io
+     gateway: api.146.190.10.81.nip.io
+     tsffrontend: awgment.146.190.10.81.nip.io
+     camunda: camunda.146.190.10.81.nip.io
+   urls:
+     keycloak: http://auth.146.190.10.81.nip.io/
+     gateway: http://api.146.190.10.81.nip.io
+     tsffrontend: http://awgment.146.190.10.81.nip.io 
+     camunda:  http://awgment.146.190.10.81.nip.io/camunda
+   secretname:
+     keycloak: local-augmnt
+     gateway: local-augmnt
+     tsffrontend: local-augmnt
+     camunda: local-augmnt

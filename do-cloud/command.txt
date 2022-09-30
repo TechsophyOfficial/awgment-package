@@ -1,0 +1,3 @@
+helm install -f do-cloud/cluster.values.yaml keycloak-tsf charts/keycloak-tsf/
+
+helm install -f do-cloud/cluster.values.yaml awgment-tsf charts/awgment-tsf/
