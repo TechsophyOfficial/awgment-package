@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: install-admin
+  namespace: dev
+spec:
+  backoffLimit: 2
+  ttlSecondsAfterFinished: 86400
+  template:
+    spec:
+      restartPolicy: Never    
+      containers:
+      - name: run-postman
+        image: postman/newman:alpine
+        command: ["newman"]
+        args:
+        - "run"
+        - "keycloak_clientscopes.postman_collection.json"
+        - "-k"
+        - "--env-var"
+        - "username=$(KEYCLOAK_USER)"
+        - "--env-var"
+        - "password=$(KEYCLOAK_PASSWORD)"
+        - "--env-var"
+        - "keycloak_url=$(KEYCLOAK_URL)"
+        - "--env-var"
+        - "realm=$(KEYCLOAK_REALM)"
+        envFrom:
+          - configMapRef:
+              name: keycloak-env
+        volumeMounts:
+        - mountPath: /etc/newman
+          name: postman-collections        
+      volumes:
+      - name: postman-collections
+        configMap:
+          # name: awgment-admin-configmap
+          name: admin-config
+          items:
+            - key: keycloak_clientscopes.postman_collection.json
+              path: keycloak_clientscopes.postman_collection.json

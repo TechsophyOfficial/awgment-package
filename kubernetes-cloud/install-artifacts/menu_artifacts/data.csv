@@ -1,0 +1,8 @@
+Id,Type,Label,Url,Role
+961523592173740032,component,Workflow Modeler,workflow-modeler,awgment-modeler-workflow
+961524713894207488,component,Rule Modeler,rule-modeler,awgment-modeler-rule
+961525647365922816,component,Form Modeler,form-modeler,awgment-modeler-form
+961540897133846528,component,Manage Themes,manage-themes,awgment-manage-themes
+963468630177763328,component,Manage Groups,accounts/groups,awgment-manage-groups
+963469471802609664,component,Manage Users,accounts/users,awgment-manage-users
+963470104953769984,component,Case Inbox,caseInbox,awgment-case-inbox

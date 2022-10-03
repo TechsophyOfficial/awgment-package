@@ -11,60 +11,33 @@ The below readme assumes some understanding of kubernetes and helm, please refer
 3. [Kubectl](https://kubernetes.io/docs/tasks/tools/)
 4. [Helm](https://helm.sh/docs/intro/install/)
 
-Git clone this repository on your local.
-
-Notes-
-If you get errors for open file handles
-```
-        "too many open files"
-```
-Set the following on your system settings
-```
-sudo sysctl fs.inotify.max_user_watches=524288
-sudo sysctl fs.inotify.max_user_instances=512
-```
-Please refer to [Troubleshooting](#troubleshooting) for solution to common issues.
 
 ## setup kubernetes for awgment on cloud
 
-Goto the kind-linux-local folder under package repo
-<p/>
+Create local directory (.kube) and keep the required config file in the directory to access to that kubernetes cluster.
 
+Now you will be accessed to k8’s cluster. Check the access by running the command below.
 ```
-                awgment-package$ cd kind-linux-local/
+   Kubectl get nodes
 ```
 
-Edit file localEnv.sh to manage your environment ports, below defaults are used, if they are already bound please change them.
-
-```
-        export reg_name='kind-registry'
-        export reg_port='5001'
-        export http_port=8080
-
-```
 To create namespace for cluster run the following script
 ```
         kubectl create namespace dev
         Kubectl get namespace  
 ```
-Execute the following commands to create kind cluster and set it up with basic installations including nginx controller.
-<p>
-
-```        
-        awgment-package/kind-linux-local$ ./setupLocalKind.sh
-```
-</p>
+# clone the awgment Repository:
+git clone https://github.com/TechsophyOfficial/awgment-package.git
 
 ## Deploy postgres pod:
 Run below script to run postgres pod
 
 ```
 
-        awgment-package$cd kubernates-linux/
-        awgment-package/kubernates-linux$cd cloud/
-        awgment-package/kubernates-linux/cloud$ cd dependencies/
-        awgment-package/kubernates-linux/cloud/dependencies/kubectl apply  -f postgres-deployment.yaml -n dev
-        awgment-package/kubernates-linux/cloud/dependencies/kubectl apply –f postgres-config.yaml -n dev
+        awgment-package$cd kubernetes-cloud/
+        awgment-package/kubernetes-cloud$ cd dependencies/
+        awgment-package/kubernetes-cloud/dependencies/kubectl apply  -f postgres-deployment.yaml -n dev
+        awgment-package/kubernetes-cloud/dependencies/kubectl apply –f postgres-config.yaml -n dev
 
 ```
 Run below script to connect to the postgres pod
@@ -79,11 +52,10 @@ Run below script to run mongodb pod
 
 ```
 
-        awgment-package$cd kubernates-linux/
-        awgment-package/kubernates-linux$cd cloud/
-        awgment-package/kubernates-linux/cloud$ cd dependencies/
-        awgment-package/kubernates-linux/cloud/dependencies/kubectl apply –f  mongo-deployment.yaml -n dev
-        awgment-package/kubernates-linux/cloud/dependencies/kubectl apply –f mongo-config.yaml -n dev
+        awgment-package$cd kubernetes-cloud/
+        awgment-package/kubernetes-cloud$ cd dependencies/
+        awgment-package/kubernetes-cloud/dependencies/kubectl apply –f  mongo-deployment.yaml -n dev
+        awgment-package/kubernetes-cloud/dependencies/kubectl apply –f mongo-config.yaml -n dev
 
 ```
 Run below script to connect to the mongodb pod
@@ -94,7 +66,7 @@ Run below script to connect to the mongodb pod
 Enter 'mongo' to connect to the shell
 
 Run below commands in primary mongo shell
-
+```
 rs.initiate()
 
 var cfg = rs.conf()
@@ -104,7 +76,7 @@ cfg.members[0].host="mongo-0.mongo:27017"
 rs.reconfig(cfg)
 
 rs.status()
-
+```
 Create tp_modeler user to the admin database:
 Run the below script :
 ```
@@ -122,9 +94,19 @@ db.createUser(
 
 ) 
 ```
+## Install nginx ingress on  kubernetes:
+for install nginx run below command
+```
+   kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.44.0/deploy/static/provider/cloud/deploy.yaml
+```
+Run below command to access the loadbalancer IP:
+```
+   kubectl get  svc -n ingress-nginx
+```
+## Deploy keycloak
+Update cluster.values.yaml with your environment details for postgres and mongo in below properties
 
-## install keycloak
-Update local.values.yaml with your environment details for postgres and mongo in below properties
+Replace the IP with your loadbalancer ip in the cluster.values.yaml file
 ```
 keycloak:
   adminUser: admin
@@ -137,24 +119,8 @@ keycloak:
     password: <POSTGRES_PASSWORD>
     name: keycloakdb
     vendor: postgres
-  url: http://<you ip like 192.168.1.16>:8888
+  url: <LoadBalancer Ip>
   
-mongo:
-   url: mongodb+srv://<username>:<password>@<mongo.cluster.com>:27017/?retryWrites=true
-postgres:
-     camunda:
-         dburl: jdbc:postgresql://<POSTGRES_HOST>:5432/camundadb
-         user: <POSTGRES_USER>
-         password: <POSTGRES_PASSWORD>
-         database: camundadb
-ingress:
-# other properties
-#
-#
-  urls:
-   keycloak: http://<your ip like 192.168.1.101>:8888
-
-
 ```
 <br/>
 Install keycloak via helm chart
@@ -162,7 +128,7 @@ Install keycloak via helm chart
 
 ```
         cd <awgment-package repo folder>
-        awgment-package$ helm install -f do-cloud/cluster.values.yaml keycloak-tsf charts/keycloak-tsf/ -n dev
+        awgment-package$ helm install -f kubernetes-cloud/cluster.values.yaml keycloak-tsf charts/keycloak-tsf/ -n dev
 ```
 
 
@@ -225,7 +191,7 @@ Further steps currently use above details, please reset the password AFTER  fini
 Install awgment chart
 ```
         cd <awgment-package repo folder>
-        awgment-package$ helm install -f do-cloud/cluster.values.yaml awgment-tsf charts/awgment-tsf/ -n dev
+        awgment-package$ helm install -f kubernetes-cloud/cluster.values.yaml awgment-tsf charts/awgment-tsf/ -n dev
 ```
 
 <br/>
