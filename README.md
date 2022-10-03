@@ -4,21 +4,14 @@ Package awgment
 The below readme assumes some understanding of kubernetes and helm, please refer [Troubleshooting](#troubleshooting) for some helpful links to beginners.
 
 
-# Deployment - local linux machine using Kind
+# Deployment of awgment kubernets in cloud
 ## Prerequisite
 
 1. Linux OS
-2. [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/)
 3. [Kubectl](https://kubernetes.io/docs/tasks/tools/)
 4. [Helm](https://helm.sh/docs/intro/install/)
-5. Postgres db
-6. [Mongodb](https://www.mongodb.com/atlas/database) with transactions support 
 
 Git clone this repository on your local.
-
-Create two databases in postgres and a user with appropriate priviledges
-- For keycloak - keycloakdb
-- For Camunda - camundadb
 
 Notes-
 If you get errors for open file handles
@@ -32,8 +25,7 @@ sudo sysctl fs.inotify.max_user_instances=512
 ```
 Please refer to [Troubleshooting](#troubleshooting) for solution to common issues.
 
-
-## setup kind for awgment on linux
+## setup kubernetes for awgment on cloud
 
 Goto the kind-linux-local folder under package repo
 <p/>
@@ -50,11 +42,11 @@ Edit file localEnv.sh to manage your environment ports, below defaults are used,
         export http_port=8080
 
 ```
-<p>
-Please ensure that the database (mongo and postgres) are allowed in your firewall and you are able to connect using default clients with IP details.<br/>
-
-Please refer to [Troubleshooting](#troubleshooting) for solution to common issues.
-</p>
+To create namespace for cluster run the following script
+```
+        kubectl create namespace dev
+        Kubectl get namespace  
+```
 Execute the following commands to create kind cluster and set it up with basic installations including nginx controller.
 <p>
 
@@ -62,6 +54,74 @@ Execute the following commands to create kind cluster and set it up with basic i
         awgment-package/kind-linux-local$ ./setupLocalKind.sh
 ```
 </p>
+
+## Deploy postgres pod:
+Run below script to run postgres pod
+
+```
+
+        awgment-package$cd kubernates-linux/
+        awgment-package/kubernates-linux$cd cloud/
+        awgment-package/kubernates-linux/cloud$ cd dependencies/
+        awgment-package/kubernates-linux/cloud/dependencies/kubectl apply  -f postgres-deployment.yaml -n dev
+        awgment-package/kubernates-linux/cloud/dependencies/kubectl apply –f postgres-config.yaml -n dev
+
+```
+Run below script to connect to the postgres pod
+
+```
+         kubectl exec –it <postgres-pod name> bin/bash -n dev
+         psql  -U postgresadmin postgres 
+```
+create camundadb and keycloakdb here and then grant all permissions here
+## Deploy Mongodb pod:
+Run below script to run mongodb pod
+
+```
+
+        awgment-package$cd kubernates-linux/
+        awgment-package/kubernates-linux$cd cloud/
+        awgment-package/kubernates-linux/cloud$ cd dependencies/
+        awgment-package/kubernates-linux/cloud/dependencies/kubectl apply –f  mongo-deployment.yaml -n dev
+        awgment-package/kubernates-linux/cloud/dependencies/kubectl apply –f mongo-config.yaml -n dev
+
+```
+Run below script to connect to the mongodb pod
+
+```
+         kubectl exec –it <mongo-pod name> bin/bash -n dev
+```
+Enter 'mongo' to connect to the shell
+
+Run below commands in primary mongo shell
+
+rs.initiate()
+
+var cfg = rs.conf()
+
+cfg.members[0].host="mongo-0.mongo:27017"
+
+rs.reconfig(cfg)
+
+rs.status()
+
+Create tp_modeler user to the admin database:
+Run the below script :
+```
+db.createUser( 
+
+   { 
+
+     user: "tp_modeler", 
+
+     pwd: "T3ch!#@^&o*", 
+
+     roles: [ { role: "dbOwner", db: "admin" } ] 
+
+   } 
+
+) 
+```
 
 ## install keycloak
 Update local.values.yaml with your environment details for postgres and mongo in below properties
@@ -101,8 +161,8 @@ Install keycloak via helm chart
 <br/>
 
 ```
-        cd awgment-package repo folder>
-        awgment-package$ helm install -f kind-linux-local/local.values.yaml keycloak-tsf charts/keycloak-tsf/
+        cd <awgment-package repo folder>
+        awgment-package$ helm install -f kind-linux-local/local.values.yaml keycloak-tsf charts/keycloak-tsf/ -n dev
 ```
 
 
@@ -145,38 +205,6 @@ Oops, you are here. If pod errors out, please check the logs to identify the iss
 ```
 
 
-
-## keycloak dns work around
-As we are installing keycloak in a local environment without a dns, we need to use port forwarding feature to manage traffic to keycloak from both internal pods and external browser.
-<br/>
-The script `runKeycloak.sh` opens a port 8888 on your local machine that redirects traffic to keycloak service. Run the same from awgment-package folder
-<br/>
-
-```
-        cd awgment-package repo folder>
-        awgment-package$ ./runKeycloak.sh
-```
-
-The above shall open port 8888 on your local machine.<br/>
-Verify the installation by logging into keycloak at `http://<your ip>:8888` with `keycloak.adminUser` and `keycloak.adminPassword` as per your local.values.yaml file.<br/>
-Please ensure to update local.values.yaml with keycloak url before proceeding to further steps as depicted below
-<br/>
-You can regenerate the  client secret for camunda-identity-service and update the same values in your local.values.yaml file under `keycloak.client.secret` before proceeding to the next steps to enhance security. 
-<br/>
-This is highly recommended for production deployments.
-```
-keycloak:
-  client:
-    secret: 0ef502e1-567a-48cf-ae56-7e1a5bdfe3c4  
-  url: http://<your ip like 192.168.1.101>:8888
-# other properties
-#
-#
-ingress:
-  urls:
-   keycloak: http://<your ip like 192.168.1.101>:8888
-```
-
 ## add admin user
 
 Run below script to add an admin user for awgment
@@ -197,7 +225,7 @@ Further steps currently use above details, please reset the password AFTER  fini
 Install awgment chart 
 ```
         cd <awgment-package repo folder>
-        awgment-package$ helm install -f kind-linux-local/local.values.yaml awgment-tsf charts/awgment-tsf/
+        awgment-package$ helm install -f kind-linux-local/local.values.yaml awgment-tsf charts/awgment-tsf/ -n dev
 ```
 
 <br/>
