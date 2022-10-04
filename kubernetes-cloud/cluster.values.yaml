@@ -8,22 +8,22 @@ keycloak:
   adminPassword: Admin@^&%$
   client:
     secret: 0ef502e1-567a-48cf-ae56-7e1a5bdfe3c4  
-  db:   
-    host: postgres:5432 
-    user: postgresadmin
-    password: Po$^&r#$qL!7*9#
+  db:
+    host: <POSTGRES_HOST>:5432
+    user: <POSTGRES_USER>
+    password: <POSTGRES_PASSWORD>
     name: keycloakdb
     vendor: postgres
-  url: http://auth.146.190.10.81.nip.io
+  url: http://<LoadBalancerIp>
   
 mongo:
-   url: mongodb://tp_modeler:T3ch%21%23%40%5E%26o%2A@mongo-0.mongo:27017,mongo-1.mongo:27017/
+   url: mongodb+srv://<username>:<password>@<mongo.cluster.com>:27017/?retryWrites=true
 postgres:
-     camunda:
-         dburl: jdbc:postgresql://postgres:5432/camundadb
-         user: postgresadmin
-         password: Po$^&r#$qL!7*9#
-         database: camundadb
+  camunda:
+    dburl: jdbc:postgresql://<POSTGRES_HOST>:5432/camundadb
+    user: <POSTGRES_USER>
+    password: <POSTGRES_PASSWORD>
+    database: camundadb
          
 cloudconfig:
    url: https://github.com/TechsophyOfficial/tp-cloud-config.git

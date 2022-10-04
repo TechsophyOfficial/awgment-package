@@ -2,7 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: install-admin
-  namespace: dev
+#  namespace: dev
 spec:
   backoffLimit: 2
   ttlSecondsAfterFinished: 86400

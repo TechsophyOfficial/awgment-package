@@ -26,19 +26,23 @@ To create namespace for cluster run the following script
         kubectl create namespace dev
         Kubectl get namespace  
 ```
-# clone the awgment Repository:
+# clone the awgment Repository
 git clone https://github.com/TechsophyOfficial/awgment-package.git
 
-## Deploy postgres pod:
+## Deploy postgres pod
 Run below script to run postgres pod
 
 ```
 
         awgment-package$cd kubernetes-cloud/
         awgment-package/kubernetes-cloud$ cd dependencies/
-        awgment-package/kubernetes-cloud/dependencies/kubectl apply  -f postgres-deployment.yaml -n dev
-        awgment-package/kubernetes-cloud/dependencies/kubectl apply –f postgres-config.yaml -n dev
+        awgment-package/kubernetes-cloud/dependencies$ kubectl apply  -f postgres-deployment.yaml -n dev
+        awgment-package/kubernetes-cloud/dependencies$ kubectl apply –f postgres-config.yaml -n dev
 
+```
+Run below script to get all pods
+```
+ kubectl get pods -n dev
 ```
 Run below script to connect to the postgres pod
 
@@ -46,7 +50,18 @@ Run below script to connect to the postgres pod
          kubectl exec –it <postgres-pod name> bin/bash -n dev
          psql  -U postgresadmin postgres 
 ```
-create camundadb and keycloakdb here and then grant all permissions here
+Run below command to create keycloakdb
+```
+   create database keycloakdb;
+```
+grant all privileges on database keycloakdb to postgresadmin
+
+Run below command to create keycloakdb
+```
+   create database camundadb; 
+```
+grant all privileges on database camundadb to postgresadmin
+
 ## Deploy Mongodb pod:
 Run below script to run mongodb pod
 
@@ -54,8 +69,8 @@ Run below script to run mongodb pod
 
         awgment-package$cd kubernetes-cloud/
         awgment-package/kubernetes-cloud$ cd dependencies/
-        awgment-package/kubernetes-cloud/dependencies/kubectl apply –f  mongo-deployment.yaml -n dev
-        awgment-package/kubernetes-cloud/dependencies/kubectl apply –f mongo-config.yaml -n dev
+        awgment-package/kubernetes-cloud/dependencies$ kubectl apply –f  mongo-deployment.yaml -n dev
+        awgment-package/kubernetes-cloud/dependencies$ kubectl apply –f mongo-config.yaml -n dev
 
 ```
 Run below script to connect to the mongodb pod
@@ -63,9 +78,13 @@ Run below script to connect to the mongodb pod
 ```
          kubectl exec –it <mongo-pod name> bin/bash -n dev
 ```
-Enter 'mongo' to connect to the shell
+Enter 'mongo' here to connect to the shell
+```
+ root@mongo-0:/# mongo
+```
 
-Run below commands in primary mongo shell
+Run below commands in primary mongo shell(rs0:PRIMARY>)
+
 ```
 rs.initiate()
 
@@ -77,7 +96,8 @@ rs.reconfig(cfg)
 
 rs.status()
 ```
-Create tp_modeler user to the admin database:
+Create tp_modeler user to the admin database.
+
 Run the below script :
 ```
 db.createUser( 
@@ -94,7 +114,7 @@ db.createUser(
 
 ) 
 ```
-## Install nginx ingress on  kubernetes:
+## Install nginx ingress on  kubernetes
 for install nginx run below command
 ```
    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.44.0/deploy/static/provider/cloud/deploy.yaml
@@ -103,6 +123,14 @@ Run below command to access the loadbalancer IP:
 ```
    kubectl get  svc -n ingress-nginx
 ```
+After excution of above command the output will be look like this.
+```
+NAME                                 TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S)                      AGE
+ingress-nginx-controller             LoadBalancer   10.245.213.199   64.72.43.23     80:31606/TCP,443:30047/TCP   5d23h
+ingress-nginx-controller-admission   ClusterIP      10.245.88.198    <none>          443/TCP                      5d23h
+
+```
+
 ## Deploy keycloak
 Update cluster.values.yaml with your environment details for postgres and mongo in below properties
 
@@ -154,7 +182,7 @@ Above shall import a `techsophy-platform` realm.
 After Verification, Wait for few minutes and check if keycloak pods are running.
 </br>
 ``` 
-        awgment-package$ kubectl get pods
+        awgment-package$ kubectl get pods -n dev
 ```
 
 If the status for the listed keycloak pods is running as example below, then skip the next step.
@@ -167,7 +195,7 @@ Oops, you are here. If pod errors out, please check the logs to identify the iss
 <br/>
 
 ```
-        awgment-package$ kubectl logs <pod name>
+        awgment-package$ kubectl logs <pod name> -n dev
 ```
 
 
@@ -215,7 +243,7 @@ After Verification, check if all pods are running.
 </br>
 ```
         cd awgment-package repo folder>
-        awgment-package$ kubectl get pods
+        awgment-package$ kubectl get pods - n dev
 ```
 
 If the status for all listed pods is running as example below, then skip the next step.
@@ -230,6 +258,9 @@ If the status for all listed pods is running as example below, then skip the nex
         form-modeler-5448cdf575-mqb6d          1/1     Running   0               5m11s
         gateway-85df6ffb9c-jwvln               1/1     Running   0               5m11s
         keycloak-94f8bd648-5lsrr               1/1     Running   0               6m47s
+        mongo-0                                1/1     Running   0               4d23h
+        mongo-1                                1/1     Running   0               4d23h
+        postgres-8576996c8b-sgkbs              1/1     Running   0               7d18h
         rule-app-5f748cc976-gpcbn              1/1     Running   1 (3m46s ago)   5m11s
         rule-modeler-c689cbb79-7n6vv           1/1     Running   0               5m11s
         rules-857b8d5859-kj2vp                 1/1     Running   1 (4m40s ago)   5m11s
@@ -247,7 +278,7 @@ Oops, you are here. It seems all pods are not in running status.
 
 ```
         cd awgment-package repo folder>
-        awgment-package$ kubectl logs <pod name>
+        awgment-package$ kubectl logs <pod name> - n dev
 ```
 
 See the status and check what blocks the pod to run.
@@ -262,7 +293,7 @@ Run below script to install default menus for awgment
         awgment-package/install-artifacts$ ./setup-menu.sh
 ```
 
-To do this step manually if variation are required in future, please refer the files and steps under [install-artifacts/menu_artifacts](install-artifacts/menu_artifacts) to install menu items.
+To do this step manually if variation are required in future, please refer the files and steps under [awgment-package/install-artifacts/menu_artifacts](awgment-package/install-artifacts/menu_artifacts) to install menu items.
 
 
 ## Post install
