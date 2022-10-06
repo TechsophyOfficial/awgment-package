@@ -206,7 +206,7 @@ Run below script to add an admin user for awgment
 
 ```
         awgment-package$ cd install-artifacts/
-        awgment-package/install-artifacts$ ./setup-keycloak-admin.sh
+        awgment-package/install-artifacts$ ./setup-keycloak-admin.sh -n dev
 ```
 Above shall add a default user to the techsophy-platform realm.<br/>
 ```
@@ -290,7 +290,7 @@ Run below script to install default menus for awgment
 
 ```
         awgment-package$ cd install-artifacts/
-        awgment-package/install-artifacts$ ./setup-menu.sh
+        awgment-package/install-artifacts$ ./setup-menu.sh -n dev
 ```
 
 To do this step manually if variation are required in future, please refer the files and steps under [awgment-package/install-artifacts/menu_artifacts](awgment-package/install-artifacts/menu_artifacts) to install menu items.
