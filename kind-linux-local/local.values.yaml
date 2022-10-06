@@ -8,18 +8,18 @@ keycloak:
   client:
     secret: 0ef502e1-567a-48cf-ae56-7e1a5bdfe3c4
   db:
-    host: 192.168.225.45:5433
-    user: postgres
-    password: password
+    host: <POSTGRES_HOST>:<POSTGRES:PORT> 
+    user: <POSTGRES_USER>
+    password: <POSTGRES_PASSWORD>
     name: keycloakdb
     vendor: postgres
-  url: http://192.168.225.45:8888
+  url: http://<you ip like 192.168.1.16>:8888
 
 mongo:
-    url: mongodb+srv://nandini:Nandini%40abc123@cluster0.sp7dq.mongodb.net/test
+    url: mongodb+srv://<username>:<password>@<mongo.cluster.com>:27017/?retryWrites=truet
 postgres:
   camunda:
-     dburl: jdbc:postgresql://192.168.225.45:5433/camundadb
+     dburl: jdbc:postgresql://<POSTGRES_HOST>:<POSTGRES:PORT>/camundadb
      user: postgres
      password: password
      database: camundadb
@@ -45,7 +45,7 @@ ingress:
     tsffrontend: awgment.172.17.0.1.nip.io
     camunda: camunda.172.17.0.1.nip.io
   urls:
-    keycloak: http://192.168.225.45:8888/
+    keycloak: http://<you ip like 192.168.1.16>:8888
     gateway: http://api.172.17.0.1.nip.io:8080
     tsffrontend: http://awgment.172.17.0.1.nip.io:8080
     camunda:  http://awgment.172.17.0.1.nip.io:8080/
