@@ -16,7 +16,7 @@ keycloak:
   url: http://<you ip like 192.168.1.16>:8888
 
 mongo:
-    url: mongodb+srv://<username>:<password>@<mongo.cluster.com>:27017/?retryWrites=truet
+    url: mongodb+srv://<username>:<password>@<mongo.cluster.com>:27017/?retryWrites=true
 postgres:
   camunda:
      dburl: jdbc:postgresql://<POSTGRES_HOST>:<POSTGRES:PORT>/camundadb
