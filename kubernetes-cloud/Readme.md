@@ -294,7 +294,13 @@ Run below script to install default menus for awgment
 ```
 
 To do this step manually if variation are required in future, please refer the files and steps under [awgment-package/install-artifacts/menu_artifacts](awgment-package/install-artifacts/menu_artifacts) to install menu items.
+Now check the awgment menus
+```
+ by hitting "awgment.<LoadBalancer Ip>.nip.io/model"
+```
 
+Username:admin
+Password:admin
 
 ## Post install
 Check for any jobs using kubectl and delete them

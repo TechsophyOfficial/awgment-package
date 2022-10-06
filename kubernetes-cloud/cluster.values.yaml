@@ -38,15 +38,15 @@ ingress:
     #  uat: letsencrypt-staging
     #  prod: letsencrypt-prod  
    hosts:
-     keycloak: auth.146.190.10.81.nip.io
-     gateway: api.146.190.10.81.nip.io
-     tsffrontend: awgment.146.190.10.81.nip.io
-     camunda: camunda.146.190.10.81.nip.io
+     keycloak:  http://<LoadBalancerIp>
+     gateway:  http://<LoadBalancerIp>
+     tsffrontend:  http://<LoadBalancerIp>
+     camunda:  http://<LoadBalancerIp>
    urls:
-     keycloak: http://auth.146.190.10.81.nip.io/
-     gateway: http://api.146.190.10.81.nip.io
-     tsffrontend: http://awgment.146.190.10.81.nip.io 
-     camunda:  http://awgment.146.190.10.81.nip.io/camunda
+     keycloak:  http://<LoadBalancerIp>
+     gateway:  http://<LoadBalancerIp>
+     tsffrontend:  http://<LoadBalancerIp>
+     camunda:   http://<LoadBalancerIp>
    secretname:
      keycloak: local-augmnt
      gateway: local-augmnt
