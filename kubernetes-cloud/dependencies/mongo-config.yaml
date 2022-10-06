@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongo
+  labels:
+    app: mongo
+data:
+  MONGO_INITDB_ROOT_USERNAME: tp_modeler
+  MONGO_INITDB_ROOT_PASSWORD: T3ch!#@^&o*
+  MONGO_INITDB__DATABASE: tp_modeler
+
