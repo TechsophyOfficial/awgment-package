@@ -12,7 +12,7 @@ The below readme assumes some understanding of kubernetes and helm, please refer
 3. [Kubectl](https://kubernetes.io/docs/tasks/tools/)
 4. [Helm](https://helm.sh/docs/intro/install/)
 5. Postgres db
-6. [Mongodb](https://www.mongodb.com/atlas/database) with transactions support 
+6. [Mongodb](https://www.mongodb.com/atlas/database) with transactions support
 
 Git clone this repository on your local.
 
@@ -161,7 +161,7 @@ The above shall open port 8888 on your local machine.<br/>
 Verify the installation by logging into keycloak at `http://<your ip>:8888` with `keycloak.adminUser` and `keycloak.adminPassword` as per your local.values.yaml file.<br/>
 Please ensure to update local.values.yaml with keycloak url before proceeding to further steps as depicted below
 <br/>
-You can regenerate the  client secret for camunda-identity-service and update the same values in your local.values.yaml file under `keycloak.client.secret` before proceeding to the next steps to enhance security. 
+You can regenerate the  client secret for camunda-identity-service and update the same values in your local.values.yaml file under `keycloak.client.secret` before proceeding to the next steps to enhance security.
 <br/>
 This is highly recommended for production deployments.
 ```
@@ -194,7 +194,7 @@ password: admin
 Further steps currently use above details, please reset the password AFTER  finishing the awgment installation.
 
 ## install awgment deployment
-Install awgment chart 
+Install awgment chart
 ```
         cd <awgment-package repo folder>
         awgment-package$ helm install -f kind-linux-local/local.values.yaml awgment-tsf charts/awgment-tsf/
@@ -245,7 +245,7 @@ If the status for all listed pods is running as example below, then skip the nex
         workflow-app-54cfd979fc-nttbd          1/1     Running   0               5m10s
         workflow-engine-b7bf8bbb6-fjcwg        1/1     Running   0               5m10s
         workflow-modeler-6f7488b66-rw28r       1/1     Running   0               5m11s
-        
+
 
 <br/>
 Oops, you are here. It seems all pods are not in running status.
@@ -277,7 +277,7 @@ Check for any jobs using kubectl and delete them
         kubectl get jobs
         kubectl delete jobs <jobname>
 ```
-Reset password for admin user for both realms, specifically if you are using this in a non-local environment 
+Reset password for admin user for both realms, specifically if you are using this in a non-local environment
 - master realm
 - techsophy-platform realm
 
@@ -298,7 +298,7 @@ If you experience higher CPU usage on your system please uninstall the chart via
 **Setting up PostGress DB on local:**
 It should be possible to connect with postgres db via IP address, some link below explain how to allow connection for any/specific ip, please follow as per your version<br/>
 [Postgres Configuration](https://www.vultr.com/docs/install-pgadmin-4-for-postgresql-database-server-on-ubuntu-linux/#2__Change_PostgreSQL_Configurations)
- 
+
 
 **MongoDB set up:**
 Using mongo on local machine -
@@ -318,10 +318,10 @@ commands:
 
 1. install docker(if not installed)
 2. create a docker Group
-        cmd: **sudo groupadd docker**
-3. check your user with below command: **echo $USER** 
+   cmd: **sudo groupadd docker**
+3. check your user with below command: **echo $USER**
 4. excute the command: **sudo usermod -aG docker $USER**
 5. restart your system
 6. open the terminal and try to execute below command without **sudo** it should give some result. it should not give **permission Denied** message.
-        **docker images/ docker ps**
+   **docker images/ docker ps**
 

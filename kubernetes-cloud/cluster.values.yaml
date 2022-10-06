@@ -1,0 +1,54 @@
+namespace: dev
+accountapp:
+  registration:
+    email: "noreply-tsf@gmail.com"
+
+keycloak:
+  adminUser: admin
+  adminPassword: Admin@^&%$
+  client:
+    secret: 0ef502e1-567a-48cf-ae56-7e1a5bdfe3c4  
+  db:
+    host: <POSTGRES_HOST>:5432
+    user: <POSTGRES_USER>
+    password: <POSTGRES_PASSWORD>
+    name: keycloakdb
+    vendor: postgres
+  url: http://<LoadBalancerIp>
+  
+mongo:
+   url: mongodb+srv://<username>:<password>@<mongo.cluster.com>:27017/?retryWrites=true
+postgres:
+  camunda:
+    dburl: jdbc:postgresql://<POSTGRES_HOST>:5432/camundadb
+    user: <POSTGRES_USER>
+    password: <POSTGRES_PASSWORD>
+    database: camundadb
+         
+cloudconfig:
+   url: https://github.com/TechsophyOfficial/tp-cloud-config.git
+   user: test
+   password: test
+
+
+ingress:
+   clusterissuer:
+     issuer: selfsigned-issuer
+    #  dev: letsencrypt-dev
+    #  uat: letsencrypt-staging
+    #  prod: letsencrypt-prod  
+   hosts:
+     keycloak:  http://<LoadBalancerIp>
+     gateway:  http://<LoadBalancerIp>
+     tsffrontend:  http://<LoadBalancerIp>
+     camunda:  http://<LoadBalancerIp>
+   urls:
+     keycloak:  http://<LoadBalancerIp>
+     gateway:  http://<LoadBalancerIp>
+     tsffrontend:  http://<LoadBalancerIp>
+     camunda:   http://<LoadBalancerIp>
+   secretname:
+     keycloak: local-augmnt
+     gateway: local-augmnt
+     tsffrontend: local-augmnt
+     camunda: local-augmnt

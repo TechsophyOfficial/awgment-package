@@ -1,0 +1,56 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongo
+  namespace: dev
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: mongo
+  serviceName: "mongo"
+  template:
+    metadata:
+      labels:
+        name: mongo
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - image: mongo:4.4
+        name: mongo
+        envFrom:
+        - configMapRef:
+            name: mongo
+        command: 
+        - mongod 
+        - "--bind_ip_all"
+        - "--replSet"
+        - rs0
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - name: mongovolumes-replicas-paisa-dev
+          mountPath: /data/db
+  volumeClaimTemplates:
+  - metadata:
+      name: mongovolumes-replicas-paisa-dev
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi        
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo
+  namespace: dev
+spec:
+  type: NodePort
+  ports:
+  - port: 27017
+  selector:
+    name: mongo
