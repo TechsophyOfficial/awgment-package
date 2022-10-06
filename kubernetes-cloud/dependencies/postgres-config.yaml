@@ -8,6 +8,4 @@ data:
   POSTGRES_DB: postgresdb
   POSTGRES_USER: postgresadmin
   POSTGRES_PASSWORD: Po$^&r#$qL!7*9#
-  #ACCESS_KEY: AKIA4YBJW4UJQYH7VDPT 
-  #SECRET_KEY: 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
-  # BUCKETNAME: dmnbkt
+

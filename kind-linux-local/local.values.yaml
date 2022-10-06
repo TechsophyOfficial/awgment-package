@@ -2,53 +2,55 @@ namespace: default
 accountapp:
   registration:
     email: "noreply-tsf@gmail.com"
-
 keycloak:
   adminUser: admin
   adminPassword: Admin@^&%$
   client:
-    secret: 0ef502e1-567a-48cf-ae56-7e1a5bdfe3c4  
-  db:   
-    host: <POSTGRES_HOST>:5432 
-    user: <POSTGRES_USER>
-    password: <POSTGRES_PASSWORD>
+    secret: 0ef502e1-567a-48cf-ae56-7e1a5bdfe3c4
+  db:
+    host: 192.168.225.45:5433
+    user: postgres
+    password: password
     name: keycloakdb
     vendor: postgres
-  url: http://<you ip like 192.168.1.16>:8888
-  
+  url: http://192.168.225.45:8888
+
 mongo:
-   url: mongodb+srv://<username>:<password>@<mongo.cluster.com>:27017/?retryWrites=true
+    url: mongodb+srv://nandini:Nandini%40abc123@cluster0.sp7dq.mongodb.net/test
 postgres:
-     camunda:
-         dburl: jdbc:postgresql://<POSTGRES_HOST>:5432/camundadb
-         user: <POSTGRES_USER>
-         password: <POSTGRES_PASSWORD>
-         database: camundadb
-         
+  camunda:
+     dburl: jdbc:postgresql://192.168.225.45:5433/camundadb
+     user: postgres
+     password: password
+     database: camundadb
+
+
+
+
 cloudconfig:
-   url: https://github.com/TechsophyOfficial/tp-cloud-config.git
-   user: test
-   password: test
+  url: https://github.com/TechsophyOfficial/tp-cloud-config.git
+  user: test
+  password: test
 
 
 ingress:
-   clusterissuer:
-     issuer: selfsigned-issuer
+  clusterissuer:
+    issuer: selfsigned-issuer
     #  dev: letsencrypt-dev
     #  uat: letsencrypt-staging
-    #  prod: letsencrypt-prod  
-   hosts:
-     keycloak: auth.172.17.0.1.nip.io
-     gateway: api.172.17.0.1.nip.io
-     tsffrontend: awgment.172.17.0.1.nip.io
-     camunda: camunda.172.17.0.1.nip.io
-   urls:
-     keycloak: http://<you ip like 192.168.1.16>:8888/
-     gateway: http://api.172.17.0.1.nip.io:8080
-     tsffrontend: http://awgment.172.17.0.1.nip.io:8080 
-     camunda:  http://awgment.172.17.0.1.nip.io:8080/camunda
-   secretname:
-     keycloak: local-augmnt
-     gateway: local-augmnt
-     tsffrontend: local-augmnt
-     camunda: local-augmnt
+    #  prod: letsencrypt-prod
+  hosts:
+    keycloak: auth.172.17.0.1.nip.io
+    gateway: api.172.17.0.1.nip.io
+    tsffrontend: awgment.172.17.0.1.nip.io
+    camunda: camunda.172.17.0.1.nip.io
+  urls:
+    keycloak: http://192.168.225.45:8888/
+    gateway: http://api.172.17.0.1.nip.io:8080
+    tsffrontend: http://awgment.172.17.0.1.nip.io:8080
+    camunda:  http://awgment.172.17.0.1.nip.io:8080/
+  secretname:
+    keycloak: local-augmnt
+    gateway: local-augmnt
+    tsffrontend: local-augmnt
+    camunda: local-augmnt
