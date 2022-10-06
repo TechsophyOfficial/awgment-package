@@ -5,8 +5,10 @@ The below readme assumes some understanding of kubernetes and helm, please refer
 
 
 # Deployment of awgment kubernets cluster
-Below steps can be used to deploy awgment on kubernetes cluster. 
+Below steps can be used to deploy awgment on kubernetes cluster.
+
 To keep the installation simple dns/tls certificate configuration is avoided, so the below steps should be used for introductory evaluation purpose. For running a dedicated environments adherence to ops best practices is required.
+
 Any contributions to improve below is welcome.
 
 ## Prerequisite
