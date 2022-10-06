@@ -4,7 +4,11 @@ Package awgment
 The below readme assumes some understanding of kubernetes and helm, please refer [Troubleshooting](#troubleshooting) for some helpful links to beginners.
 
 
-# Deployment of awgment kubernets in cloud
+# Deployment of awgment kubernets cluster
+Below steps can be used to deploy awgment on kubernetes cluster. 
+To keep the installation simple dns/tls certificate configuration is avoided, so the below steps should be used for introductory evaluation purpose. For running a dedicated environments adherence to ops best practices is required.
+Any contributions to improve below is welcome.
+
 ## Prerequisite
 
 1. Linux OS
@@ -12,8 +16,10 @@ The below readme assumes some understanding of kubernetes and helm, please refer
 4. [Helm](https://helm.sh/docs/intro/install/)
 
 
+
 ## setup kubernetes for awgment on cloud
 
+Create kubernetes cluster in your choice of cloud platform, below is experimented on Digital-ocean. Download the Kubeconfig.
 Create local directory (.kube) and keep the required config file in the directory to access to that kubernetes cluster.
 
 Now you will be accessed to k8’s cluster. Check the access by running the command below.
@@ -21,7 +27,7 @@ Now you will be accessed to k8’s cluster. Check the access by running the comm
    Kubectl get nodes
 ```
 
-To create namespace for cluster run the following script
+We shall deploy the pods in specific namespace 'dev'. To create namespace for cluster run the following script
 ```
         kubectl create namespace dev
         Kubectl get namespace  
@@ -29,8 +35,10 @@ To create namespace for cluster run the following script
 # clone the awgment Repository
 git clone https://github.com/TechsophyOfficial/awgment-package.git
 
+Below steps can be used to deploy postgres and mongo db as pods using provided sample configuration files in kubernetes cluster with mounted volumes.
+
 ## Deploy postgres pod
-Run below script to run postgres pod
+Run below script to run postgres pod, you can update the files as per your environment specific configuration
 
 ```
 
@@ -40,16 +48,20 @@ Run below script to run postgres pod
         awgment-package/kubernetes-cloud/dependencies$ kubectl apply –f postgres-config.yaml -n dev
 
 ```
+
 Run below script to get all pods
+
 ```
  kubectl get pods -n dev
 ```
+
 Run below script to connect to the postgres pod
 
 ```
          kubectl exec –it <postgres-pod name> bin/bash -n dev
          psql  -U postgresadmin postgres 
 ```
+
 Run below command to create keycloakdb
 ```
    create database keycloakdb;
@@ -63,7 +75,7 @@ Run below command to create keycloakdb
 grant all privileges on database camundadb to postgresadmin
 
 ## Deploy Mongodb pod:
-Run below script to run mongodb pod
+Run below script to run mongodb pod, you can update the files for your environment specific configuration
 
 ```
 
@@ -80,7 +92,7 @@ Run below script to connect to the mongodb pod
 ```
 Enter 'mongo' here to connect to the shell
 ```
- root@mongo-0:/# mongo
+         root@mongo-0:/# mongo
 ```
 
 Run below commands in primary mongo shell(rs0:PRIMARY>)
@@ -115,15 +127,20 @@ db.createUser(
 ) 
 ```
 ## Install nginx ingress on  kubernetes
-for install nginx run below command
+Next we need to install nginx, one can refer the documentation, https://kubernetes.github.io/ingress-nginx/deploy/
+Below steps can be used to install specfic version-
+
 ```
    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.44.0/deploy/static/provider/cloud/deploy.yaml
 ```
-Run below command to access the loadbalancer IP:
+
+Run below command to access the loadbalancer IP, which shall be required in further configuration
+
 ```
    kubectl get  svc -n ingress-nginx
 ```
-After excution of above command the output will be look like this.
+
+After excution of above command the output will look like this.
 ```
 NAME                                 TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S)                      AGE
 ingress-nginx-controller             LoadBalancer   10.245.213.199   64.72.43.23     80:31606/TCP,443:30047/TCP   5d23h
@@ -142,7 +159,7 @@ keycloak:
   client:
     secret: 0ef502e1-567a-48cf-ae56-7e1a5bdfe3c4  
   db:   
-    host: <POSTGRES_HOST>:5432 
+    host: <POSTGRES_SERVICE_HOST>:5432 
     user: <POSTGRES_USER>
     password: <POSTGRES_PASSWORD>
     name: keycloakdb
@@ -151,7 +168,9 @@ keycloak:
   
 ```
 <br/>
+
 Install keycloak via helm chart
+
 <br/>
 
 ```
@@ -236,7 +255,7 @@ You will see awgment-tsf name with status as Deployed as below example. If not, 
 <br/>
 
         NAME        	NAMESPACE	REVISION	UPDATED         STATUS  	CHART               	APP VERSION
-        awgment-tsf 	default  	1       	                deployed	tsf-playground-1.0.0	1.0.0      
+        awgment-tsf 	default  	1       	                deployed	awgment-tsf-1.0.0	   1.0.0      
         keycloak-tsf	default  	1       	                deployed	keycloak-tsf-1.0.0  	1.0.0 
 
 After Verification, check if all pods are running.
@@ -245,7 +264,7 @@ After Verification, check if all pods are running.
         cd awgment-package repo folder>
         awgment-package$ kubectl get pods - n dev
 ```
-
+Wait for sometime for all pods to manage dependencies and come to running state as below.
 If the status for all listed pods is running as example below, then skip the next step.
 
         NAME                                   READY   STATUS    RESTARTS        AGE
@@ -305,10 +324,10 @@ Password:admin
 ## Post install
 Check for any jobs using kubectl and delete them
 ```
-        kubectl get jobs
-        kubectl delete jobs <jobname>
+        kubectl get jobs -n dev
+        kubectl delete jobs <jobname> -n dev
 ```
-Reset password for admin user for both realms, specifically if you are using this in a non-local environment
+Reset password for admin user for both realms
 - master realm
 - techsophy-platform realm
 
@@ -319,41 +338,3 @@ Reset password for admin user for both realms, specifically if you are using thi
 
 [Quick start for absolute beginners](https://opensource.com/article/20/2/kubectl-helm-commands) <br/>
 [More detailed dive](https://www.baeldung.com/ops/kubernetes-helm)<br/>
-
-If you experience higher CPU usage on your system please uninstall the chart via helm
-```        
-        helm uninstall awgment-tsf
-        helm uninstall keycloak-tsf
-```
-
-**Setting up PostGress DB on local:**
-It should be possible to connect with postgres db via IP address, some link below explain how to allow connection for any/specific ip, please follow as per your version<br/>
-[Postgres Configuration](https://www.vultr.com/docs/install-pgadmin-4-for-postgresql-database-server-on-ubuntu-linux/#2__Change_PostgreSQL_Configurations)
-
-
-**MongoDB set up:**
-Using mongo on local machine -
-update the **bindIp** value(as shown below) in mongod.conf which is available in **/etc/mongod.conf**
-**bindIp: 0.0.0.0**
-and stop the mongodb service and start again.
-commands:
-**sudo service mongod status** ---- to check the status
-**sudo service mongod start** ----- to start the service
-**sudo service mongod stop** ---- to stop the service
-
-[Running Standalone Mongo as a replication cluster](https://hevodata.com/learn/mongodb-transactions-on-single-node/#41)
-
-**Docker set up:**
-
-[Manage docker as a non root user](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user)
-
-1. install docker(if not installed)
-2. create a docker Group
-   cmd: **sudo groupadd docker**
-3. check your user with below command: **echo $USER**
-4. excute the command: **sudo usermod -aG docker $USER**
-5. restart your system
-6. open the terminal and try to execute below command without **sudo** it should give some result. it should not give **permission Denied** message.
-   **docker images/ docker ps**
-
-
