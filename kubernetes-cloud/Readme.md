@@ -166,7 +166,24 @@ keycloak:
     password: <POSTGRES_PASSWORD>
     name: keycloakdb
     vendor: postgres
-  url: <LoadBalancer Ip>
+  url: http://auth.<loadbalancerIp>.nip.io
+mongo:
+  url: mongodb://tp_modeler:<mongo password>@mongo-0.mongo:27017,mongo-1.mongo:27017/
+   
+ingress:
+#
+#other properties
+#
+  hosts:
+    keycloak: auth.<loadbalancerIp>.nip.io
+    gateway: api.<loadbalancerIp>.nip.io
+    tsffrontend: awgment.<loadbalancerIp>.nip.io
+    camunda: camunda.<loadbalancerIp>.nip.io
+  urls:
+    keycloak: http://auth.<loadbalancerIp>.nip.io/
+    gateway: http://api.<loadbalancerIp>.nip.io
+    tsffrontend: http://awgment.<loadbalancerIp>.nip.io 
+    camunda:  http://awgment.<loadbalancerIp>.nip.io/camunda
   
 ```
 <br/>
