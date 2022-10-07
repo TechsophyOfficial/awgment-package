@@ -7,7 +7,7 @@ The below readme assumes some understanding of kubernetes and helm, please refer
 # Deployment - local linux machine using Kind
 ## Prerequisite
 
-1. Linux OS
+1. Linux OS - min :16GB RAM, core i7 processor or equivalent
 2. [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/)
 3. [Kubectl](https://kubernetes.io/docs/tasks/tools/)
 4. [Helm](https://helm.sh/docs/intro/install/)
@@ -269,7 +269,20 @@ Run below script to install default menus for awgment
 ```
 
 To do this step manually if variation are required in future, please refer the files and steps under [install-artifacts/menu_artifacts](install-artifacts/menu_artifacts) to install menu items.
+Please wait for the install-menu job to finish. Check its status by running below command
+```
+        kubectl describe job install-menu
+```
 
+## Launch Awgment
+Open chrome or any of your favourite browser and goto below URL to launch awgment.
+<br/>
+
+```
+        http://awgment.172.17.0.1.nip.io:8080/model/
+```
+
+If all previous steps completed successfully, you shall be redirected to keycloak login screen for awgment.
 
 ## Post install
 Check for any jobs using kubectl and delete them
