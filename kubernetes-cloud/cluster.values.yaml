@@ -45,10 +45,10 @@ ingress:
     #  uat: letsencrypt-staging
     #  prod: letsencrypt-prod  
    hosts:
-     keycloak: auth.64.72.43.23.nip.io
-     gateway: api.146.190.10.81.nip.io
-     tsffrontend: awgment.146.190.10.81.nip.io
-     camunda: camunda.146.190.10.81.nip.io
+     keycloak: auth.<loadbalancerip>.nip.io
+     gateway: api.<loadbalancerip>.nip.io
+     tsffrontend: awgment.<loadbalancerip>.nip.io
+     camunda: camunda.<loadbalancerip>.nip.io
    urls:
      keycloak: http://auth.<loadbalancerip>.nip.io/
      gateway: http://api.<loadbalancerip>.nip.io
