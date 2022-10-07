@@ -112,7 +112,7 @@ rs.status()
 ```
 Create tp_modeler user to the admin database.
 
-Run the below script :
+Run the below script while providing your password:
 ```
 db.createUser( 
 
@@ -120,7 +120,7 @@ db.createUser(
 
      user: "tp_modeler", 
 
-     pwd: "T3ch!#@^&o*", 
+     pwd: "<mongo password>", 
 
      roles: [ { role: "dbOwner", db: "admin" } ] 
 
