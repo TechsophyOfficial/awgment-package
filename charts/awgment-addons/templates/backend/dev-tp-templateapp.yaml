@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.templateapp.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.templateapp.name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.templateapp.name }}
+    spec:
+      containers:
+      - image: {{ .Values.templateapp.image.repository }}:{{ .Values.templateapp.image.tag }}
+        name: {{ .Values.templateapp.name }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.templateapp.image.configMapRef }}
+        ports:
+        - containerPort: {{ .Values.templateapp.service.port }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.templateapp.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.templateapp.service.type }}
+  ports:
+  - port: {{ .Values.templateapp.service.port }}
+  selector:
+    name: {{ .Values.templateapp.name }}

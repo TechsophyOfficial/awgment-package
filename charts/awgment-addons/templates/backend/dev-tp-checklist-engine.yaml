@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.checklistengine.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.checklistengine.name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.checklistengine.name }}
+    spec:
+      containers:
+      - image: {{ .Values.checklistengine.image.repository }}:{{ .Values.checklistengine.image.tag }}
+        name: {{ .Values.checklistengine.name }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.checklistengine.image.configMapRef }}
+        ports:
+        - containerPort: {{ .Values.checklistengine.service.port }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.checklistengine.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.checklistengine.service.type }}
+  ports:
+  - port: {{ .Values.checklistengine.service.port }}
+  selector:
+    name: {{ .Values.checklistengine.name }}

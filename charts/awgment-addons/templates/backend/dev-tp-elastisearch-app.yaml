@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.elasticsearchapp.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.elasticsearchapp.name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.elasticsearchapp.name }}
+    spec:
+      containers:
+      - image: {{ .Values.elasticsearchapp.image.repository }}:{{ .Values.elasticsearchapp.image.tag }}
+        name: {{ .Values.elasticsearchapp.name }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.elasticsearchapp.image.configMapRef }}
+        ports:
+        - containerPort: {{ .Values.elasticsearchapp.service.port }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.elasticsearchapp.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.elasticsearchapp.service.type }}
+  ports:
+  - port: {{ .Values.elasticsearchapp.service.port }}
+  selector:
+    name: {{ .Values.elasticsearchapp.name }}

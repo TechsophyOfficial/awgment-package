@@ -1,0 +1,199 @@
+replicaCount: 1
+imagePullSecrets: ts-nexus 
+imagePullPolicy: Always
+configMapRef: awgmnt-addon-env
+    
+keycloak:
+   realm: techsophy-platform
+   client:
+      frontend: tp-ui-core
+      backend: camunda-identity-service
+      secret: 
+   url: 
+      
+mongo:
+   url: 
+   transaction_enabled: true
+ 
+cloudconfig:
+   url: 
+   user: 
+   password: 
+
+smtp:
+  host: 
+  password: 
+  port: "587"
+  user: noreply.tsf@gmail.com
+
+sns:
+  access_key: 
+  region: ap-south-1
+  secret_key: 
+  topic_arn: 
+
+aws: 
+  region: ap-south-1
+  access_key: 
+  access_secret: 
+  bucket_name: techsophy-platform
+
+digital_ocean:
+  access_key: 
+  region: sgp1
+  bucket_name: augmnt
+  endpoint:  https://sgp1.digitaloceanspaces.com
+  secret_key: 
+
+  
+firebase:
+  project_id: 
+  private_key_id: 
+  private_key: |-
+    -----BEGIN PRIVATE KEY-----
+    z1EuHpjE6g==
+     -----END PRIVATE KEY-----
+
+  client_email: 
+  client_id: 
+  token_url: https://oauth2.googleapis.com/token
+  enabled: "true"
+  app: "true"
+
+ses:
+  aws_region: ap-south-1
+  access_key: 
+  access_secret: 
+
+twilio:
+  msid: 
+  token: 
+  account_id: 
+
+    
+postgres:
+     camunda:
+         dburl: 
+         user: 
+         password: 
+         database: 
+   
+ingress:
+   name:
+     keycloak: keycloak-ingress
+     gateway: gateway-ingress
+     tsffrontend: tsf-ingress
+     camunda: camunda-ingress
+   class:
+     nginx: nginx
+     alb: alb
+   clusterissuer:
+     issuer: 
+     dev: 
+     uat: 
+     prod:   
+   hosts:
+     keycloak: 
+     gateway: 
+     tsffrontend: 
+     camunda: 
+   urls:
+     keycloak: 
+     gateway: 
+     tsffrontend:  
+     camunda: 
+   secretname:
+     keycloak: 
+     gateway: 
+     tsffrontend: 
+     camunda: 
+   
+templateapp:
+   name: template-app
+   image:
+     repository: techsophyofficial/awgment-app-checklist
+     tag: v0.1.0-beta
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
+    
+notificationapp:
+   name: tp-app-notification
+   image:
+     repository: techsophyofficial/awgment-app-notification
+     tag: v0.1.0-beta
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
+
+dmsapp:
+   name: dms-app
+   image:
+     repository: techsophyofficial/awgment-app-checklist
+     tag: v0.1.0-beta
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
+
+documentconverterapp:
+   name: document-converter
+   image:
+     repository: techsophyofficial/awgment-app-checklist
+     tag: v0.1.0-beta
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
+
+pdfconvertor:
+   name: tp-pdf-convertor
+   image:
+     repository: techsophyofficial/awgment-app-checklist
+     tag: v0.1.0-beta
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
+
+pciapp:
+   name: pci-app
+   image:
+     repository: techsophyofficial/awgment-app-checklist
+     tag: v0.1.0-beta
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
+
+elasticsearchapp:
+   name: tp-elastic-search-app
+   image:
+     repository: techsophyofficial/awgment-app-checklist
+     tag: v0.1.0-beta
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
+    
+checklistengine:
+   name: checklist-engine
+   image:
+     repository: techsophyofficial/awgment-app-checklist
+     tag: v0.1.0-beta
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080
+
+checklistapp:
+   name: checklist-app
+   image:
+     repository: techsophyofficial/awgment-app-checklist
+     tag: v0.1.0-beta
+     configMapRef: augmnt-env
+   service:
+     type: ClusterIP
+     port: 8080

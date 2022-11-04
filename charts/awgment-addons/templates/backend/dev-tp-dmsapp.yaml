@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.dmsapp.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.dmsapp.name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.dmsapp.name }}
+    spec:
+      containers:
+      - image: {{ .Values.dmsapp.image.repository }}:{{ .Values.dmsapp.image.tag }}
+        name: {{ .Values.dmsapp.name }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.dmsapp.image.configMapRef }}
+        ports:
+        - containerPort: {{ .Values.dmsapp.service.port }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.dmsapp.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.dmsapp.service.type }}
+  ports:
+  - port: {{ .Values.dmsapp.service.port }}
+  selector:
+    name: {{ .Values.dmsapp.name }}
