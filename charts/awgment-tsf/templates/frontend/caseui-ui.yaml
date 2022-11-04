@@ -17,6 +17,13 @@ spec:
       containers:
       - image: {{ .Values.caseui.image.repository }}:{{ .Values.caseui.image.tag }}
         name: {{ .Values.caseui.name }}
+        resources:
+          # requests:
+          #   memory: {{ .Values.resources.min.memory.default }}
+          #   cpu: {{ .Values.resources.min.cpu.default }}
+          limits:
+            memory: {{ .Values.resources.max.memory.default }}
+            # cpu: {{ .Values.resources.max.cpu.default }}         
         envFrom:
         - configMapRef:
             name: {{ .Values.caseui.image.configMapRef }}

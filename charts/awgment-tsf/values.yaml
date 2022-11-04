@@ -193,7 +193,32 @@ keycloak:
       backend: camunda-identity-service
       secret: 
    url: 
+resources:
+  min:
+    cpu:
+      default: 0.1m
+    memory:
+      default: 5Mi
       
+  max:
+    cpu:
+      default:
+    memory:
+      default: 128Mi
+      accountapp: 384Mi
+      configserver: 192Mi
+      formapp: 256Mi
+      gateway: 256Mi
+      keycloak: 256Mi
+      ruleapp: 256Mi
+      ruleengine: 256Mi
+      runtimeformapp: 256Mi
+      utilapp: 256Mi
+      uxappcontroller: 256Mi
+      workflowapp: 256Mi
+      workflowengine: 496Mi
+
+    
 mongo:
    url: 
    transaction_enabled: true
