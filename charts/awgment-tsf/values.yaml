@@ -204,7 +204,7 @@ resources:
     cpu:
       default:
     memory:
-      default: 128Mi
+      default: 16Mi
       accountapp: 384Mi
       configserver: 192Mi
       formapp: 384Mi
