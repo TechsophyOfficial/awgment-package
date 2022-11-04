@@ -207,15 +207,15 @@ resources:
       default: 128Mi
       accountapp: 384Mi
       configserver: 192Mi
-      formapp: 256Mi
+      formapp: 384Mi
       gateway: 256Mi
       keycloak: 256Mi
-      ruleapp: 256Mi
+      ruleapp: 384Mi
       ruleengine: 256Mi
-      runtimeformapp: 256Mi
+      runtimeformapp: 384Mi
       utilapp: 256Mi
       uxappcontroller: 256Mi
-      workflowapp: 256Mi
+      workflowapp: 352Mi
       workflowengine: 496Mi
 
     
