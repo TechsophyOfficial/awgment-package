@@ -10,6 +10,8 @@ keycloak:
       backend: camunda-identity-service
       secret: 
    url: 
+gateway:
+  url: http://gateway:8080/api
       
 mongo:
    url: 
@@ -37,6 +39,10 @@ aws:
   access_key: 
   access_secret: 
   bucket_name: techsophy-platform
+ses:
+  aws_region: ap-south-1
+  access_key: 
+  access_secret: 
 
 digital_ocean:
   access_key: 
@@ -49,34 +55,32 @@ digital_ocean:
 firebase:
   project_id: 
   private_key_id: 
-  private_key: |-
+  private_key: |
     -----BEGIN PRIVATE KEY-----
     z1EuHpjE6g==
-     -----END PRIVATE KEY-----
-
+    -----END PRIVATE KEY-----
   client_email: 
   client_id: 
   token_url: https://oauth2.googleapis.com/token
   enabled: "true"
   app: "true"
 
-ses:
-  aws_region: ap-south-1
-  access_key: 
-  access_secret: 
+
 
 twilio:
   msid: 
   token: 
   account_id: 
 
-    
+
 postgres:
-     camunda:
-         dburl: 
-         user: 
-         password: 
-         database: 
+
+  camunda:
+
+    dburl:
+    user:
+    password:
+    database:
    
 ingress:
    name:

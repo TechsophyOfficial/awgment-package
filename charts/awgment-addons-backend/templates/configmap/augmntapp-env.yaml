@@ -2,7 +2,6 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ .Values.configMapRef }}
-  namespace: {{ .Values.namespace }}
 data:
   GATEWAY_URI: {{ .Values.gateway.url }}
   TP_MODELER_APP_MONGO_URI: {{ .Values.mongo.url }}
@@ -29,11 +28,11 @@ data:
   TWILIO_ACCOUNT_ID: {{ .Values.twilio.account_id}}
   TWILIO_MSID: {{ .Values.twilio.msid }}
   TWILIO_TOKEN: {{ .Values.twilio.token }}
-  AWS_ACCESS_KEY: 
+  AWS_ACCESS_KEY: {{ .Values.aws.access_key | quote }}
   AWS_ENABLED: "false"
   AWS_BUCKET_NAME: {{ .Values.aws.bucket_name }}
   AWS_REGION: {{ .Values.aws.region }} 
-  AWS_SECRET_KEY: {{ .Values.aws.secret_key }}
+  AWS_SECRET_KEY: {{ .Values.aws.access_secret }}
   KEYCLOAK_URL_AUTH: {{ .Values.keycloak.url }}
   KEYCLOAK_REALM_NAME: {{ .Values.keycloak.realm }}
   KEYCLOAK_CLIENT_ID: {{ .Values.keycloak.client.backend }}
@@ -47,20 +46,20 @@ data:
     }
   EMAIL_VALIDITY: "86400"
   OTP_VALIDITY: "180"
-  USER_REGISTRATION_FAILURE_EMAIL_SUBJECT: User Registration Failed
-  USER_REGISTRATION_FAILURE_EMAIL_TO: 
+  # USER_REGISTRATION_FAILURE_EMAIL_SUBJECT: User Registration Failed
+  # USER_REGISTRATION_FAILURE_EMAIL_TO: 
   ELASTIC_ENABLE: "true"
   ELASTIC_SOURCE: "true"
-  DIGITAL_OCEAN_ACCESSKEY: {{ .Values.digital_ocean.access_key}}
-  DIGITAL_OCEAN_BUCKET_NAME: {{ .Values.digital_ocean.bucket_name}}
+  DIGITAL_OCEAN_ACCESSKEY: {{ .Values.digital_ocean.access_key }}
+  DIGITAL_OCEAN_BUCKET_NAME: {{ .Values.digital_ocean.bucket_name }}
   DIGITAL_OCEAN_ENABLED: "true"
   DIGITAL_OCEAN_ENDPOINT: {{ .Values.digital_ocean.endpoint}}
   DIGITAL_OCEAN_REGION: {{ .Values.digital_ocean.region}}
   DIGITAL_OCEAN_SECRET_KEY: {{ .Values.digital_ocean.secret_key}}
-  USERNAME: 
-  PASSWORD: 
-  CLIENT_ID: 
-  default.pagelimit: "20"
+  # USERNAME: 
+  # PASSWORD: 
+  # CLIENT_ID: 
+  # default.pagelimit: "20"
   PCI_AUDIT_FILE_ENABLED: "false"
   PCI_AUDIT_MONGO_ENABLED: "true"
   SXP_JOURNEY_BASE_URL: https://sxp-playground.journey-manager.techsophy.com/journey
@@ -69,21 +68,21 @@ data:
   PORT: "9200"
   PROTOCOL: http
   MAX_FILE_SIZE: 20MB
-  CLIENTS: "camunda-identity-service,ticketing-system"
-  FIREBASE_PROJECT_ID: {{ .Values.firebase.project_id }}
-  FIREBASE_PRIVATE_KEY_ID: {{ .Values.firebase.private_key_id }}
-  FIREBASE_PRIVATE_KEY: {{ .Values.firebase.private_key }}
-  FIREBASE_CLIENT_EMAIL: {{ .Values.firebase.client_email }}
-  FIREBASE_CLIENT_ID: {{ .Values.firebase.client_id }}
-  FIREBASE_TOKEN_URI: {{ .Values.firebase.token_url }}
-  FIREBASE_ENABLED: {{ .Values.firebase.enabled }}
-  FIREBASE_APP: {{ .Values.firebase.app }}
-  AWS_REGION: {{ .Values.aws.region}}
-  AWS_ACCESS_KEY: {{ .Values.aws.access_key}}
-  AWS_ACCESS_SECRET: {{ .Values.aws.access_secret}}
+  # CLIENTS: "camunda-identity-service,ticketing-system"
   EMAIL_PROVIDER_SENDMAIL: "false"
   EMAIL_PROVIDER_SENDGRID: "false"
   EMAIL_PROVIDER_AWS_SES: "true"
   SES_AWS_REGION: {{ .Values.ses.aws_region }}
   SES_AWS_ACCESS_KEY: {{ .Values.ses.access_key }}
   SES_AWS_ACCESS_SECRET: {{ .Values.ses.access_secret }}
+  FIREBASE_PRIVATE_KEY: |
+    ----BEGIN----
+    ankndfsdfsdfsdfsd
+    ----END----
+  FIREBASE_PROJECT_ID: {{ .Values.firebase.project_id }}
+  FIREBASE_PRIVATE_KEY_ID: {{ .Values.firebase.private_key_id | quote }}
+  FIREBASE_CLIENT_EMAIL: {{ .Values.firebase.client_email | quote}}
+  FIREBASE_CLIENT_ID: {{ .Values.firebase.client_id  | quote}} 
+  FIREBASE_TOKEN_URI: {{ .Values.firebase.token_url | quote}} 
+  FIREBASE_ENABLED: {{ .Values.firebase.enabled  | quote}}
+  FIREBASE_APP: {{ .Values.firebase.app | quote }}
