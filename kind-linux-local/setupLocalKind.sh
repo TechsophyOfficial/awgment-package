@@ -92,6 +92,6 @@ echo "Installing nginx "
 # env
 
 
-# echo \
-# 'Please setup your db(postgres/mongo) as per readme and setup local.values.yaml appropriately'
+echo \
+'Please setup your db(postgres/mongo) as per readme and setup local.values.yaml appropriately'
 

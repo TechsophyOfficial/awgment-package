@@ -14,7 +14,7 @@ keycloak:
     password: <POSTGRES_PASSWORD>
     name: keycloakdb
     vendor: postgres
-  url: http://auth.<loadbalancerip>.nip.io
+  url: http://<LoadBalancerIp>
   
 mongo:
    url: mongodb+srv://<username>:<password>@<mongo.cluster.com>:27017/?retryWrites=true
@@ -37,23 +37,16 @@ ingress:
     #  dev: letsencrypt-dev
     #  uat: letsencrypt-staging
     #  prod: letsencrypt-prod  
-
-ingress:
-   clusterissuer:
-     issuer: selfsigned-issuer
-    #  dev: letsencrypt-dev
-    #  uat: letsencrypt-staging
-    #  prod: letsencrypt-prod  
    hosts:
-     keycloak: auth.<loadbalancerip>.nip.io
-     gateway: api.<loadbalancerip>.nip.io
-     tsffrontend: awgment.<loadbalancerip>.nip.io
-     camunda: camunda.<loadbalancerip>.nip.io
+     keycloak:  http://<LoadBalancerIp>
+     gateway:  http://<LoadBalancerIp>
+     tsffrontend:  http://<LoadBalancerIp>
+     camunda:  http://<LoadBalancerIp>
    urls:
-     keycloak: http://auth.<loadbalancerip>.nip.io/
-     gateway: http://api.<loadbalancerip>.nip.io
-     tsffrontend: http://awgment.<loadbalancerip>.nip.io 
-     camunda:  http://awgment.<loadbalancerip>.nip.io/camunda
+     keycloak:  http://<LoadBalancerIp>
+     gateway:  http://<LoadBalancerIp>
+     tsffrontend:  http://<LoadBalancerIp>
+     camunda:   http://<LoadBalancerIp>
    secretname:
      keycloak: local-augmnt
      gateway: local-augmnt

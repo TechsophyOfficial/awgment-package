@@ -112,7 +112,7 @@ rs.status()
 ```
 Create tp_modeler user to the admin database.
 
-Run the below script while providing your password:
+Run the below script :
 ```
 db.createUser( 
 
@@ -120,7 +120,7 @@ db.createUser(
 
      user: "tp_modeler", 
 
-     pwd: "<mongo password>", 
+     pwd: "T3ch!#@^&o*", 
 
      roles: [ { role: "dbOwner", db: "admin" } ] 
 
@@ -166,24 +166,7 @@ keycloak:
     password: <POSTGRES_PASSWORD>
     name: keycloakdb
     vendor: postgres
-  url: http://auth.<loadbalancerIp>.nip.io
-mongo:
-  url: mongodb://tp_modeler:<mongo password>@mongo-0.mongo:27017,mongo-1.mongo:27017/
-   
-ingress:
-#
-#other properties
-#
-  hosts:
-    keycloak: auth.<loadbalancerIp>.nip.io
-    gateway: api.<loadbalancerIp>.nip.io
-    tsffrontend: awgment.<loadbalancerIp>.nip.io
-    camunda: camunda.<loadbalancerIp>.nip.io
-  urls:
-    keycloak: http://auth.<loadbalancerIp>.nip.io/
-    gateway: http://api.<loadbalancerIp>.nip.io
-    tsffrontend: http://awgment.<loadbalancerIp>.nip.io 
-    camunda:  http://awgment.<loadbalancerIp>.nip.io/camunda
+  url: <LoadBalancer Ip>
   
 ```
 <br/>
