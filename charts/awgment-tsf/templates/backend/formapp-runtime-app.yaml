@@ -16,6 +16,13 @@ spec:
     spec:
       containers:
       - image: {{ .Values.runtimeformapp.image.repository }}:{{ .Values.runtimeformapp.image.tag }}
+        resources:
+          # requests:
+          #   memory: {{ .Values.resources.min.memory.default }}
+          #   cpu: {{ .Values.resources.min.cpu.default }}
+          limits:
+            memory: {{ .Values.resources.max.memory.runtimeformapp }}
+            # cpu: {{ .Values.resources.max.cpu.default }}  
         name: {{ .Values.runtimeformapp.name }}
         envFrom:
         - configMapRef:

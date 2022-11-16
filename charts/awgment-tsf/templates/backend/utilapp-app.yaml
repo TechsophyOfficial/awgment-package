@@ -17,6 +17,13 @@ spec:
       containers:
       - image: {{ .Values.utilapp.image.repository }}:{{ .Values.utilapp.image.tag }}
         name: {{ .Values.utilapp.name }}
+        resources:
+          # requests:
+          #   memory: {{ .Values.resources.min.memory.default }}
+          #   cpu: {{ .Values.resources.min.cpu.default }}
+          limits:
+            memory: {{ .Values.resources.max.memory.utilapp }}
+            # cpu: {{ .Values.resources.max.cpu.default }}  
         envFrom:
         - configMapRef:
             name: {{ .Values.utilapp.image.configMapRef }}

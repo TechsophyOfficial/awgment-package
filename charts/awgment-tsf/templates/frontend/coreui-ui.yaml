@@ -17,6 +17,13 @@ spec:
       containers:
       - image: {{ .Values.coreui.image.repository }}:{{ .Values.coreui.image.tag }}
         name: {{ .Values.coreui.name }}
+        resources:
+          # requests:
+          #   memory: {{ .Values.resources.min.memory.default }}
+          #   cpu: {{ .Values.resources.min.cpu.default }}
+          limits:
+            memory: {{ .Values.resources.max.memory.default }}
+            # cpu: {{ .Values.resources.max.cpu.default }}         
         envFrom:
         - configMapRef:
             name: {{ .Values.coreui.image.configMapRef }}
