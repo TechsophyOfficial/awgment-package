@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.runtimeescalationmatrix.name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.runtimeescalationmatrix.name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.runtimeescalationmatrix.name }}
+    spec:
+      containers:
+      - image: {{ .Values.runtimeescalationmatrix.image.repository }}:{{ .Values.runtimeescalationmatrix.image.tag }}
+        name: {{ .Values.runtimeescalationmatrix.name }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.configMapRef }}
+        ports:
+        - containerPort: {{ .Values.runtimeescalationmatrix.service.port }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.runtimeescalationmatrix.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.runtimeescalationmatrix.service.type }}
+  ports:
+  - port: {{ .Values.runtimeescalationmatrix.service.port }}
+  selector:
+    name: {{ .Values.runtimeescalationmatrix.name }}

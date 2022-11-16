@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.escalationmatrix.name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.escalationmatrix.name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.escalationmatrix.name }}
+    spec:
+      containers:
+      - image: {{ .Values.escalationmatrix.image.repository }}:{{ .Values.escalationmatrix.image.tag }}
+        name: {{ .Values.escalationmatrix.name }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.configMapRef }}
+        ports:
+        - containerPort: {{ .Values.escalationmatrix.service.port }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.escalationmatrix.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.escalationmatrix.service.type }}
+  ports:
+  - port: {{ .Values.escalationmatrix.service.port }}
+  selector:
+    name: {{ .Values.escalationmatrix.name }}

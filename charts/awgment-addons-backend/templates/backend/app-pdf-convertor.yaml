@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.pdfconvertor.name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.pdfconvertor.name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.pdfconvertor.name }}
+    spec:
+      containers:
+      - image: {{ .Values.pdfconvertor.image.repository }}:{{ .Values.pdfconvertor.image.tag }}
+        name: {{ .Values.pdfconvertor.name }}
+        env:
+        - name: API_GATEWAY_URL
+          value: {{ .Values.gateway.url }}
+        - name: KEYCLOAK_URL
+          value: {{ .Values.keycloak.url }}
+        - name: KEYCLOAK_CLIENT_ID
+          value: {{ .Values.keycloak.client.frontend }}
+        ports:
+        - containerPort: {{ .Values.pdfconvertor.service.port }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.pdfconvertor.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.pdfconvertor.service.type }}
+  ports:
+  - port: {{ .Values.pdfconvertor.service.port }}
+  selector:
+    name: {{ .Values.pdfconvertor.name }}

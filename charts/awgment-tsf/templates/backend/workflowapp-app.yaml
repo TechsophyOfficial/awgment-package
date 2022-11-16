@@ -16,6 +16,13 @@ spec:
     spec:
       containers:
       - image: {{ .Values.workflowapp.image.repository }}:{{ .Values.workflowapp.image.tag }}
+        resources:
+          # requests:
+          #   memory: {{ .Values.resources.min.memory.default }}
+          #   cpu: {{ .Values.resources.min.cpu.default }}
+          limits:
+            memory: {{ .Values.resources.max.memory.workflowapp }}
+            # cpu: {{ .Values.resources.max.cpu.default }} 
         name: {{ .Values.workflowapp.name }}
         envFrom:
         - configMapRef:

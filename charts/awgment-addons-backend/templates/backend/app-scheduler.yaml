@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.scheduler.name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      name: {{ .Values.scheduler.name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.scheduler.name }}
+    spec:
+      containers:
+      - image: {{ .Values.scheduler.image.repository }}:{{ .Values.scheduler.image.tag }}
+        name: {{ .Values.scheduler.name }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.configMapRef }}
+        ports:
+        - containerPort: {{ .Values.scheduler.service.port }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecrets }}
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.scheduler.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.scheduler.service.type }}
+  ports:
+  - port: {{ .Values.scheduler.service.port }}
+  selector:
+    name: {{ .Values.scheduler.name }}
