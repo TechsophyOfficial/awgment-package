@@ -18,7 +18,7 @@ spec:
         name: {{ .Values.pciapp.name }}
         envFrom:
         - configMapRef:
-            name: {{ .Values.pciapp.image.configMapRef }}
+            name: {{ .Values.configMapRef }}
         ports:
         - containerPort: {{ .Values.pciapp.service.port }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}

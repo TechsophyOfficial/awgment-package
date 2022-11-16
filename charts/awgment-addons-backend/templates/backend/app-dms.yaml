@@ -18,7 +18,7 @@ spec:
         name: {{ .Values.dmsapp.name }}
         envFrom:
         - configMapRef:
-            name: {{ .Values.dmsapp.image.configMapRef }}
+            name: {{ .Values.configMapRef }}
         ports:
         - containerPort: {{ .Values.dmsapp.service.port }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}

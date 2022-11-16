@@ -18,7 +18,7 @@ spec:
         name: {{ .Values.notificationapp.name }}
         envFrom:
         - configMapRef:
-            name: {{ .Values.notificationapp.image.configMapRef }}
+            name: {{ .Values.configMapRef }}
         ports:
         - containerPort: {{ .Values.notificationapp.service.port }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}

@@ -2,25 +2,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.checklistapp.name }}
+  name: {{ .Values.scheduler.name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      name: {{ .Values.checklistapp.name }}
+      name: {{ .Values.scheduler.name }}
   template:
     metadata:
       labels:
-        name: {{ .Values.checklistapp.name }}
+        name: {{ .Values.scheduler.name }}
     spec:
       containers:
-      - image: {{ .Values.checklistapp.image.repository }}:{{ .Values.checklistapp.image.tag }}
-        name: {{ .Values.checklistapp.name }}
+      - image: {{ .Values.scheduler.image.repository }}:{{ .Values.scheduler.image.tag }}
+        name: {{ .Values.scheduler.name }}
         envFrom:
         - configMapRef:
             name: {{ .Values.configMapRef }}
         ports:
-        - containerPort: {{ .Values.checklistapp.service.port }}
+        - containerPort: {{ .Values.scheduler.service.port }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
       imagePullSecrets:
       - name: {{ .Values.imagePullSecrets }}
@@ -31,11 +31,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.checklistapp.name }}
+  name: {{ .Values.scheduler.name }}
   namespace: {{ .Values.namespace }}
 spec:
-  type: {{ .Values.checklistapp.service.type }}
+  type: {{ .Values.scheduler.service.type }}
   ports:
-  - port: {{ .Values.checklistapp.service.port }}
+  - port: {{ .Values.scheduler.service.port }}
   selector:
-    name: {{ .Values.checklistapp.name }}
+    name: {{ .Values.scheduler.name }}

@@ -2,25 +2,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.checklistapp.name }}
+  name: {{ .Values.case.name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      name: {{ .Values.checklistapp.name }}
+      name: {{ .Values.case.name }}
   template:
     metadata:
       labels:
-        name: {{ .Values.checklistapp.name }}
+        name: {{ .Values.case.name }}
     spec:
       containers:
-      - image: {{ .Values.checklistapp.image.repository }}:{{ .Values.checklistapp.image.tag }}
-        name: {{ .Values.checklistapp.name }}
+      - image: {{ .Values.case.image.repository }}:{{ .Values.case.image.tag }}
+        name: {{ .Values.case.name }}
         envFrom:
         - configMapRef:
             name: {{ .Values.configMapRef }}
         ports:
-        - containerPort: {{ .Values.checklistapp.service.port }}
+        - containerPort: {{ .Values.case.service.port }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
       imagePullSecrets:
       - name: {{ .Values.imagePullSecrets }}
@@ -31,11 +31,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.checklistapp.name }}
+  name: {{ .Values.case.name }}
   namespace: {{ .Values.namespace }}
 spec:
-  type: {{ .Values.checklistapp.service.type }}
+  type: {{ .Values.case.service.type }}
   ports:
-  - port: {{ .Values.checklistapp.service.port }}
+  - port: {{ .Values.case.service.port }}
   selector:
-    name: {{ .Values.checklistapp.name }}
+    name: {{ .Values.case.name }}

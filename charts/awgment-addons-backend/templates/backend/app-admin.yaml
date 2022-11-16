@@ -2,25 +2,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.checklistapp.name }}
+  name: {{ .Values.admin.name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      name: {{ .Values.checklistapp.name }}
+      name: {{ .Values.admin.name }}
   template:
     metadata:
       labels:
-        name: {{ .Values.checklistapp.name }}
+        name: {{ .Values.admin.name }}
     spec:
       containers:
-      - image: {{ .Values.checklistapp.image.repository }}:{{ .Values.checklistapp.image.tag }}
-        name: {{ .Values.checklistapp.name }}
+      - image: {{ .Values.admin.image.repository }}:{{ .Values.admin.image.tag }}
+        name: {{ .Values.admin.name }}
         envFrom:
         - configMapRef:
             name: {{ .Values.configMapRef }}
         ports:
-        - containerPort: {{ .Values.checklistapp.service.port }}
+        - containerPort: {{ .Values.admin.service.port }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
       imagePullSecrets:
       - name: {{ .Values.imagePullSecrets }}
@@ -31,11 +31,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.checklistapp.name }}
+  name: {{ .Values.admin.name }}
   namespace: {{ .Values.namespace }}
 spec:
-  type: {{ .Values.checklistapp.service.type }}
+  type: {{ .Values.admin.service.type }}
   ports:
-  - port: {{ .Values.checklistapp.service.port }}
+  - port: {{ .Values.admin.service.port }}
   selector:
-    name: {{ .Values.checklistapp.name }}
+    name: {{ .Values.admin.name }}

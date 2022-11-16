@@ -18,7 +18,7 @@ spec:
         name: {{ .Values.documentconverterapp.name }}
         envFrom:
         - configMapRef:
-            name: {{ .Values.documentconverterapp.image.configMapRef }}
+            name: {{ .Values.configMapRef }}
         ports:
         - containerPort: {{ .Values.documentconverterapp.service.port }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}

@@ -18,7 +18,7 @@ spec:
         name: {{ .Values.checklistengine.name }}
         envFrom:
         - configMapRef:
-            name: {{ .Values.checklistengine.image.configMapRef }}
+            name: {{ .Values.configMapRef }}
         ports:
         - containerPort: {{ .Values.checklistengine.service.port }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}

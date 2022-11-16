@@ -23,7 +23,7 @@ cloudconfig:
    password: 
 
 smtp:
-  host: 
+  host: smtp.gmail.com
   password: 
   port: "587"
   user: noreply.tsf@gmail.com
@@ -48,7 +48,7 @@ digital_ocean:
   access_key: 
   region: sgp1
   bucket_name: augmnt
-  endpoint:  https://sgp1.digitaloceanspaces.com
+  endpoint: 
   secret_key: 
 
   
@@ -59,7 +59,7 @@ firebase:
     -----BEGIN PRIVATE KEY-----
     z1EuHpjE6g==
     -----END PRIVATE KEY-----
-  client_email: 
+  client_email: firebase-adminsdk-zdtus@kims-rn.iam.gserviceaccount.com
   client_id: 
   token_url: https://oauth2.googleapis.com/token
   enabled: "true"
@@ -117,7 +117,6 @@ templateapp:
    image:
      repository: techsophyofficial/awgment-app-checklist
      tag: v0.1.0-beta
-     configMapRef: augmnt-env
    service:
      type: ClusterIP
      port: 8080
@@ -127,7 +126,6 @@ notificationapp:
    image:
      repository: techsophyofficial/awgment-app-notification
      tag: v0.1.0-beta
-     configMapRef: augmnt-env
    service:
      type: ClusterIP
      port: 8080
@@ -137,7 +135,6 @@ dmsapp:
    image:
      repository: techsophyofficial/awgment-app-checklist
      tag: v0.1.0-beta
-     configMapRef: augmnt-env
    service:
      type: ClusterIP
      port: 8080
@@ -147,7 +144,6 @@ documentconverterapp:
    image:
      repository: techsophyofficial/awgment-app-checklist
      tag: v0.1.0-beta
-     configMapRef: augmnt-env
    service:
      type: ClusterIP
      port: 8080
@@ -167,7 +163,6 @@ pciapp:
    image:
      repository: techsophyofficial/awgment-app-checklist
      tag: v0.1.0-beta
-     configMapRef: augmnt-env
    service:
      type: ClusterIP
      port: 8080
@@ -177,7 +172,6 @@ elasticsearchapp:
    image:
      repository: techsophyofficial/awgment-app-checklist
      tag: v0.1.0-beta
-     configMapRef: augmnt-env
    service:
      type: ClusterIP
      port: 8080
@@ -187,7 +181,6 @@ checklistengine:
    image:
      repository: techsophyofficial/awgment-app-checklist
      tag: v0.1.0-beta
-     configMapRef: augmnt-env
    service:
      type: ClusterIP
      port: 8080
@@ -197,7 +190,61 @@ checklistapp:
    image:
      repository: techsophyofficial/awgment-app-checklist
      tag: v0.1.0-beta
-     configMapRef: augmnt-env
    service:
+     type: ClusterIP
+     port: 8080
+
+
+admin:
+   name: admin-app
+   image:
+     repository: techsophyofficial/awgment-app-admin
+     tag: v0.1.0-beta
+   service:
+     type: ClusterIP
+     port: 8080
+
+case:
+   name: case-app
+   image:
+     repository: techsophyofficial/awgment-app-case
+     tag: v0.1.0-beta
+   service:
+     type: ClusterIP
+     port: 8080
+
+escalationmatrix:
+   name: escalation-matrix-app
+   image:
+     repository: techsophyofficial/awgment-app-escalation-matrix
+     tag: v0.1.0-beta
+   service:
+     type: ClusterIP
+     port: 8080
+
+scheduler:
+   name: scheduler-app
+   image:
+     repository: techsophyofficial/awgment-app-scheduler
+     tag: v0.1.0-beta
+   service:
+     type: ClusterIP
+     port: 8080
+
+paymentgateway:
+   name: payment-gateway
+   image:
+     repository: techsophyofficial/awgment-app-payment-gateway
+     tag: v0.1.0-beta
+   service:
+     type: ClusterIP
+     port: 8080
+
+runtimeescalationmatrix:
+    name: runtime-escalation-matrix
+    image:
+     repository: techsophyofficial/awgment-runtime-escalation-matrix
+     tag: v0.1.0-beta
+    service:
      type: ClusterIP
      port: 8080

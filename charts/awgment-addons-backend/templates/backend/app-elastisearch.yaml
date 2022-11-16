@@ -18,7 +18,7 @@ spec:
         name: {{ .Values.elasticsearchapp.name }}
         envFrom:
         - configMapRef:
-            name: {{ .Values.elasticsearchapp.image.configMapRef }}
+            name: {{ .Values.configMapRef }}
         ports:
         - containerPort: {{ .Values.elasticsearchapp.service.port }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
