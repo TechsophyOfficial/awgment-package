@@ -211,7 +211,7 @@ resources:
       gateway: 256Mi
       keycloak: 256Mi
       ruleapp: 384Mi
-      ruleengine: 256Mi
+      ruleengine: 384Mi
       runtimeformapp: 384Mi
       utilapp: 256Mi
       uxappcontroller: 256Mi
@@ -259,11 +259,12 @@ ingress:
      gateway: 
      tsffrontend:  
      camunda: 
+   secured: "false"
    secretname:
-     keycloak: 
-     gateway: 
-     tsffrontend: 
-     camunda: 
+     keycloak: local-awgmnt
+     gateway: local-awgmnt
+     tsffrontend: local-awgmnt
+     camunda: local-awgmnt
 
 
 templatemodeler:

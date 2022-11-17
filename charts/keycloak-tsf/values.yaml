@@ -36,5 +36,6 @@ ingress:
      issuer: 
    hosts:
      keycloak:
+   secured: "false"
    secretname:
-     keycloak:
+     keycloak: local-awgmnt
