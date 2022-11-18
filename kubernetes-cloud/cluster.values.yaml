@@ -81,6 +81,15 @@ twilio:
   token: <your_token>
   account_id: <your_account_id>
 
+paytm:
+  url:  https://securegw-edc.paytm.in
+  merchant_id: <your merchant id>
+  merchant_key: <your merchant key>
+  
+razorpay:
+  url: https://api.razorpay.com/v1
+  key_id: <your key id>
+  key_secret: <your key secret>
 
 ingress:
    clusterissuer:
