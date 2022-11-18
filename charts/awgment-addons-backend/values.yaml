@@ -243,7 +243,7 @@ paymentgateway:
    name: payment-gateway
    image:
      repository: techsophyofficial/awgment-app-payment-gateway
-     tag: v0.1.0-beta
+     tag: v0.1.1-beta
    service:
      type: ClusterIP
      port: 8080
