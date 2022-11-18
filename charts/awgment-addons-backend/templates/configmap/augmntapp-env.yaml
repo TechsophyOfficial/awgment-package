@@ -86,3 +86,15 @@ data:
   FIREBASE_TOKEN_URI: {{ .Values.firebase.token_url | quote}} 
   FIREBASE_ENABLED: {{ .Values.firebase.enabled  | quote}}
   FIREBASE_APP: {{ .Values.firebase.app | quote }}
+
+  PAYTM_CALLBACK_URL: http://localhost:8080
+  PAYTM_CHANNEL_ID: WEB
+  PAYTM_MERCHANT_ID: {{ .Values.paytm.merchant_id | quote }}
+  PAYTM_MERCHANT_KEY: {{ .Values.paytm.merchant_key | quote }}
+  PAYTM_URL: {{ .Values.paytm.url | quote }}
+  
+  PAYTM_WEBSITE: WEBSTAGING
+  PAYTM_INDUSTRY_TYPE_ID: Retail
+  RAZORPAY_KEY_ID: {{ .Values.razorpay.key_id | quote }}
+  RAZORPAY_KEY_SECRET: {{ .Values.razorpay.key_secret | quote }}
+  RAZORPAY_URL: {{ .Values.razorpay.url | quote }}
