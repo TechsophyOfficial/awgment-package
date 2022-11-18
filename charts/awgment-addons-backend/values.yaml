@@ -65,6 +65,14 @@ firebase:
   enabled: "true"
   app: "true"
 
+paytm:
+  url:
+  merchant_id:
+  merchant_key:
+razorpay:
+  url:
+  key_id:
+  key_secret:
 
 
 twilio:
