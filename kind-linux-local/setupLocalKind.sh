@@ -19,7 +19,7 @@ fi
 
 
 #clean up
-kind delete clusters --all
+kind delete cluster --name awgment
 
 
 
@@ -46,13 +46,16 @@ nodes:
     nodeRegistration:
       kubeletExtraArgs:
         node-labels: "ingress-ready=true"
+  extraMounts:
+  - hostPath: ~/document/kind
+    containerPath: /storage
   extraPortMappings:
   - containerPort: 80
     hostPort: ${http_port}
     protocol: TCP
-  # - containerPort: 443
-  #   hostPort: 8443
-  #   protocol: TCP
+  - containerPort: 443
+    hostPort: 8443
+    protocol: TCP
 EOF
 
 # connect the registry to the cluster network if not already connected
@@ -77,10 +80,25 @@ EOF
 
 kubectl cluster-info --context kind-${cluster_name}
 
-# echo "Installing certificate manager, though we currently dont support  "
-# kubectl create namespace cert-manager
-# kubectl apply  \
-#   -f https://github.com/cert-manager/cert-manager/releases/download/v1.8.2/cert-manager.yaml
+echo "Installing certificate manager, though we currently dont support  "
+kubectl create namespace cert-manager
+kubectl apply  \
+  -f https://github.com/cert-manager/cert-manager/releases/download/v1.8.2/cert-manager.yaml
+
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-kind
+spec:
+  persistentVolumeReclaimPolicy: Delete
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 2Gi
+  hostPath:
+    path: /storage/
+EOF
 
 echo "Installing nginx "
 
@@ -94,4 +112,5 @@ echo "Installing nginx "
 
 # echo \
 # 'Please setup your db(postgres/mongo) as per readme and setup local.values.yaml appropriately'
+
 

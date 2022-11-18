@@ -7,10 +7,12 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: 4m
 spec:
-  # tls:
-  # - hosts:
-  #   - {{ .Values.ingress.hosts.gateway }}
-    # secretName: {{ .Values.ingress.secretname.gateway }}
+  {{- if eq .Values.ingress.secured "true" }}
+  tls:
+  - hosts:
+    - {{ .Values.ingress.hosts.gateway }}
+    secretName: {{ .Values.ingress.secretname.gateway }}
+  {{- end }}
   rules:
   - host: {{ .Values.ingress.hosts.gateway }}
     http:
