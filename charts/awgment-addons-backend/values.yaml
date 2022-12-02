@@ -123,7 +123,7 @@ ingress:
 templateapp:
    name: template-app
    image:
-     repository: techsophyofficial/awgment-app-checklist
+     repository: techsophyofficial/awgment-app-templates
      tag: v0.1.0-beta
    service:
      type: ClusterIP
@@ -141,7 +141,7 @@ notificationapp:
 dmsapp:
    name: dms-app
    image:
-     repository: techsophyofficial/awgment-app-checklist
+     repository: techsophyofficial/awgment-app-document-management-system
      tag: v0.1.0-beta
    service:
      type: ClusterIP
@@ -150,7 +150,7 @@ dmsapp:
 documentconverterapp:
    name: document-converter
    image:
-     repository: techsophyofficial/awgment-app-checklist
+     repository: techsophyofficial/awgment-app-document-convertor
      tag: v0.1.0-beta
    service:
      type: ClusterIP
@@ -159,7 +159,7 @@ documentconverterapp:
 pdfconvertor:
    name: tp-pdf-convertor
    image:
-     repository: techsophyofficial/awgment-app-checklist
+     repository: techsophyofficial/awgment-pdf-convertor
      tag: v0.1.0-beta
      configMapRef: augmnt-env
    service:
@@ -178,7 +178,7 @@ pciapp:
 elasticsearchapp:
    name: tp-elastic-search-app
    image:
-     repository: techsophyofficial/awgment-app-checklist
+     repository: techsophyofficial/awgment-app-elastic-search
      tag: v0.1.0-beta
    service:
      type: ClusterIP
