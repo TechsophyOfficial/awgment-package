@@ -36,6 +36,8 @@ ingress:
      issuer: 
    hosts:
      keycloak:
-   secured: "false"
+   urls:
+     scheme: http
+     port: 80
    secretname:
-     keycloak: local-awgmnt
+     keycloak: awgmnt-certificate

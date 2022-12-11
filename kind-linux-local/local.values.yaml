@@ -15,6 +15,7 @@ keycloak:
     vendor: postgres
   url: http://<you ip like 192.168.1.16>:8888
 
+
 mongo:
     url: mongodb+srv://<username>:<password>@<mongo.cluster.com>:27017/?retryWrites=true
 postgres:
@@ -45,12 +46,14 @@ ingress:
     tsffrontend: awgment.172.17.0.1.nip.io
     camunda: camunda.172.17.0.1.nip.io
   urls:
+    scheme: http
+    port: 8080
     keycloak: http://<you ip like 192.168.1.16>:8888
     gateway: http://api.172.17.0.1.nip.io:8080
     tsffrontend: http://awgment.172.17.0.1.nip.io:8080
     camunda:  http://awgment.172.17.0.1.nip.io:8080/
   secretname:
-    keycloak: local-augmnt
-    gateway: local-augmnt
-    tsffrontend: local-augmnt
-    camunda: local-augmnt
+    keycloak: awgment-certificate
+    gateway: awgment-certificate
+    tsffrontend: awgment-certificate
+    camunda: awgment-certificate

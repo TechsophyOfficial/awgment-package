@@ -110,12 +110,14 @@ ingress:
      tsffrontend: awgment.<loadbalancerip>.nip.io
      camunda: camunda.<loadbalancerip>.nip.io
    urls:
+     scheme: https
+     port: 443
      keycloak: http://auth.<loadbalancerip>.nip.io/
      gateway: http://api.<loadbalancerip>.nip.io
      tsffrontend: http://awgment.<loadbalancerip>.nip.io 
      camunda:  http://awgment.<loadbalancerip>.nip.io/camunda
    secretname:
-     keycloak: local-augmnt
-     gateway: local-augmnt
-     tsffrontend: local-augmnt
-     camunda: local-augmnt
+     keycloak: awgmnt-certificate
+     gateway: awgmnt-certificate
+     tsffrontend: awgmnt-certificate
+     camunda: awgmnt-certificate

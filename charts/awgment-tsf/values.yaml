@@ -255,16 +255,17 @@ ingress:
      tsffrontend: 
      camunda: 
    urls:
+     scheme: http
+     port: 80
      keycloak: 
      gateway: 
      tsffrontend:  
      camunda: 
-   secured: "false"
    secretname:
-     keycloak: local-awgmnt
-     gateway: local-awgmnt
-     tsffrontend: local-awgmnt
-     camunda: local-awgmnt
+     keycloak: awgmnt-certificate
+     gateway: awgmnt-certificate
+     tsffrontend: awgmnt-certificate
+     camunda: awgmnt-certificate
 
 
 templatemodeler:

@@ -8,10 +8,12 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: 120m
 spec:
-  # tls:
-  # - hosts:
-  #   - {{ .Values.ingress.hosts.camunda }}
-    # secretName: {{ .Values.ingress.secretname.camunda }}
+  {{- if eq .Values.ingress.urls.scheme "https" }}
+  tls:
+  - hosts:
+    - {{ .Values.ingress.hosts.camunda }}
+    secretName: {{ .Values.ingress.secretname.camunda }}
+  {{- end }}
   rules:
   - host: {{ .Values.ingress.hosts.camunda }}
     http:

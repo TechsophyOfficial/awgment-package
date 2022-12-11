@@ -7,9 +7,12 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: 4m
 spec:
-  # tls:
-  #   - hosts:
-  #     - {{ .Values.ingress.hosts.keycloak }}
+  {{- if eq .Values.ingress.urls.scheme "https" }}
+  tls:
+    - hosts:
+      - {{ .Values.ingress.hosts.keycloak }}
+      secretName: awgmnt-certificate
+  {{- end }}
   rules:
   - host: {{ .Values.ingress.hosts.keycloak }}
     http:

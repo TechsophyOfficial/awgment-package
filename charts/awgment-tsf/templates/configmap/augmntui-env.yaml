@@ -6,14 +6,39 @@ metadata:
 data:
   HOSTNAME: {{ .Values.ingress.hosts.gateway }}
   WEB_ROOT: "/usr/share/nginx/html"
+
+  {{- if .Values.ingress.urls.tsffrontend }}
   REACT_baseUrL: {{ .Values.ingress.urls.tsffrontend }}
   REACT_baseUrl: {{ .Values.ingress.urls.tsffrontend }}
-  REACT_apiGatewayUrl: {{ .Values.ingress.urls.gateway }}/api 
-  REACT_keyCloakUrl: {{ .Values.ingress.urls.keycloak }}
-  REACT_keyCloakRealm: {{ .Values.keycloak.realm }}
-  REACT_keyCloakClientId: {{ .Values.keycloak.client.frontend }}
+  {{- else }}
+  REACT_baseUrL: {{ .Values.ingress.urls.scheme }}://{{ .Values.ingress.hosts.tsffrontend }}:{{ .Values.ingress.urls.port }}
+  REACT_baseUrl: {{ .Values.ingress.urls.scheme }}://{{ .Values.ingress.hosts.tsffrontend }}:{{ .Values.ingress.urls.port }}
+  {{- end }}
+
+  {{- if .Values.ingress.urls.gateway }}
+  REACT_apiGatewayUrl: {{ .Values.ingress.urls.gateway }}/api
+  REACT_swaggerUrl: {{ .Values.ingress.urls.gateway }}
+  {{- else }}
+  REACT_apiGatewayUrl: {{ .Values.ingress.urls.scheme }}://{{ .Values.ingress.hosts.gateway }}:{{ .Values.ingress.urls.port }}/api
+  REACT_swaggerUrl: {{ .Values.ingress.urls.scheme }}://{{ .Values.ingress.hosts.gateway }}:{{ .Values.ingress.urls.port }}
+  {{- end }}
+
+  {{- if .Values.ingress.urls.camunda }}
   REACT_workflowEngineURL: {{ .Values.ingress.urls.camunda  }}
   REACT_appServerURL: {{ .Values.ingress.urls.camunda  }}/engine-rest
+  {{- else }}
+  REACT_workflowEngineURL: {{ .Values.ingress.urls.scheme }}://{{ .Values.ingress.hosts.camunda }}:{{ .Values.ingress.urls.port }}
+  REACT_appServerURL: {{ .Values.ingress.urls.scheme }}://{{ .Values.ingress.hosts.camunda }}:{{ .Values.ingress.urls.port }}/engine-rest
+  {{- end }}
+
+  {{- if .Values.ingress.urls.keycloak }}
+  REACT_keyCloakUrl: {{ .Values.ingress.urls.keycloak }}
+  {{- else }}
+  REACT_keyCloakUrl: {{ .Values.ingress.urls.scheme }}://{{ .Values.ingress.hosts.keycloak }}:{{ .Values.ingress.urls.port }}
+  {{- end }}
+  REACT_keyCloakRealm: {{ .Values.keycloak.realm }}
+  REACT_keyCloakClientId: {{ .Values.keycloak.client.frontend }}
+
   REACT_publicUrl: "/model"
 
   REACT_publicAccountsUrl: "/accounts/"
@@ -34,4 +59,4 @@ data:
   REACT_publicRulesUrl: "/model/rules/"
 
   REACT_publicProcessUrl: "/model/process/"
-  REACT_swaggerUrl: {{ .Values.ingress.urls.gateway }}
+
