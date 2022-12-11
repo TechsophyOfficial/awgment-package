@@ -27,8 +27,8 @@ data:
   REACT_workflowEngineURL: {{ .Values.ingress.urls.camunda  }}
   REACT_appServerURL: {{ .Values.ingress.urls.camunda  }}/engine-rest
   {{- else }}
-  REACT_workflowEngineURL: {{ .Values.ingress.urls.scheme }}://{{ .Values.ingress.hosts.camunda }}:{{ .Values.ingress.urls.port }}
-  REACT_appServerURL: {{ .Values.ingress.urls.scheme }}://{{ .Values.ingress.hosts.camunda }}:{{ .Values.ingress.urls.port }}/engine-rest
+  REACT_workflowEngineURL: {{ .Values.ingress.urls.scheme }}://{{ .Values.ingress.hosts.camunda }}:{{ .Values.ingress.urls.port }}/camunda
+  REACT_appServerURL: {{ .Values.ingress.urls.scheme }}://{{ .Values.ingress.hosts.camunda }}:{{ .Values.ingress.urls.port }}/camunda/engine-rest
   {{- end }}
 
   {{- if .Values.ingress.urls.keycloak }}
