@@ -89,7 +89,7 @@ echo "Installing nginx "
 ./nginx.sh
 
 
-# kubectl apply -f dependency/cert-manager.yaml --validate=false
+ kubectl apply -f dependency/cert-manager.yaml --validate=false
 
 # env
 

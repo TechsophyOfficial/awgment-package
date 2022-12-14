@@ -115,7 +115,7 @@ ingress:
     #  keycloak: http://auth.<loadbalancerip>.nip.io/
     #  gateway: http://api.<loadbalancerip>.nip.io
     #  tsffrontend: http://awgment.<loadbalancerip>.nip.io 
-    #  camunda:  http://awgment.<loadbalancerip>.nip.io/camunda
+    #  camunda:  http://camunda.<loadbalancerip>.nip.io/camunda
    secretname:
      keycloak: awgmnt-certificate
      gateway: awgmnt-certificate
