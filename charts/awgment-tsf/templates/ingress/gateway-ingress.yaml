@@ -2,15 +2,17 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ .Values.ingress.name.gateway }}
+  namespace: {{ .Values.namespace }}
   annotations:
-    kubernetes.io/ingress.class: {{ .Values.ingress.class.nginx }}
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: 4m
 spec:
-  # tls:
-  # - hosts:
-  #   - {{ .Values.ingress.hosts.gateway }}
-    # secretName: {{ .Values.ingress.secretname.gateway }}
+  {{- if eq .Values.ingress.urls.scheme "https" }}
+  tls:
+  - hosts:
+    - {{.Values.ingress.hosts.gateway }}
+    secretName: {{ .Values.ingress.secretname.gateway }}
+  {{- end }}
   rules:
   - host: {{ .Values.ingress.hosts.gateway }}
     http:

@@ -19,7 +19,7 @@ fi
 
 
 #clean up
-kind delete clusters --all
+kind delete cluster --name ${cluster_name}
 
 
 
@@ -50,9 +50,9 @@ nodes:
   - containerPort: 80
     hostPort: ${http_port}
     protocol: TCP
-  # - containerPort: 443
-  #   hostPort: 8443
-  #   protocol: TCP
+  - containerPort: 443
+    hostPort: ${https_port}
+    protocol: TCP
 EOF
 
 # connect the registry to the cluster network if not already connected
@@ -77,21 +77,20 @@ EOF
 
 kubectl cluster-info --context kind-${cluster_name}
 
-# echo "Installing certificate manager, though we currently dont support  "
-# kubectl create namespace cert-manager
-# kubectl apply  \
-#   -f https://github.com/cert-manager/cert-manager/releases/download/v1.8.2/cert-manager.yaml
+
+kubectl create namespace cert-manager
+
+echo "Installing certificate manager, just in case you need it"
+kubectl apply  \
+  -f https://github.com/cert-manager/cert-manager/releases/download/v1.8.2/cert-manager.yaml
+
+
+# kubectl apply -f kubernetes-cloud/dependencies/self-signed-certificate.yaml --validate=false
+
 
 echo "Installing nginx "
 
 ./nginx.sh
 
 
-# kubectl apply -f dependency/cert-manager.yaml --validate=false
-
 # env
-
-
-# echo \
-# 'Please setup your db(postgres/mongo) as per readme and setup local.values.yaml appropriately'
-

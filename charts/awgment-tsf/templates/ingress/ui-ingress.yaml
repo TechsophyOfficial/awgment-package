@@ -5,14 +5,15 @@ metadata:
   name: {{ .Values.ingress.name.tsffrontend }}
   namespace: {{ .Values.namespace }}
   annotations:
-    kubernetes.io/ingress.class: {{ .Values.ingress.class.nginx }}
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: 120m
 spec:
-  # tls:
-  # - hosts:
-  #   - {{ .Values.ingress.hosts.tsffrontend }}
-    # secretName: {{ .Values.ingress.secretname.tsffrontend }}
+  {{- if eq .Values.ingress.urls.scheme "https" }}
+  tls:
+  - hosts:
+    - {{ .Values.ingress.hosts.tsffrontend }}
+    secretName: {{ .Values.ingress.secretname.tsffrontend }}
+  {{- end }}
   rules:
   - host: {{ .Values.ingress.hosts.tsffrontend }}
     http:

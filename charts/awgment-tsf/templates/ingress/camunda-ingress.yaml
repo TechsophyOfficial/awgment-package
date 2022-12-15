@@ -4,14 +4,17 @@ metadata:
   name: {{ .Values.ingress.name.camunda }}
   namespace: {{ .Values.namespace }}
   annotations:
-    kubernetes.io/ingress.class: {{ .Values.ingress.class.nginx }}
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: 120m
+    nginx.ingress.kubernetes.io/proxy-redirect-to: "{{.Values.ingress.urls.scheme}}://{{ .Values.ingress.hosts.camunda }}:{{.Values.ingress.urls.port}}/"
+    nginx.ingress.kubernetes.io/proxy-redirect-from: "{{.Values.ingress.urls.scheme}}://{{ .Values.ingress.hosts.camunda }}/"
 spec:
-  # tls:
-  # - hosts:
-  #   - {{ .Values.ingress.hosts.camunda }}
-    # secretName: {{ .Values.ingress.secretname.camunda }}
+  {{- if eq .Values.ingress.urls.scheme "https" }}
+  tls:
+  - hosts:
+    - {{ .Values.ingress.hosts.camunda }}
+    secretName: {{ .Values.ingress.secretname.camunda }}
+  {{- end }}
   rules:
   - host: {{ .Values.ingress.hosts.camunda }}
     http:

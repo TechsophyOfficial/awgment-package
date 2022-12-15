@@ -1,5 +1,5 @@
 replicaCount: 1
-namespace: default
+namespace: awgment
 imagePullSecrets: ts-nexus 
 imagePullPolicy: Always
 configMapRef: augmnt-env
@@ -241,9 +241,9 @@ ingress:
      gateway: gateway-ingress
      tsffrontend: tsf-ingress
      camunda: camunda-ingress
-   class:
-     nginx: nginx
-     alb: alb
+   class: nginx
+#     nginx: nginx
+#     alb: alb
    clusterissuer:
      issuer: 
      dev: 
@@ -255,16 +255,17 @@ ingress:
      tsffrontend: 
      camunda: 
    urls:
+     scheme: http
+     port: 80
      keycloak: 
      gateway: 
      tsffrontend:  
      camunda: 
-   secured: "false"
    secretname:
-     keycloak: local-awgmnt
-     gateway: local-awgmnt
-     tsffrontend: local-awgmnt
-     camunda: local-awgmnt
+     keycloak: awgmnt-certificate
+     gateway: awgmnt-certificate
+     tsffrontend: awgmnt-certificate
+     camunda: awgmnt-certificate
 
 
 templatemodeler:
