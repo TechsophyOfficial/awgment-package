@@ -28,6 +28,25 @@ cloudconfig:
    url: https://github.com/TechsophyOfficial/tp-cloud-config.git
    user: test
    password: test
+   
+ingress:
+   hosts:
+     keycloak: auth.<loadbalancerip>.nip.io
+     gateway: api.<loadbalancerip>.nip.io
+     tsffrontend: awgment.<loadbalancerip>.nip.io
+     camunda: camunda.<loadbalancerip>.nip.io
+   urls:
+     scheme: https
+     port: 443
+    #  keycloak: http://auth.<loadbalancerip>.nip.io/
+    #  gateway: http://api.<loadbalancerip>.nip.io
+    #  tsffrontend: http://awgment.<loadbalancerip>.nip.io 
+    #  camunda:  http://camunda.<loadbalancerip>.nip.io/camunda
+   secretname:
+     keycloak: awgmnt-certificate
+     gateway: awgmnt-certificate
+     tsffrontend: awgmnt-certificate
+     camunda: awgmnt-certificate
 
 aws: 
   region: ap-south-1
@@ -92,26 +111,3 @@ razorpay:
   key_secret: <your key secret>
 
 
-ingress:
-#   clusterissuer:
-#     issuer: selfsigned-issuer
-    #  dev: letsencrypt-dev
-    #  uat: letsencrypt-staging
-    #  prod: letsencrypt-prod  
-   hosts:
-     keycloak: awgmnt.<loadbalancerip>.nip.io
-     gateway: awgmnt.<loadbalancerip>.nip.io
-     tsffrontend: awgment.<loadbalancerip>.nip.io
-     camunda: awgmnt.<loadbalancerip>.nip.io
-   urls:
-     scheme: http
-     port: 443
-    #  keycloak: http://auth.<loadbalancerip>.nip.io/
-    #  gateway: http://api.<loadbalancerip>.nip.io
-    #  tsffrontend: http://awgment.<loadbalancerip>.nip.io 
-    #  camunda:  http://camunda.<loadbalancerip>.nip.io/camunda
-   secretname:
-     keycloak: awgmnt-certificate
-     gateway: awgmnt-certificate
-     tsffrontend: awgmnt-certificate
-     camunda: awgmnt-certificate
