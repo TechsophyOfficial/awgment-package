@@ -35,23 +35,25 @@ cloudconfig:
 
 
 ingress:
-  clusterissuer:
-    issuer: selfsigned-issuer
+#  clusterissuer:
+#    issuer: selfsigned-issuer
     #  dev: letsencrypt-dev
     #  uat: letsencrypt-staging
     #  prod: letsencrypt-prod
   hosts:
-    keycloak: auth.172.17.0.1.nip.io
-    gateway: api.172.17.0.1.nip.io
+    keycloak: awgment.172.17.0.1.nip.io
+    gateway: awgment.172.17.0.1.nip.io
     tsffrontend: awgment.172.17.0.1.nip.io
-    camunda: camunda.172.17.0.1.nip.io
+    camunda: awgment.172.17.0.1.nip.io
   urls:
     scheme: http
     port: 8080
-    keycloak: http://<you ip like 192.168.1.16>:8888
-    gateway: http://api.172.17.0.1.nip.io:8080
-    tsffrontend: http://awgment.172.17.0.1.nip.io:8080
-    camunda:  http://awgment.172.17.0.1.nip.io:8080/
+#    scheme: http
+#    port: 8080
+    keycloak: http://<you ip like 192.168.1.16>:8888/
+#    gateway: http://api.172.17.0.1.nip.io:8080
+#    tsffrontend: http://awgment.172.17.0.1.nip.io:8080
+#    camunda:  http://camunda.172.17.0.1.nip.io:8080/camunda
   secretname:
     keycloak: awgment-certificate
     gateway: awgment-certificate

@@ -91,26 +91,20 @@ razorpay:
   key_id: <your key id>
   key_secret: <your key secret>
 
-ingress:
-   clusterissuer:
-     issuer: selfsigned-issuer
-    #  dev: letsencrypt-dev
-    #  uat: letsencrypt-staging
-    #  prod: letsencrypt-prod  
 
 ingress:
-   clusterissuer:
-     issuer: selfsigned-issuer
+#   clusterissuer:
+#     issuer: selfsigned-issuer
     #  dev: letsencrypt-dev
     #  uat: letsencrypt-staging
     #  prod: letsencrypt-prod  
    hosts:
-     keycloak: auth.<loadbalancerip>.nip.io
-     gateway: api.<loadbalancerip>.nip.io
+     keycloak: awgmnt.<loadbalancerip>.nip.io
+     gateway: awgmnt.<loadbalancerip>.nip.io
      tsffrontend: awgment.<loadbalancerip>.nip.io
-     camunda: camunda.<loadbalancerip>.nip.io
+     camunda: awgmnt.<loadbalancerip>.nip.io
    urls:
-     scheme: https
+     scheme: http
      port: 443
     #  keycloak: http://auth.<loadbalancerip>.nip.io/
     #  gateway: http://api.<loadbalancerip>.nip.io

@@ -1,6 +1,6 @@
 replicaCount: 1
-namespace: default
-imagePullSecrets: ts-nexus 
+namespace: awgment
+imagePullSecrets: ts-nexus
 imagePullPolicy: Always
 configMapRef: augmnt-env
 

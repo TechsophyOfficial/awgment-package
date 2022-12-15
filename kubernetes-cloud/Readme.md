@@ -128,6 +128,7 @@ db.createUser(
 
 ) 
 ```
+
 ## Install nginx ingress on  kubernetes
 Next we need to install nginx, one can refer the documentation, https://kubernetes.github.io/ingress-nginx/deploy/
 Below steps can be used to install specfic version-
@@ -150,6 +151,40 @@ ingress-nginx-controller-admission   ClusterIP      10.245.88.198    <none>     
 
 ```
 
+## install ssl on kubernetes
+Setting up HTTPS with cert-manager (self-signed or LetsEncrypt) in kubernetes
+
+create namespace with cert-manager
+
+```
+
+kubectl create namespace cert-manager
+
+```
+install cert-manager yaml through kubectl apply command
+
+```
+
+kubectl apply  \
+  -f https://github.com/cert-manager/cert-manager/releases/download/v1.8.2/cert-manager.yaml
+
+```
+you can check whether the cert-manager pods are running or not by below command
+
+
+````
+kubectl get pods -n cert-manager
+Output:
+NAME                                      READY   STATUS    RESTARTS   AGE
+cert-manager-556549df9-qxp7k              1/1     Running   0          138m
+cert-manager-cainjector-69d7cb5d4-vdktp   1/1     Running   0          138m
+cert-manager-webhook-c5bdf945c-xcn2r      1/1     Running   0          138m
+````
+create the issuer and certificate yaml file  see more for how to create in this below tutorial
+
+https://someweb.github.io/devops/cert-manager-kubernetes/
+
+after installation of awgment  test on browser by giving https.
 ## Deploy keycloak
 Update cluster.values.yaml with your environment details for postgres and mongo in below properties
 

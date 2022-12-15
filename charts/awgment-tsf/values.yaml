@@ -1,5 +1,5 @@
 replicaCount: 1
-namespace: default
+namespace: awgment
 imagePullSecrets: ts-nexus 
 imagePullPolicy: Always
 configMapRef: augmnt-env
@@ -241,9 +241,9 @@ ingress:
      gateway: gateway-ingress
      tsffrontend: tsf-ingress
      camunda: camunda-ingress
-   class:
-     nginx: nginx
-     alb: alb
+   class: nginx
+#     nginx: nginx
+#     alb: alb
    clusterissuer:
      issuer: 
      dev: 

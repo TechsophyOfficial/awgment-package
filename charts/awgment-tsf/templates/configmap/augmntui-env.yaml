@@ -34,7 +34,7 @@ data:
   {{- if .Values.ingress.urls.keycloak }}
   REACT_keyCloakUrl: {{ .Values.ingress.urls.keycloak }}
   {{- else }}
-  REACT_keyCloakUrl: {{ .Values.ingress.urls.scheme }}://{{ .Values.ingress.hosts.keycloak }}:{{ .Values.ingress.urls.port }}
+  REACT_keyCloakUrl: {{ .Values.ingress.urls.scheme }}://{{ .Values.ingress.hosts.keycloak }}:{{ .Values.ingress.urls.port }}/
   {{- end }}
   REACT_keyCloakRealm: {{ .Values.keycloak.realm }}
   REACT_keyCloakClientId: {{ .Values.keycloak.client.frontend }}

@@ -3,7 +3,6 @@ kind: Ingress
 metadata:
   name: {{ .Values.ingress.name.keycloak }}
   annotations:
-    kubernetes.io/ingress.class: {{ .Values.ingress.class.nginx }}
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: 4m
 spec:

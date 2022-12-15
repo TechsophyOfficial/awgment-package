@@ -84,16 +84,13 @@ echo "Installing certificate manager, just in case you need it"
 kubectl apply  \
   -f https://github.com/cert-manager/cert-manager/releases/download/v1.8.2/cert-manager.yaml
 
+
+# kubectl apply -f kubernetes-cloud/dependencies/self-signed-certificate.yaml --validate=false
+
+
 echo "Installing nginx "
 
 ./nginx.sh
 
 
- kubectl apply -f dependency/cert-manager.yaml --validate=false
-
 # env
-
-
-# echo \
-# 'Please setup your db(postgres/mongo) as per readme and setup local.values.yaml appropriately'
-
