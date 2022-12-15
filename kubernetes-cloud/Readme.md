@@ -156,7 +156,7 @@ In case you want SSL to be enabled for external traffic on your domain, you need
 There are different certificate managers available some may charge you for providing a certificate.
 [Here](https://someweb.github.io/devops/cert-manager-kubernetes/) is an article that explains how to setup cert-manager.
 
-One can install a self-signed certificate manager if secure communication is the only need and a valid domain mapping is not on your high list. A sample yaml file is present under dependencies/self-signed-certificate.yaml
+One can install a self-signed certificate manager if secure communication is the only need and a valid domain mapping is not on your high list. A sample yaml file is present under dependencies/self-signed-certificate.yaml, please update the domain name if you are using it.
 ```
 
         awgment-package$cd kubernetes-cloud/
