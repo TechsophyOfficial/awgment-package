@@ -4,7 +4,7 @@ Package awgment
 The below readme assumes some understanding of kubernetes and helm, please refer [Troubleshooting](#troubleshooting) for some helpful links to beginners.
 
 
-# Deployment of awgment kubernets cluster
+# Deployment of awgment kubernetes cluster
 Below steps can be used to deploy awgment on kubernetes cluster.
 
 To keep the installation simple dns/tls certificate configuration is avoided, so the below steps should be used for introductory evaluation purpose. For running a dedicated environments adherence to ops best practices is required.
@@ -152,39 +152,40 @@ ingress-nginx-controller-admission   ClusterIP      10.245.88.198    <none>     
 ```
 
 ## install ssl on kubernetes
-Setting up HTTPS with cert-manager (self-signed or LetsEncrypt) in kubernetes
+In case you want SSL to be enabled for external traffic on your domain, you need to install a certificate manager.
+There are different certificate managers available some may charge you for providing a certificate.
+[Here](https://someweb.github.io/devops/cert-manager-kubernetes/) is an article that explains how to setup cert-manager.
 
-create namespace with cert-manager
-
+One can install a self-signed certificate manager if secure communication is the only need and a valid domain mapping is not on your high list. A sample yaml file is present under dependencies/self-signed-certificate.yaml
 ```
 
-kubectl create namespace cert-manager
-
+        awgment-package$cd kubernetes-cloud/
+        awgment-package/kubernetes-cloud$ cd dependencies/
+        awgment-package/kubernetes-cloud/dependencies$ kubectl apply –f  self-signed-certificate.yaml -n dev
 ```
-install cert-manager yaml through kubectl apply command
+The above shall install a certificate with name awgmnt-certificate. **This is referred to by the helm chart values, update the helm chart values if you change the name.**
 
+To configure SSL communication update the following details in cluster.values.yaml file, instead of using loadbalancer ip with nip.io you can also specify the domains if you have them available.
 ```
-
-kubectl apply  \
-  -f https://github.com/cert-manager/cert-manager/releases/download/v1.8.2/cert-manager.yaml
-
+ingress:
+   hosts:
+     keycloak: auth.<loadbalancerip>.nip.io
+     gateway: api.<loadbalancerip>.nip.io
+     tsffrontend: awgment.<loadbalancerip>.nip.io
+     camunda: camunda.<loadbalancerip>.nip.io
+   urls:
+     scheme: https
+     port: 443
+   secretname:
+     keycloak: awgmnt-certificate
+     gateway: awgmnt-certificate
+     tsffrontend: awgmnt-certificate
+     camunda: awgmnt-certificate
 ```
-you can check whether the cert-manager pods are running or not by below command
+If you dont want SSL to be configured update the urls.scheme/port in above file as http/80.
 
 
-````
-kubectl get pods -n cert-manager
-Output:
-NAME                                      READY   STATUS    RESTARTS   AGE
-cert-manager-556549df9-qxp7k              1/1     Running   0          138m
-cert-manager-cainjector-69d7cb5d4-vdktp   1/1     Running   0          138m
-cert-manager-webhook-c5bdf945c-xcn2r      1/1     Running   0          138m
-````
-create the issuer and certificate yaml file  see more for how to create in this below tutorial
 
-https://someweb.github.io/devops/cert-manager-kubernetes/
-
-after installation of awgment  test on browser by giving https.
 ## Deploy keycloak
 Update cluster.values.yaml with your environment details for postgres and mongo in below properties
 
