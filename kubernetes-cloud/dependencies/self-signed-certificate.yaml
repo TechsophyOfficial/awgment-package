@@ -4,29 +4,7 @@ metadata:
   name: selfsigned-issuer
 spec:
   selfSigned: {}
-# ---
-# apiVersion: cert-manager.io/v1
-# kind: Certificate
-# metadata:
-#   name: awgmnt-certificate
-# #  namespace: sandbox
-# spec:
-#   isCA: true
-#   commonName: awgmnt-certificate
-#   secretName: awgmnt-certificate
-#   issuerRef:
-#     name: selfsigned-issuer
-#     kind: ClusterIssuer
-#     group: cert-manager.io
-#---
-# apiVersion: cert-manager.io/v1
-# kind: Issuer
-# metadata:
-#   name: letsencrypt-ca
-#   namespace: sandbox
-# spec:
-#   ca:
-#     secretName: letsencrypt-ca
+
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate

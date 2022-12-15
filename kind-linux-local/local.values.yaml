@@ -41,10 +41,10 @@ ingress:
     #  uat: letsencrypt-staging
     #  prod: letsencrypt-prod
   hosts:
-    keycloak: awgment.172.17.0.1.nip.io
-    gateway: awgment.172.17.0.1.nip.io
+    keycloak: auth.172.17.0.1.nip.io
+    gateway: api.172.17.0.1.nip.io
     tsffrontend: awgment.172.17.0.1.nip.io
-    camunda: awgment.172.17.0.1.nip.io
+    camunda: camunda.172.17.0.1.nip.io
   urls:
     scheme: http
     port: 8080
