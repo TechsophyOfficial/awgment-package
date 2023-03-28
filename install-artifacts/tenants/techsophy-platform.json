@@ -1,5 +1,5 @@
 {
-"realm":"kims",
+"realm":"techsophy-platform",
 "authURL": "https://keycloak-tsplatform.techsophy.com/",
 "clientId": "tp-ui-core",
 "gatewayURL": "https://api-gateway.techsophy.com/api"
