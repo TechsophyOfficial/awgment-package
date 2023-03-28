@@ -30,6 +30,15 @@ spec:
         ports:
         - containerPort: {{ .Values.coreui.service.port }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html/tenants
+          name: tenant-config        
+      volumes:
+      - name: tenant-config
+        configMap:
+          # name: awgment-admin-configmap
+          name: tenant-config
+         
       imagePullSecrets:
       - name: {{ .Values.imagePullSecrets }}
 

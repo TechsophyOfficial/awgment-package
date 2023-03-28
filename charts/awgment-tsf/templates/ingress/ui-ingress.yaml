@@ -7,6 +7,8 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: 120m
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "X-Tenant-Id: techsophy-platform";     
 spec:
   {{- if eq .Values.ingress.urls.scheme "https" }}
   tls:
@@ -17,7 +19,14 @@ spec:
   rules:
   - host: {{ .Values.ingress.hosts.tsffrontend }}
     http:
-      paths:                 
+      paths:
+      - path: /tenants
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Values.coreui.name }}
+            port:
+              number: {{ .Values.coreui.service.port }}                       
       - path: /model
         pathType: Prefix
         backend:
