@@ -1,0 +1,6 @@
+{
+"realm":"tenant1",
+"authURL": "https://keycloak-tsplatform.techsophy.com/",
+"clientId": "tp-ui-core",
+"gatewayURL": "https://api-gateway.techsophy.com/api"
+}
